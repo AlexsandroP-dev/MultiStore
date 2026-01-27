@@ -5,7 +5,5 @@ FROM composer/composer:2.7
 RUN apk add --no-cache --virtual build-essentials \
     icu-dev icu-libs zlib-dev g++ make automake autoconf libzip-dev \
     libpng-dev libwebp-dev libjpeg-turbo-dev freetype-dev && \
-    libwebp-dev \
-    libjpeg-turbo-dev \
     docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-install gd zip intl
