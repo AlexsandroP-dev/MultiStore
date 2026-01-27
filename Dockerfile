@@ -12,8 +12,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libpq-dev \
     libzip-dev \
-    cron \
-    curl
+    libicu-dev \
+    curl \
+    cron
 
 # Limpar cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
