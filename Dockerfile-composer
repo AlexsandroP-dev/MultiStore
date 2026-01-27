@@ -1,0 +1,11 @@
+FROM composer/composer:2.7
+
+#RUN sed -i 's|http://|https://|g' /etc/apk/repositories
+
+RUN apk add --no-cache --virtual build-essentials \
+    icu-dev icu-libs zlib-dev g++ make automake autoconf libzip-dev \
+    libpng-dev libwebp-dev libjpeg-turbo-dev freetype-dev && \
+    libwebp-dev \
+    libjpeg-turbo-dev \
+    docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp && \
+    docker-php-ext-install gd zip intl

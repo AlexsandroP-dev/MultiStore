@@ -1,0 +1,119 @@
+version: "3"
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laravel/app
+    container_name: multistore-app
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www:delegated
+      - ./docker_config_files/php/local.ini:/usr/local/etc/php/conf.d/local.ini:delegated
+      - ~/.composer/docker-cache/:/root/.composer:cached
+    networks:
+      - multistore-networks
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: multistore-webserver
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www:delegated
+      - ./docker_config_files/nginx/conf.d/:/etc/nginx/conf.d/:delegated
+    networks:
+      - multistore-networks
+    depends_on:
+      - postgres
+      - app
+
+  #Postgres Service
+  postgres:
+    container_name: multistore-postgres
+    image: postgres
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres:delegated
+    ports:
+      - "5432:5432"
+    networks:
+      - multistore-networks
+
+  #PgAdmin
+  pgadmin:
+    container_name: multistore-pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: alex@multistore.br
+      PGADMIN_DEFAULT_PASSWORD: alexadminmultistore
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "8080:80"
+    networks:
+      - multistore-networks
+    #composer
+  composer:
+    build:
+      context: .
+      dockerfile: Dockerfile-composer
+    container_name: multistore-composer
+    volumes:
+      - ./:/var/www/
+    working_dir: /var/www/
+    depends_on:
+      - app
+    networks:
+      - multistore-networks
+
+  #npm
+  npm:
+    image: node:20
+    container_name: multistore-npm
+    volumes:
+      - ./:/var/www/
+    working_dir: /var/www/
+    entrypoint: [ "npm" ]
+    networks:
+      - multistore-networks
+
+  #artisan
+  artisan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: multistore-artisan
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - postgres
+    working_dir: /var/www/
+    entrypoint: [ "php", "/var/www/artisan" ]
+    networks:
+      - multistore-networks
+
+#Docker Networks
+networks:
+  multistore-networks:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
+  postgres:
+  pgadmin:
