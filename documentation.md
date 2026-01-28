@@ -9,3 +9,9 @@
 -   [ ] **Fase 2: Estrutura Tema**
     -   [x] 1.1. Views de botões utilitários.
     -   [x] 1.2. Pacote de ícones do Bootstrap 5.
+    -   [x] 1.3. View estrututal base e autenticação.
+
+-   [ ] **Fase 3: Autenticação básica**
+    -   [x] 1.1. Tabela Users.
+    -   [x] 1.1. Tela de Login.
+    -   [x] 1.2. Tela de Cadastro.

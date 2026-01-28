@@ -1,25 +1,30 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+@extends('layouts.auth')
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@section('title', ' - Recuperar Senha')
 
-    <form method="POST" action="{{ route('password.email') }}">
+@section('content')
+    <h4 class="mb-2 text-center">Digite seu Email para Recuperar sua Senha</h4>
+    <form action="{{ route('password.email') }}" method="POST">
         @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <div class="input-group mb-3">
+                <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"
+                    id="email" placeholder="Digite seu email" autofocus autocomplete="email" value="{{ old('email') }}"
+                    required>
+                <div class="input-group-text">
+                    <span class="bi bi-envelope"></span>
+                </div>
+            </div>
         </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
+        @include('utils.form.error', ['param' => 'email'])
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary mb-3">Enviar link para redefinir senha</button>
         </div>
     </form>
-</x-guest-layout>
+    <p>{{ session('status') }}</p>
+    <span>Retornar ao </span>
+    <a class="text-primary" href="{{ route('login') }}">
+        Login
+    </a>
+@endsection

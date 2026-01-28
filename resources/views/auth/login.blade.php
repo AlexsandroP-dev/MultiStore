@@ -1,47 +1,71 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.auth')
 
-    <form method="POST" action="{{ route('login') }}">
+@section('title', ' - Login')
+
+@section('content')
+    <h4 class="mb-2 text-center">Faça Login</h4>
+    <form action="{{ route('login') }}" method="POST">
         @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <div class="input-group">
+                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
+                    placeholder="Entre com email" autofocus autocomplete="email" value="{{ old('email') }}"
+                    required>
+                <div class="input-group-text">
+                    <span class="bi bi-envelope"></span>
+                </div>
+            </div>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        @include('utils.form.error', ['param' => 'login'])
+        <div class="form-group">
+            <label class="form-label" for="password">Senha</label>
+            <div class="input-group">
+                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password"
+                    id="password" placeholder="Digite sua Senha" required>
+                <div class="input-group-text">
+                    <button class="btn btn-outline-secondary btn-sm" type="button" id="togglePassword">
+                        <span class="bi bi-eye" id="eyeIcon"></span>
+                    </button>
+                </div>
+            </div>
+            @include('utils.form.error', ['param' => 'password'])
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="custom-control custom-checkbox ms-1">
+                <input type="checkbox" class="form-check-input" id="basic_checkbox_1">
+                <label class="form-check-label" for="basic_checkbox_1">Lembrar-me</label>
+            </div>
+            <a href="{{ route('password.request') }}">Esqueci minha senha</a>
         </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary mb-3">Logar</button>
         </div>
     </form>
-</x-guest-layout>
+    @if (Route::has('register'))
+        <span>Não possui cadastro?</span>
+        <a class="text-primary" href="{{ route('register') }}">Cadastre-se</a>
+    @endif
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#password');
+            const eyeIcon = document.querySelector('#eyeIcon');
+
+            if (togglePassword) {
+                togglePassword.addEventListener('click', function() {
+                    // Alterna o tipo do input
+                    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                    password.setAttribute('type', type);
+
+                    // Alterna o ícone (olho aberto / olho cortado)
+                    eyeIcon.classList.toggle('bi-eye');
+                    eyeIcon.classList.toggle('bi-eye-slash');
+                });
+            }
+        });
+    </script>
+@endsection
