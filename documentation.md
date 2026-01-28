@@ -8,3 +8,4 @@
 
 -   [ ] **Fase 2: Estrutura Tema**
     -   [x] 1.1. Views de botões utilitários.
+    -   [x] 1.2. Pacote de ícones do Bootstrap 5.
