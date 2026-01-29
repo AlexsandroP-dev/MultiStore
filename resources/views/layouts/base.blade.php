@@ -26,6 +26,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
+    @stack('css')
 </head>
 
 <body class="vh-100">
@@ -34,6 +35,7 @@
 
     @yield('scripts')
 
+    @stack('scripts')
 </body>
 
 </html>
