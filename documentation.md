@@ -12,8 +12,20 @@
     -   [x] 1.1. Views de botões utilitários.
     -   [x] 1.2. Pacote de ícones do Bootstrap 5.
     -   [x] 1.3. View estrututal base e autenticação.
+    -   [x] 1.4. Desenvolver e estruturar sidebar, footer e topnav principal.
+        -   [] 1.4.1. Sidebar
+            -   [x] 1.4.1.1 Layout.
+            -   [] 1.4.1.2 Configurar para que os menus da sidebar fiquem separados no arquivo config/mainTheme.php.
+        -   [] 1.4.2. Footer
+            -   [x] 1.4.2.1 Layout.
+            -   [] 1.4.2.2 Configurar para que o parãmetro de nome do sistema fiqum separado no arquivo config/mainTheme.php.
+        -   [] 1.4.3. Topnav
+            -   [] 1.4.3.1 Layout.
+            -   [] 1.4.3.2 Configurar para que os menus do topnav fiquem separados no arquivo config/mainTheme.php.
+            -   [] 1.4.3.3 Configurar para que o botão Login/Cadastre-se esteja no topnav.
 
 -   [ ] **Fase 3: Autenticação básica**
     -   [x] 1.1. Tabela Users.
+        -   [x] 1.1.1. Adicionar campos: `string:cpf`, `string:cnpj`, `bool:admin`, `bool:administrativo`, `bool:lojista`, `bool:colaborador`, `bool:cliente` com default false 
     -   [x] 1.1. Tela de Login.
     -   [x] 1.2. Tela de Cadastro.

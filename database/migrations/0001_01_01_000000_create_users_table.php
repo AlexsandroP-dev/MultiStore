@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('cpf')->nullable()->unique();
+            $table->string('cnpj')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('admin')->default(false);
             $table->boolean('administrativo')->default(false);
+            $table->boolean('lojista')->default(false);
             $table->boolean('colaborador')->default(false);
             $table->boolean('cliente')->default(false);
             $table->rememberToken();
