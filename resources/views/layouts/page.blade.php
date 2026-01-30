@@ -5,7 +5,8 @@
         @include('layouts.pagePartials.sidebar')
 
         <div class="w-100 d-flex flex-column min-vh-100">
-            <main class="flex-grow-1 p-4">
+            @include('layouts.pagePartials.topnav')
+            <main class="flex-grow-1 p-4 bg-light">
                 <div class="container-fluid">
                     @yield('content')
                 </div>
