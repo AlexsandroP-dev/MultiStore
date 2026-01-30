@@ -10,11 +10,11 @@
     <meta name="robots" content="" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="@yield('page_description')" />
-    <meta property="og:title" content="['nada aqui']" />
-    <meta property="og:description" content="['nada aqui']  @yield('title')" />
+    <meta property="og:title" content="{{ config('themes.mainTheme.base.HeaderTitle') }}" />
+    <meta property="og:description" content="{{ config('themes.mainTheme.base.HeaderDescription') }}  @yield('title')" />
     <meta property="og:image" content="['nada aqui']" />
     <meta name="format-detection" content="telephone=no">
-    <title>['nada aqui'] @yield('title')</title>
+    <title>{{ config('themes.mainTheme.base.HeaderTitle') }} @yield('title')</title>
     <link rel="icon" type="image/svg" sizes="16x16" href="['nada aqui']">
 
     <!-- CSS -->

@@ -1,7 +1,8 @@
 <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark transition-all"
     style="width: 280px; min-height: 100vh;">
     <div class="d-flex align-items-center justify-content-between w-100 mb-3">
-        <span class="fs-4 logo-text fw-bold">['nada aqui']</span>
+        <a class="text-white text-decoration-none" href="{{ route(config('themes.mainTheme.sidebar.sideBarHeaderRoute')) }}"><span
+                class="fs-4 logo-text fw-bold">{{ config('themes.mainTheme.sidebar.sideBarHeaderName') }}</span></a>
 
         <button class="btn text-white border-0 p-0" id="mobileSideBarToggle">
             <i class="bi bi-x-lg fs-3 d-inline d-md-none"></i>
@@ -9,42 +10,58 @@
     </div>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} py-3"
-                data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
-                <i class="bi bi-speedometer2 me-2"></i> <span class="nav-text">Dashboard</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }} py-3"
-                data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
-                <i class="bi bi-speedometer2 me-2"></i> <span class="nav-text">['nada aqui']</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link py-3 text-white d-flex align-items-center justify-content-between"
-                data-bs-toggle="collapse" href="#submenuCadastros" role="button" aria-expanded="false">
-                <div>
-                    <i class="bi bi-grid me-2"></i>
-                    <span class="nav-text">Cadastros</span>
-                </div>
-                <i class="bi bi-chevron-down small nav-text"></i>
-            </a>
-            <div class="collapse {{ request()->routeIs('login.*', 'logout.*') ? 'show' : '' }}" id="submenuCadastros">
-                <ul class="nav flex-column ms-3 mt-1 small">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-white-50 py-2">
-                            <i class="bi bi-box me-2"></i> Produtos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-white-50 py-2">
-                            <i class="bi bi-tags me-2"></i> Categorias
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+        @foreach (config('themes.mainTheme.sidebar.sideBarItems') as $item)
+            @if (isset($item['submenu']))
+                {{-- Item com Dropdown --}}
+                <li class="nav-item">
+                    @php
+                        $subRoutes = collect($item['submenu'])->pluck('route')->toArray();
+                        $isOpen = false;
+                        foreach ($subRoutes as $sr) {
+                            if (request()->routeIs($sr)) {
+                                $isOpen = true;
+                                break;
+                            }
+                        }
+                    @endphp
+
+                    <a class="nav-link py-3 d-flex align-items-center justify-content-between {{ $isOpen ? 'bg-primary text-white' : 'text-white' }}"
+                        data-bs-toggle="collapse" href="#submenu{{ Str::slug($item['name']) }}" role="button"
+                        aria-expanded="{{ $isOpen ? 'true' : 'false' }}">
+                        <div>
+                            <i class="{{ $item['icon'] }} me-2"></i>
+                            <span class="nav-text">{{ $item['name'] }}</span>
+                        </div>
+                        <i class="bi bi-chevron-down small nav-text arrow-icon {{ $isOpen ? 'rotate-180' : '' }}"></i>
+                    </a>
+
+                    <div class="collapse {{ $isOpen ? 'show' : '' }}" id="submenu{{ Str::slug($item['name']) }}">
+                        <ul class="nav flex-column ms-3 mt-1 small border-start border-secondary border-opacity-25">
+                            @foreach ($item['submenu'] as $sub)
+                                <li class="nav-item">
+                                    <a href="{{ route($sub['route']) }}"
+                                        class="nav-link py-2 {{ request()->routeIs($sub['route']) ? 'text-primary fw-bold active-sub' : 'text-white-50' }}">
+                                        <i class="{{ $sub['icon'] ?? 'bi bi-circle' }} me-2"
+                                            style="font-size: 0.7rem;"></i>
+                                        {{ $sub['name'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </li>
+            @else
+                {{-- Item Simples --}}
+                <li class="nav-item">
+                    <a href="{{ route($item['route']) }}"
+                        class="nav-link {{ request()->routeIs($item['route']) ? 'active' : '' }} py-3"
+                        data-bs-toggle="tooltip" data-bs-placement="right" title="{{ $item['name'] }}">
+                        <i class="{{ $item['icon'] }} me-2"></i>
+                        <span class="nav-text">{{ $item['name'] }}</span>
+                    </a>
+                </li>
+            @endif
+        @endforeach
     </ul>
 </div>
 
@@ -151,6 +168,45 @@
         /* Esconde submenus quando a sidebar está colapsada */
         .sidebar-collapsed .collapse,
         .sidebar-collapsed .collapse.show {
+            display: none !important;
+        }
+
+        /* Estilo para destacar o subitem ativo de forma diferente do item principal */
+        #sidebar .nav-link.active-sub {
+            background-color: rgba(13, 110, 253, 0.1) !important;
+            /* Fundo azul bem suave */
+            color: #0d6efd !important;
+            /* Cor primária do Bootstrap */
+        }
+
+        /* Classe auxiliar para o carregamento inicial via Blade */
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+
+        /* Linha lateral para dar continuidade visual ao submenu */
+        #sidebar .collapse ul {
+            margin-left: 1.2rem !important;
+            padding-left: 0.5rem;
+        }
+
+        /* Garante que o item pai ativo no modo colapsado não tenha texto ou seta */
+        .sidebar-collapsed .nav-text {
+            display: none !important;
+        }
+
+        /* Configuração base da seta do dropdown */
+        .arrow-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Quando o botão dropdown NÃO está colapsado (ou seja, está aberto), giramos a seta */
+        .nav-link[aria-expanded="true"] .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Ocultar seta no modo colapsado para não quebrar o layout de 80px */
+        .sidebar-collapsed .arrow-icon {
             display: none !important;
         }
     </style>
