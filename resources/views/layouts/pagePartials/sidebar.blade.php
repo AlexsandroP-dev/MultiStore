@@ -10,16 +10,40 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} py-3" data-bs-toggle="tooltip" data-bs-placement="right"
-                title="Dashboard">
+            <a href="#" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} py-3"
+                data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
                 <i class="bi bi-speedometer2 me-2"></i> <span class="nav-text">Dashboard</span>
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }} py-3" data-bs-toggle="tooltip" data-bs-placement="right"
-                title="Dashboard">
+            <a href="#" class="nav-link {{ request()->routeIs('login') ? 'active' : '' }} py-3"
+                data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
                 <i class="bi bi-speedometer2 me-2"></i> <span class="nav-text">['nada aqui']</span>
             </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link py-3 text-white d-flex align-items-center justify-content-between"
+                data-bs-toggle="collapse" href="#submenuCadastros" role="button" aria-expanded="false">
+                <div>
+                    <i class="bi bi-grid me-2"></i>
+                    <span class="nav-text">Cadastros</span>
+                </div>
+                <i class="bi bi-chevron-down small nav-text"></i>
+            </a>
+            <div class="collapse {{ request()->routeIs('login.*', 'logout.*') ? 'show' : '' }}" id="submenuCadastros">
+                <ul class="nav flex-column ms-3 mt-1 small">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-white-50 py-2">
+                            <i class="bi bi-box me-2"></i> Produtos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-white-50 py-2">
+                            <i class="bi bi-tags me-2"></i> Categorias
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </li>
     </ul>
 </div>
@@ -78,8 +102,7 @@
         .sidebar-collapsed .nav-text {
             display: none;
         }
-    </style>
-    <style>
+
         /* Estilo para todos os items da sidebar exceto o ativo */
         #sidebar .nav-link {
             transition: all 0.2s ease-in-out;
@@ -107,6 +130,28 @@
         #sidebar .nav-link.active:hover {
             transform: none;
             /* Mantém o item ativo parado */
+        }
+
+        /* Ajuste de indentação do submenu */
+        #sidebar .collapse .nav-link {
+            padding-left: 1.5rem;
+        }
+
+        /* Esconde a setinha quando a sidebar estiver colapsada */
+        .sidebar-collapsed .bi-chevron-down {
+            display: none;
+        }
+
+        /* Cor dos itens dentro do dropdown */
+        .nav-pills .nav-link.text-white-50:hover {
+            color: #fff !important;
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        /* Esconde submenus quando a sidebar está colapsada */
+        .sidebar-collapsed .collapse,
+        .sidebar-collapsed .collapse.show {
+            display: none !important;
         }
     </style>
 @endpush
