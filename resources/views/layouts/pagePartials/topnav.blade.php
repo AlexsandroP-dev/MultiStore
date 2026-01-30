@@ -5,19 +5,35 @@
                 title="Sidebar">
                 <i class="bi bi-list fs-3"></i>
             </button>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Menu
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Ação 1</a></li>
-                    <li><a class="dropdown-item" href="#">Ação 2</a></li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Sobre nós</a>
-            </li>
+            @foreach (config('themes.mainTheme.topnav') as $item)
+                {{-- Item com Dropdown --}}
+                @if (isset($item['submenu']))
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navDrop{{ Str::slug($item['name']) }}"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ $item['name'] }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navDrop{{ Str::slug($item['name']) }}">
+                            @foreach ($item['submenu'] as $sub)
+                                <li>
+                                    <a class="dropdown-item {{ request()->routeIs($sub['route']) ? 'active' : '' }}"
+                                        href="{{ route($sub['route']) }}">
+                                        {{ $sub['name'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @else
+                    {{-- Item Simples --}}
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs($item['route']) ? 'active' : '' }}"
+                            href="{{ route($item['route']) }}">
+                            {{ $item['name'] }}
+                        </a>
+                    </li>
+                @endif
+            @endforeach
         </ul>
 
         <div class="d-flex align-items-center">

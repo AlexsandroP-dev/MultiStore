@@ -22,8 +22,8 @@
             -   [ ] 1.4.2.2. Configurar para que o parãmetro de nome do sistema fiqum separado no arquivo config/mainTheme.php.
         -   [ ] 1.4.3. Topnav
             -   [x] 1.4.3.1. Layout.
-            -   [ ] 1.4.3.2. Configurar para que os menus do topnav fiquem separados no arquivo config/mainTheme.php.
-            -   [x] 1.4.3.3. Configurar para que o botão Perfil esteja no topnav.
+            -   [x] 1.4.3.2. Configurar para que o botão Perfil esteja no topnav.
+            -   [x] 1.4.3.3. Configurar para que os menus do topnav fiquem separados no arquivo config/mainTheme.php.
 
 -   [ ] **Fase 3: Autenticação básica**
     -   [x] 1.1. Tabela Users.
