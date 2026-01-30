@@ -7,7 +7,7 @@ return [
     "sideBarItems" => [
         [
             "name" => "Dashboard",
-            "icon" => "bi bi-speedometer2",
+            "icon" => "bi bi-app",
             "route" => "dashboard"
         ],
         [
@@ -21,7 +21,7 @@ return [
                 ],
                 [
                     "name" => "Categorias",
-                    "route" => "dashboard",
+                    "route" => "logout",
                     "icon" => "bi bi-tags"
                 ],
             ]
