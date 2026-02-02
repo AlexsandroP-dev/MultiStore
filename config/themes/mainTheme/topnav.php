@@ -17,6 +17,6 @@ return [
     ],
     [
         "name" => "Sobre nós",
-        "route" => "dashboard",
+        "route" => "dashboard.index",
     ],
 ];

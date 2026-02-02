@@ -3,25 +3,25 @@
 // arquivo de configuração da sidebar principal
 return [
     "sideBarHeaderName" => "MultiStore",
-    "sideBarHeaderRoute" => "dashboard",
+    "sideBarHeaderRoute" => "dashboard.index",
     "sideBarItems" => [
         [
             "name" => "Dashboard",
             "icon" => "bi bi-app",
-            "route" => "dashboard"
+            "route" => "dashboard.index"
         ],
         [
             "name" => "Cadastros",
             "icon" => "bi bi-grid",
             "submenu" => [
                 [
-                    "name" => "Produtos",
-                    "route" => "login",
-                    "icon" => "bi bi-box",
+                    "name" => "Lojas",
+                    "route" => "dashboard.lojas.index",
+                    "icon" => "bi bi-shop",
                 ],
                 [
                     "name" => "Categorias",
-                    "route" => "logout",
+                    "route" => "login",
                     "icon" => "bi bi-tags"
                 ],
             ]
