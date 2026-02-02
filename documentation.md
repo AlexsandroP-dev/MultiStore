@@ -50,8 +50,9 @@
             -   [x] 4.2.3.7. delete.
         -   [ ] 4.2.4. Frontend CRUD lojas:
             -   [ ] 4.2.4.1. index (com paginação e pesquisa).
-            -   [ ] 4.2.4.2. create.
-            -   [ ] 4.2.4.3. edit.
+            -   [ ] 4.2.4.2. show.
+            -   [ ] 4.2.4.3. create.
+            -   [ ] 4.2.4.4. edit.
     -   [x] 4.3. Tabela Lojistas.
         -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.3.2. Configurar model:

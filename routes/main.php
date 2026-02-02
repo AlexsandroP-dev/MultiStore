@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store', [LojaController::class, 'store'])->name('store');
             Route::get('/edit/{loja}', [LojaController::class, 'edit'])->name('edit');
             Route::put('/update/{loja}', [LojaController::class, 'update'])->name('update');
+            Route::get('/apagados', [LojaController::class, 'deleted'])->name('deleted');
             Route::delete('/destroy/{loja}', [LojaController::class, 'destroy'])->name('destroy');
         });
     });
