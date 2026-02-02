@@ -34,13 +34,14 @@
     -   [x] 1.2. Tela de Cadastro.
 
 -   [x] **Fase 4: Features**
-    -   [x] 4.1. Tabela Lojas.
-        -   [x] 4.1.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)` .
-        -   [x] 4.1.2. Configurar model:
-            -   [x] 4.1.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
-            -   [x] 4.1.2.2 Configurar funções de relacionamentos: lojistas(table: lojistas, loja_id).
-    -   [x] 4.2. Tabela Lojistas.
-        -   [x] 4.1.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`.
-        -   [x] 4.1.2. Configurar model:
-             -   [x] 4.1.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
-             -   [x] 4.1.2.2 Configurar funções de relacionamentos: loja(table: lojas, loja_id), user(table: users, user_id).
+    -   [ ] 4.1. Adicionar diretório customizado de migrations no app/Providers/AppServiceProvider.
+    -   [x] 4.2. Tabela Lojas.
+        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)` .
+        -   [x] 4.2.2. Configurar model:
+            -   [x] 4.2.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.2.2.2 Configurar funções de relacionamentos: lojistas(table: lojistas, loja_id).
+    -   [x] 4.3. Tabela Lojistas.
+        -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.3.2. Configurar model:
+             -   [x] 4.3.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+             -   [x] 4.3.2.2 Configurar funções de relacionamentos: loja(table: lojas, loja_id), user(table: users, user_id).
