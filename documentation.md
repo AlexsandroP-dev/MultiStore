@@ -25,8 +25,22 @@
             -   [x] 1.4.3.2. Configurar para que o botão Perfil esteja no topnav.
             -   [x] 1.4.3.3. Configurar para que os menus do topnav fiquem separados no arquivo config/mainTheme.php.
 
--   [ ] **Fase 3: Autenticação básica**
+-   [x] **Fase 3: Autenticação básica**
     -   [x] 1.1. Tabela Users.
-        -   [x] 1.1.1. Adicionar campos: `string:cpf`, `string:cnpj`, `bool:admin`, `bool:administrativo`, `bool:lojista`, `bool:colaborador`, `bool:cliente` com default false 
+        -   [x] 1.1.1. Adicionar campos: `uuid:id`, `string:cpf`, `string:cnpj`, `bool:admin`, `bool:administrativo`, `bool:lojista`, `bool:colaborador`, `bool:cliente` com default false 
+        -   [x] 4.1.2. Configurar model:
+            -   [x] 4.1.2.2 Configurar funções de relacionamentos: lojistas(table: lojistas, user_id).
     -   [x] 1.1. Tela de Login.
     -   [x] 1.2. Tela de Cadastro.
+
+-   [x] **Fase 4: Features**
+    -   [x] 4.1. Tabela Lojas.
+        -   [x] 4.1.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)` .
+        -   [x] 4.1.2. Configurar model:
+            -   [x] 4.1.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.1.2.2 Configurar funções de relacionamentos: lojistas(table: lojistas, loja_id).
+    -   [x] 4.2. Tabela Lojistas.
+        -   [x] 4.1.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.1.2. Configurar model:
+             -   [x] 4.1.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+             -   [x] 4.1.2.2 Configurar funções de relacionamentos: loja(table: lojas, loja_id), user(table: users, user_id).
