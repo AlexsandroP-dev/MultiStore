@@ -21,6 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'cpf',
+        'cnpj',
+        'admin',
+        'administrativo',
+        'lojista',
+        'colaborador',
+        'cliente'
     ];
 
     /**
