@@ -16,8 +16,16 @@
                 <li class="nav-item">
                     @php
                         $subRoutes = collect($item['submenu'])->pluck('route')->toArray();
+                        $active_prefix = collect($item['submenu'])->pluck('active_prefix')->toArray();
                         $isOpen = false;
                         foreach ($subRoutes as $sr) {
+                            if (request()->routeIs($sr)) {
+                                $isOpen = true;
+                                break;
+                            }
+                        }
+
+                        foreach ($active_prefix as $sr) {
                             if (request()->routeIs($sr)) {
                                 $isOpen = true;
                                 break;
@@ -40,7 +48,7 @@
                             @foreach ($item['submenu'] as $sub)
                                 <li class="nav-item">
                                     <a href="{{ route($sub['route']) }}"
-                                        class="nav-link py-2 {{ request()->routeIs($sub['route']) ? 'text-primary fw-bold active-sub' : 'text-white-50' }}">
+                                        class="nav-link py-2 {{ request()->routeIs($sub['active_prefix']) ? 'text-primary fw-bold active-sub' : 'text-white-50' }}">
                                         <i class="{{ $sub['icon'] ?? 'bi bi-circle' }} me-2"
                                             style="font-size: 0.7rem;"></i>
                                         {{ $sub['name'] }}

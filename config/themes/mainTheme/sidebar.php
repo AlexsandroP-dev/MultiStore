@@ -17,11 +17,13 @@ return [
                 [
                     "name" => "Lojas",
                     "route" => "dashboard.lojas.index",
+                    "active_prefix" => "dashboard.lojas.*",
                     "icon" => "bi bi-shop",
                 ],
                 [
                     "name" => "Categorias",
                     "route" => "login",
+                    "active_prefix" => "login",
                     "icon" => "bi bi-tags"
                 ],
             ]
