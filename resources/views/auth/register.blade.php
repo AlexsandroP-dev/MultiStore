@@ -7,10 +7,10 @@
     <form action="{{ route('register') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label class="form-label" for="name">Nome</label>
+            <label class="form-label" for="nome">Nome</label>
             <div class="input-group">
-                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name"
-                    placeholder="Digite seu nome" autofocus autocomplete="name" value="{{ old('name') }}" required>
+                <input type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" id="nome"
+                    placeholder="Digite seu nome" autofocus autocomplete="nome" value="{{ old('nome') }}" required>
             </div>
         </div>
 
