@@ -14,6 +14,12 @@ class Loja extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $fillable = [
+        'nome',
+        'slug',
+        'cnpj'
+    ];
+
     protected function casts(): array
     {
         return [

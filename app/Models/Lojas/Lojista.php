@@ -15,6 +15,11 @@ class Lojista extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $fillable = [
+        'user_id',
+        'loja_id'
+    ];
+
     public function loja() {
         return $this->belongsTo(Loja::class, 'loja_id');
     }
