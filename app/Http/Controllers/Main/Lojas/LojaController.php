@@ -64,7 +64,7 @@ class LojaController extends Controller
 
     public function edit(Loja $loja)
     {
-        return view($this->bag['view'] . '.edit', compact('lojas'));
+        return view($this->bag['view'] . '.edit', compact('loja'));
     }
 
     public function update(LojaRequest $request, Loja $loja)

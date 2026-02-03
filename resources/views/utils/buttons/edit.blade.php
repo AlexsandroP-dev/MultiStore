@@ -6,6 +6,6 @@
 @if (Route::has($route))
     @include('utils.buttons.link', [
         'title' => 'Editar este Registro',
-        // 'icon' => 'fa fa-edit',
+        'icon' => 'bi bi-pencil-square',
     ])
 @endif

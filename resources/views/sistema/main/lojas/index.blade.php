@@ -51,6 +51,10 @@
                                         'route' => $bag['route'],
                                         'params' => ['loja' => $item->id],
                                     ])
+                                    @include('utils.buttons.edit', [
+                                        'route' => $bag['route'],
+                                        'params' => ['loja' => $item->id],
+                                    ])
                                 </td>
                             </tr>
                         @endforeach

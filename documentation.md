@@ -56,7 +56,7 @@
                 -   [ ] 4.2.4.2.1. Adicionar renovação de validade.
                 -   [ ] 4.2.4.2.2. A implementar lista de colaboradores da loja.
             -   [x] 4.2.4.3. create.
-            -   [ ] 4.2.4.4. edit.
+            -   [x] 4.2.4.4. edit.
     -   [x] 4.3. Tabela Lojistas.
         -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.3.2. Configurar model:

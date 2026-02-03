@@ -30,7 +30,7 @@ class LojaRequest extends FormRequest
             'nome' => ['required', 'string', 'max:255', 'min:3'],
             'slug' => ['required', 'string', 'max:255', Rule::unique('lojas', 'slug')->ignore($loja?->id),],
             'cnpj' => ['nullable', 'string', new CnpjValidator],
-            'expira_em' => ['required', 'integer', 'min:1'],
+            'expira_em' => ['required', 'integer', 'min:0'],
         ];
     }
 
