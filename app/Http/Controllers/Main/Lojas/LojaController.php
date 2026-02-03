@@ -53,9 +53,7 @@ class LojaController extends Controller
     {
         DB::beginTransaction();
         try {
-            $data = $request->validated();
-            $data['expira_em'] = now()->addMonths((int) $request->expira_em);
-            $loja = $this->lojas->create($data);
+            $loja = $this->lojas->create($request->validated());
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id]);
         } catch (\Throwable $th) {
