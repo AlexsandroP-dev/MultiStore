@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="col-12 col-lg-4">
-                <div class="card shadow-sm border-0 border-top border-primary border-3">
+                <div class="card shadow-sm border-0 border-top border-primary border-3 mb-4">
                     <div class="card-body text-center py-4">
                         <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
                             style="width: 70px; height: 70px;">
