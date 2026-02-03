@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store', [LojaController::class, 'store'])->name('store');
             Route::get('/{loja}/edit', [LojaController::class, 'edit'])->name('edit');
             Route::put('/{loja}/update', [LojaController::class, 'update'])->name('update');
+            Route::put('/{loja}/renovar', [LojaController::class, 'renew'])->name('update.renew');
             Route::get('/apagados', [LojaController::class, 'deleted'])->name('deleted');
             Route::delete('/{loja}/destroy', [LojaController::class, 'destroy'])->name('destroy');
         });

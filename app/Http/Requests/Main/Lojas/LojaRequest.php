@@ -27,8 +27,8 @@ class LojaRequest extends FormRequest
     {
         $loja = $this->route('loja');
         return [
-            'nome' => ['required', 'string', 'max:255', 'min:3'],
-            'slug' => ['required', 'string', 'max:255', Rule::unique('lojas', 'slug')->ignore($loja?->id),],
+            'nome' => ['sometimes', 'required', 'string', 'max:255', 'min:3'],
+            'slug' => ['sometimes', 'required', 'string', 'max:255', Rule::unique('lojas', 'slug')->ignore($loja?->id),],
             'cnpj' => ['nullable', 'string', new CnpjValidator],
             'expira_em' => ['required', 'integer', 'min:0'],
         ];

@@ -43,8 +43,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="text-muted small fw-bold text-uppercase">Data de Expiração</label>
-                                <div class="d-flex align-items-center">
-                                    <p class="text-dark mb-0 me-2">
+                                <div class="d-flex align-items-center flex-wrap gap-2">
+                                    <p class="text-dark mb-0 fw-semibold">
                                         {{ $loja->expira_em->format('d/m/Y H:i') }}
                                     </p>
 
@@ -55,6 +55,37 @@
                                         <span
                                             class="badge bg-danger-subtle text-danger border border-danger-subtle px-2">Expirado</span>
                                     @endif
+
+                                    <button class="btn btn-sm btn-link text-primary p-0 ms-2 text-decoration-none"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#collapseRenovacao"
+                                        aria-expanded="false">
+                                        <i class="bi bi-plus-circle me-1"></i>Adicionar meses
+                                    </button>
+                                </div>
+                                <div class="collapse mt-3" id="collapseRenovacao">
+                                    <div class="card card-body bg-light border-0 shadow-sm">
+                                        <form action="{{ route($bag['route'] . '.update.renew', $loja->id) }}"
+                                            method="POST" class="row g-2 align-items-center">
+                                            @csrf
+                                            @method('PUT')
+
+                                            <div class="col-auto">
+                                                <label class="visually-hidden">Meses</label>
+                                                <div class="input-group input-group-sm">
+                                                    <input type="number" name="expira_em" class="form-control"
+                                                        placeholder="Qtd. Meses" required>
+                                                    <span class="input-group-text">meses</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button type="submit" class="btn btn-sm btn-success">
+                                                    <i class="bi bi-check-lg"></i> Confirmar Renovação
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <small class="text-muted mt-2">A nova validade será somada à atual e definida para
+                                            as 23:55.</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +104,6 @@
                         </div>
                         <h6 class="fw-bold mb-1">{{ $loja->nome }}</h6>
                         <p class="text-muted small mb-3">ID: {{ $loja->id }}</p>
-
                         <div class="d-grid gap-2">
                             <button class="btn btn-primary btn-sm">Acessar Painel da Loja</button>
                             <form action="{{ route($bag['route'] . '.destroy', $loja->id) }}" method="POST"

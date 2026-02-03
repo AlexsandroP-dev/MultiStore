@@ -80,6 +80,19 @@ class LojaController extends Controller
         }
     }
 
+    public function renew(LojaRequest $request, Loja $loja)
+    {
+        DB::beginTransaction();
+        try {
+            $loja->update($request->validated());
+            DB::commit();
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput();
+        }
+    }
+
     public function destroy(Loja $loja)
     {
         DB::beginTransaction();
