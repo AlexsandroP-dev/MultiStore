@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Main\Lojas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Main\Lojas\LojaRequest;
 use App\Models\Lojas\Loja;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -44,14 +46,16 @@ class LojaController extends Controller
 
     public function show(Loja $loja)
     {
-        return view($this->bag['view'] . '.show', compact($loja));
+        return view($this->bag['view'] . '.show', compact('loja'));
     }
 
-    public function store(Request $request, Loja $loja)
+    public function store(LojaRequest $request)
     {
         DB::beginTransaction();
         try {
-            $this->lojas->create($request->validated());
+            $data = $request->validated();
+            $data['expira_em'] = now()->addMonths((int) $request->expira_em);
+            $loja = $this->lojas->create($data);
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id]);
         } catch (\Throwable $th) {
@@ -65,7 +69,7 @@ class LojaController extends Controller
         return view($this->bag['view'] . '.edit', compact('lojas'));
     }
 
-    public function update(Request $request, Loja $loja)
+    public function update(LojaRequest $request, Loja $loja)
     {
         DB::beginTransaction();
         try {
@@ -78,7 +82,8 @@ class LojaController extends Controller
         }
     }
 
-    public function destroy(Loja $loja) {
+    public function destroy(Loja $loja)
+    {
         DB::beginTransaction();
         try {
             $loja->delete();

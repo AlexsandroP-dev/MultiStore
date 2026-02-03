@@ -17,13 +17,14 @@ class Loja extends Model
     protected $fillable = [
         'nome',
         'slug',
-        'cnpj'
+        'cnpj',
+        'expira_em'
     ];
 
     protected function casts(): array
     {
         return [
-            'expira_em' => 'datetime:d-m-Y H:i',
+            'expira_em' => 'datetime:d-m-Y H:i:s',
         ];
     }
 

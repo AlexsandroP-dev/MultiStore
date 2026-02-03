@@ -17,6 +17,7 @@
                         <th>Id</th>
                         <th>Nome</th>
                         <th>Cadastrado em</th>
+                        <th>Válido até</th>
                         <th></th>
                     </thead>
                     <tbody>
@@ -24,7 +25,8 @@
                             <tr>
                                 <td>{{ $item->id }} </td>
                                 <td>{{ $item->nome }} </td>
-                                <td>{{ $item->createdAt() }} </td>
+                                <td>{{ $item->created_at->format('d-m-Y') }} </td>
+                                <td>{{ $item->expira_em }} </td>
                                 <td class="d-flex gap-2 justify-content-center" style="">
                                     <a href="" title="Visualizar Loja"
                                         class="btn btn-sm btn-outline-dark"><i class="far fa-file"></i></a>
