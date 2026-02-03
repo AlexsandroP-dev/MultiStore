@@ -46,6 +46,7 @@ class LojaController extends Controller
 
     public function show(Loja $loja)
     {
+        $loja->load('lojistas');
         return view($this->bag['view'] . '.show', compact('loja'));
     }
 

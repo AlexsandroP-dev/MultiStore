@@ -117,6 +117,62 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-bold text-primary">Colaboradores Vinculados</h5>
+                        <a href="#" class="btn btn-sm btn-primary">
+                            <i class="bi bi-person-plus me-1"></i> Novo Colaborador
+                        </a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="ps-3">Nome</th>
+                                        <th>E-mail</th>
+                                        <th>Tipo</th>
+                                        <th>Cargo/Função</th>
+                                        <th class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($loja->lojistas as $item)
+                                        <tr>
+                                            <td class="ps-3">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar-sm bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-2"
+                                                        style="width: 32px; height: 32px;">
+                                                        {{ strtoupper(substr($item->user->nome, 0, 1)) }}
+                                                    </div>
+                                                    <span class="fw-semibold">{{ $item->user->nome }}</span>
+                                                </div>
+                                            </td>
+                                            <td>{{ $item->user->email }}</td>
+                                            <td>{{ $item->user->lojista }}</td>
+                                            <td><span class="badge bg-light text-muted border">Colaborador</span></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-link text-muted"><i
+                                                        class="bi bi-eye"></i></button>
+                                                <button class="btn btn-sm btn-link text-danger"><i
+                                                        class="bi bi-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center py-4 text-muted">
+                                                <i class="bi bi-people fs-2 d-block mb-2"></i>
+                                                Nenhum colaborador cadastrado para esta loja.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
