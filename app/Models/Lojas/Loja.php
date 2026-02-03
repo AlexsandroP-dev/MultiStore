@@ -32,4 +32,29 @@ class Loja extends Model
     {
         return $this->hasMany(Lojista::class, 'loja_id');
     }
+
+    public function cnpj(): string
+    {
+        if (!$this->cnpj) {
+            return 'Não informado';
+        }
+
+        // Formata 00000000000000 para 00.000.000/0000-00
+        return preg_replace(
+            "/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/",
+            "$1.$2.$3/$4-$5",
+            $this->cnpj
+        );
+    }
+
+    public function isActive(): bool
+    {
+        return $this->expira_em && $this->expira_em->isFuture();
+    }
+
+    public function url(): string
+    {
+        $base = strtolower(config('themes.mainTheme.base.HeaderTitle'));
+        return "https://{$base}.com/loja/{$this->slug}";
+    }
 }

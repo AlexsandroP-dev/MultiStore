@@ -28,8 +28,6 @@
                                 <td>{{ $item->created_at->format('d-m-Y') }} </td>
                                 <td>{{ $item->expira_em }} </td>
                                 <td class="d-flex gap-2 justify-content-center" style="">
-                                    <a href="" title="Visualizar Loja"
-                                        class="btn btn-sm btn-outline-dark"><i class="far fa-file"></i></a>
                                     @include('utils.buttons.show', [
                                         'route' => $bag['route'],
                                         'params' => ['loja' => $item->id],

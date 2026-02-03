@@ -53,7 +53,7 @@
                             </div>
                             <hr class="my-4 text-muted">
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="{{ route('dashboard.index') }}" class="btn btn-light border">Cancelar</a>
+                                <a href="{{ route($bag['route'] . '.index') }}" class="btn btn-light border">Cancelar</a>
                                 <button type="submit" class="btn btn-success px-4">
                                     <i class="bi bi-check2-circle me-1"></i> Salvar Loja
                                 </button>

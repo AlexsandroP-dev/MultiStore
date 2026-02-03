@@ -42,15 +42,19 @@
             -   [x] 4.2.2.2 Configurar funções de relacionamentos: lojistas(table: lojistas, loja_id).
         -   [ ] 4.2.3. Backend CRUD lojas:
             -   [ ] 4.2.3.1. index (com paginação e pesquisa).
-            -   [x] 4.2.3.2. show.
+            -   [ ] 4.2.3.2. show.
+                -   [ ] 4.2.3.2.1. A implementar lista de colaboradores da loja.
             -   [x] 4.2.3.3. create (com validação de cnpj).
             -   [x] 4.2.3.4. store (com request).
             -   [x] 4.2.3.5. edit.
             -   [ ] 4.2.3.6. update (com request).
+                -   [ ] 4.2.3.6. Adicionar renovação de validade.
             -   [ ] 4.2.3.7. delete.
         -   [ ] 4.2.4. Frontend CRUD lojas:
             -   [ ] 4.2.4.1. index (com paginação e pesquisa).
             -   [ ] 4.2.4.2. show.
+                -   [ ] 4.2.4.2.1. Adicionar renovação de validade.
+                -   [ ] 4.2.4.2.2. A implementar lista de colaboradores da loja.
             -   [x] 4.2.4.3. create.
             -   [ ] 4.2.4.4. edit.
     -   [x] 4.3. Tabela Lojistas.
