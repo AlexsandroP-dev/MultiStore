@@ -14,20 +14,39 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-hover text-wrap mb-0">
                     <thead>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Cadastrado em</th>
-                        <th>Válido até</th>
-                        <th></th>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Cadastrado em</th>
+                            <th>Válido até</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($lojas as $item)
                             <tr>
-                                <td>{{ $item->id }} </td>
-                                <td>{{ $item->nome }} </td>
-                                <td>{{ $item->created_at->format('d-m-Y') }} </td>
-                                <td>{{ $item->expira_em }} </td>
-                                <td class="d-flex gap-2 justify-content-center" style="">
+                                <td class="text-muted small">{{ $item->id }}</td>
+                                <td class="fw-semibold">{{ $item->nome }}</td>
+                                <td>{{ $item->created_at->format('d/m/Y') }}</td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span>{{ $item->expira_em->format('d/m/Y') }}</span>
+                                        @if ($item->isActive())
+                                            <span
+                                                class="badge bg-success-subtle text-success border border-success-subtle mt-1"
+                                                style="width: fit-content;">
+                                                Ativo
+                                            </span>
+                                        @else
+                                            <span
+                                                class="badge bg-danger-subtle text-danger border border-danger-subtle mt-1"
+                                                style="width: fit-content;">
+                                                Expirado
+                                            </span>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td class="text-center">
                                     @include('utils.buttons.show', [
                                         'route' => $bag['route'],
                                         'params' => ['loja' => $item->id],
