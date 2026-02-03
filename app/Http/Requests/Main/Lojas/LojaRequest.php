@@ -52,6 +52,8 @@ class LojaRequest extends FormRequest
             $novaData = now()->addMonths($mesesParaAdicionar);
         }
 
+        $novaData->setTime(23, 55, 0);
+
         $validated = array_merge($validated, ['expira_em' => $novaData]);
         return $validated;
     }
