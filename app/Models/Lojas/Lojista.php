@@ -17,7 +17,8 @@ class Lojista extends Model
 
     protected $fillable = [
         'user_id',
-        'loja_id'
+        'loja_id',
+        'status'
     ];
 
     public function loja() {

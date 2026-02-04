@@ -2,6 +2,30 @@
 
 @section('content')
     <div class="container-fluid py-4">
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+                <div class="d-flex">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <div>
+                        <strong class="d-block">Ops! Algo deu errado:</strong>
+                        <ul class="mb-0 ps-3">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12 col-lg-8">
                 <div class="card shadow-sm border-0 mb-4">
@@ -150,38 +174,53 @@
 
                                         <div class="tab-content">
                                             <div class="tab-pane fade show active" id="pills-novo" role="tabpanel">
-                                                <form action="{{ route($bag['routeColaborador'] . '.store', ['loja' => $loja->id]) }}"
+                                                <form
+                                                    action="{{ route($bag['routeColaborador'] . '.store', ['loja' => $loja->id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     <div class="mb-3">
                                                         <label class="form-label small fw-bold">Nome Completo</label>
-                                                        <input type="text" name="name" class="form-control"
-                                                            placeholder="Ex: João Silva" required>
+                                                        <input type="text" name="nome"
+                                                            class="form-control @error('nome') is-invalid @enderror"
+                                                            placeholder="Ex: João Silva" value="{{ old('nome') }}"
+                                                            required>
+                                                        @include('utils.form.error', ['param' => 'nome'])
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label small fw-bold">E-mail</label>
-                                                        <input type="email" name="email" class="form-control"
-                                                            placeholder="joao@email.com" required>
+                                                        <input type="email" name="email"
+                                                            class="form-control @error('email') is-invalid @enderror"
+                                                            placeholder="joao@email.com" value="{{ old('email') }}"
+                                                            required>
+                                                        @include('utils.form.error', ['param' => 'email'])
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label small fw-bold">Senha Temporária</label>
-                                                        <input type="password" name="password" class="form-control"
+                                                        <input type="password" name="password"
+                                                            class="form-control @error('password') is-invalid @enderror"
                                                             placeholder="Mínimo 8 caracteres" required>
+                                                        @include('utils.form.error', [
+                                                            'param' => 'password',
+                                                        ])
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label small fw-bold">Confirmar Senha</label>
                                                         <input type="password" name="password_confirmation"
-                                                            class="form-control" placeholder="Mínimo 8 caracteres"
-                                                            required>
+                                                            class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                            placeholder="Mínimo 8 caracteres" required>
+                                                        @include('utils.form.error', [
+                                                            'param' => 'password_confirmation',
+                                                        ])
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary w-100">Criar Colaborador
+                                                    <button type="submit" class="btn btn-success w-100">Criar Colaborador
                                                         e
                                                         Vincular à Loja</button>
                                                 </form>
                                             </div>
 
                                             <div class="tab-pane fade" id="pills-vincular" role="tabpanel">
-                                                <form action="{{ route($bag['routeColaborador'] . '.vincular', ['loja' => $loja->id]) }}"
+                                                <form
+                                                    action="{{ route($bag['routeColaborador'] . '.vincular', ['loja' => $loja->id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     <div class="mb-3 text-center">
@@ -194,9 +233,12 @@
                                                         <div class="input-group">
                                                             <span class="input-group-text"><i
                                                                     class="bi bi-envelope"></i></span>
-                                                            <input type="email" name="email" class="form-control"
-                                                                placeholder="buscar@email.com" required>
+                                                            <input type="email" name="email"
+                                                                class="form-control @error('email') is-invalid @enderror"
+                                                                placeholder="buscar@email.com"
+                                                                value="{{ old('email') }}" required>
                                                         </div>
+                                                        @include('utils.form.error', ['param' => 'email'])
                                                     </div>
                                                     <button type="submit" class="btn btn-success w-100">Localizar e
                                                         Vincular à Loja</button>
@@ -225,15 +267,37 @@
                                         <tr>
                                             <td class="ps-3">
                                                 <div class="d-flex align-items-center">
-                                                    <div class="avatar-sm bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-2"
-                                                        style="width: 32px; height: 32px;">
+                                                    <div class="avatar-sm @if($item->status === 'Ativo') bg-success @else bg-danger @endif bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-2"
+                                                        style="width: 32px; height: 32px; border: 1px solid; border-color: @if($item->status === 'Ativo') green @else red @endif">
                                                         {{ strtoupper(substr($item->user->nome, 0, 1)) }}
                                                     </div>
                                                     <span class="fw-semibold">{{ $item->user->nome }}</span>
                                                 </div>
                                             </td>
                                             <td>{{ $item->user->email }}</td>
-                                            <td>{{ $item->user->lojista }}</td>
+                                            <td>
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    @if ($item->user->admin)
+                                                        <span class="badge bg-dark text-white">Admin</span>
+                                                    @endif
+
+                                                    @if ($item->user->administrativo)
+                                                        <span class="badge bg-primary">Administrativo</span>
+                                                    @endif
+
+                                                    @if ($item->user->lojista)
+                                                        <span class="badge bg-info text-dark">Lojista</span>
+                                                    @endif
+
+                                                    @if ($item->user->colaborador)
+                                                        <span class="badge bg-secondary">Colaborador</span>
+                                                    @endif
+
+                                                    @if (!($item->user->admin || $item->user->administrativo || $item->user->lojista || $item->user->colaborador))
+                                                        <span class="text-muted small">Sem tipo definido</span>
+                                                    @endif
+                                                </div>
+                                            </td>
                                             <td><span class="badge bg-light text-muted border">Colaborador</span></td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-link text-muted"><i
@@ -281,4 +345,13 @@
             });
         }
     </script>
+
+    @if ($errors->any())
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var myModal = new bootstrap.Modal(document.getElementById('modalColaborador'));
+                myModal.show();
+            });
+        </script>
+    @endif
 @endpush

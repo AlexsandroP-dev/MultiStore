@@ -36,7 +36,7 @@
 -   [x] **Fase 4: Features**
     -   [ ] 4.1. Adicionar diretório customizado de migrations no app/Providers/AppServiceProvider.
     -   [x] 4.2. Tabela Lojas.
-        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)` .
+        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`.
         -   [x] 4.2.2. Configurar model:
             -   [x] 4.2.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.2.2.2 Configurar funções de relacionamentos: lojistas(table: lojistas, loja_id).
@@ -45,7 +45,8 @@
             -   [ ] 4.2.3.2. show.
                 -   [x] 4.2.4.2.1. Adicionar renovação de validade.
                 -   [ ] 4.2.3.2.2. A implementar lista de colaboradores da loja.
-                    -   [ ] 4.2.3.2.2.1 Cadastrar colaborador na loja.
+                    -   [x] 4.2.3.2.2.1. Cadastrar colaborador na loja.
+                    -   [x] 4.2.3.2.2.2. Vincular colaborador na loja.
             -   [x] 4.2.3.3. create (com validação de cnpj).
             -   [x] 4.2.3.4. store (com request).
             -   [x] 4.2.3.5. edit.
@@ -57,11 +58,13 @@
             -   [ ] 4.2.4.2. show.
                 -   [x] 4.2.4.2.1. Adicionar renovação de validade.
                 -   [ ] 4.2.4.2.2. A implementar lista de colaboradores da loja.
-                    -   [x] 4.2.4.2.2.1 Cadastrar colaborador na loja.
+                    -   [x] 4.2.4.2.2.1. Cadastrar colaborador na loja.
+                    -   [x] 4.2.4.2.2.2. Vincular colaborador na loja.
+                -   [x] 4.2.4.2.3. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
             -   [x] 4.2.4.3. create.
             -   [x] 4.2.4.4. edit.
     -   [x] 4.3. Tabela Lojistas.
-        -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`, `string:status`.
         -   [x] 4.3.2. Configurar model:
              -   [x] 4.3.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
              -   [x] 4.3.2.2 Configurar funções de relacionamentos: loja(table: lojas, loja_id), user(table: users, user_id).

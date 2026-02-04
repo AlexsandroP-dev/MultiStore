@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Main\Lojas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Main\Lojas\ColaboradorRequest;
 use App\Http\Requests\Main\Lojas\LojaRequest;
 use App\Models\Lojas\Loja;
+use App\Models\Lojas\Lojista;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 
 class LojaController extends Controller
@@ -57,7 +61,7 @@ class LojaController extends Controller
         try {
             $loja = $this->lojas->create($request->validated());
             DB::commit();
-            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id]);
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Loja cadastrada com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withInput();
@@ -75,7 +79,7 @@ class LojaController extends Controller
         try {
             $loja->update($request->validated());
             DB::commit();
-            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id]);
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Dados da loja alterados com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withInput();
@@ -88,7 +92,7 @@ class LojaController extends Controller
         try {
             $loja->update($request->validated());
             DB::commit();
-            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id]);
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Prazo da expiração da loja renovado!');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withInput();
@@ -107,13 +111,45 @@ class LojaController extends Controller
         }
     }
 
-    public function storeColaborador(Request $request, Loja $loja)
+    public function storeColaborador(ColaboradorRequest $request, Loja $loja)
     {
-        dd($request->all());
+        DB::beginTransaction();
+        try {
+            $user = User::create([
+                'nome' => $request->nome,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            Lojista::Create([
+                'user_id' => $user->id,
+                'loja_id' => $loja->id,
+                'status' => 'Ativo'
+            ]);
+            DB::commit();
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Colaborador cadastrado ao sistema e vinculado a loja com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao criar novo colaborador!']);
+        }
     }
 
-    public function vincularColaborador(Request $request, Loja $loja)
+    public function vincularColaborador(ColaboradorRequest $request, Loja $loja)
     {
-        dd($request->all());
+        DB::beginTransaction();
+        try {
+            $user = User::where('email', $request->email)->firstOrFail();
+
+            Lojista::Create([
+                'user_id' => $user->id,
+                'loja_id' => $loja->id,
+                'status' => 'Ativo'
+            ]);
+            DB::commit();
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Colaborador vinculado a loja com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao vincular colaborador!']);
+        }
     }
 }
