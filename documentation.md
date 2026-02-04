@@ -57,7 +57,7 @@
             -   [ ] 4.2.4.2. show.
                 -   [x] 4.2.4.2.1. Adicionar renovação de validade.
                 -   [ ] 4.2.4.2.2. A implementar lista de colaboradores da loja.
-                    -   [ ] 4.2.4.2.2.1 Cadastrar colaborador na loja.
+                    -   [x] 4.2.4.2.2.1 Cadastrar colaborador na loja.
             -   [x] 4.2.4.3. create.
             -   [x] 4.2.4.4. edit.
     -   [x] 4.3. Tabela Lojistas.

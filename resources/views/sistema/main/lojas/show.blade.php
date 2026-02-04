@@ -121,9 +121,92 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 fw-bold text-primary">Colaboradores Vinculados</h5>
-                        <a href="#" class="btn btn-sm btn-primary">
-                            <i class="bi bi-person-plus me-1"></i> Novo Colaborador
-                        </a>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modalColaborador">
+                            <i class="bi bi-person-plus me-1"></i> Gerenciar Colaboradores
+                        </button>
+
+                        <div class="modal fade" id="modalColaborador" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content border-0 shadow">
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title">Gerenciar Colaborador</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="nav nav-pills nav-fill mb-4" id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="tab-novo" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-novo" type="button" role="tab">Criar
+                                                    Novo Usuário</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="tab-vincular" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-vincular" type="button"
+                                                    role="tab">Vincular Usuário Existente</button>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="pills-novo" role="tabpanel">
+                                                <form action="{{ route($bag['routeColaborador'] . '.store', ['loja' => $loja->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <div class="mb-3">
+                                                        <label class="form-label small fw-bold">Nome Completo</label>
+                                                        <input type="text" name="name" class="form-control"
+                                                            placeholder="Ex: João Silva" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label small fw-bold">E-mail</label>
+                                                        <input type="email" name="email" class="form-control"
+                                                            placeholder="joao@email.com" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label small fw-bold">Senha Temporária</label>
+                                                        <input type="password" name="password" class="form-control"
+                                                            placeholder="Mínimo 8 caracteres" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label small fw-bold">Confirmar Senha</label>
+                                                        <input type="password" name="password_confirmation"
+                                                            class="form-control" placeholder="Mínimo 8 caracteres"
+                                                            required>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary w-100">Criar Colaborador
+                                                        e
+                                                        Vincular à Loja</button>
+                                                </form>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="pills-vincular" role="tabpanel">
+                                                <form action="{{ route($bag['routeColaborador'] . '.vincular', ['loja' => $loja->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <div class="mb-3 text-center">
+                                                        <p class="text-muted small">Digite o e-mail do usuário que já
+                                                            possui cadastro no sistema para adicioná-lo à loja
+                                                            **{{ $loja->nome }}**.</p>
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label class="form-label small fw-bold">E-mail do Usuário</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text"><i
+                                                                    class="bi bi-envelope"></i></span>
+                                                            <input type="email" name="email" class="form-control"
+                                                                placeholder="buscar@email.com" required>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-success w-100">Localizar e
+                                                        Vincular à Loja</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -161,7 +244,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="text-center py-4 text-muted">
+                                            <td colspan="5" class="text-center py-4 text-muted">
                                                 <i class="bi bi-people fs-2 d-block mb-2"></i>
                                                 Nenhum colaborador cadastrado para esta loja.
                                             </td>

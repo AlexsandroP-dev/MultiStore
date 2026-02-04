@@ -17,6 +17,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('/{loja}/renovar', [LojaController::class, 'renew'])->name('update.renew');
             Route::get('/apagados', [LojaController::class, 'deleted'])->name('deleted');
             Route::delete('/{loja}/destroy', [LojaController::class, 'destroy'])->name('destroy');
+
+            Route::prefix('/lojas/{loja}/show/colaborador')->name('show.colaborador.')->group(function () {
+                Route::post('/store', [LojaController::class, 'storeColaborador'])->name('store');
+                Route::post('/vincular', [LojaController::class, 'vincularColaborador'])->name('vincular');
+            });
         });
     });
 });

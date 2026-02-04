@@ -16,6 +16,7 @@ class LojaController extends Controller
     protected $bag = [
         'view' => 'sistema.main.lojas',
         'route' => 'dashboard.lojas',
+        'routeColaborador' => 'dashboard.lojas.show.colaborador',
         'title' => 'Lojas',
         'subtitle' => 'todas as lojas',
         'section' => [
@@ -104,5 +105,15 @@ class LojaController extends Controller
             DB::rollBack();
             return redirect()->back();
         }
+    }
+
+    public function storeColaborador(Request $request, Loja $loja)
+    {
+        dd($request->all());
+    }
+
+    public function vincularColaborador(Request $request, Loja $loja)
+    {
+        dd($request->all());
     }
 }
