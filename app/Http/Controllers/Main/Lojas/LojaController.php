@@ -22,6 +22,7 @@ class LojaController extends Controller
         'view' => 'sistema.main.lojas',
         'route' => 'dashboard.lojas',
         'routeColaborador' => 'dashboard.lojas.show.colaborador',
+        'routeCargo' => 'dashboard.lojas.show.cargo',
         'title' => 'Lojas',
         'subtitle' => 'todas as lojas',
         'section' => [
@@ -53,7 +54,7 @@ class LojaController extends Controller
 
     public function show(Loja $loja)
     {
-        $loja->load('lojistas');
+        $loja->load(['lojistas', 'cargos']);
         return view($this->bag['view'] . '.show', compact('loja'));
     }
 
@@ -106,6 +107,7 @@ class LojaController extends Controller
         DB::beginTransaction();
         try {
             $loja->delete();
+            DB::commit();
             return redirect()->route($this->bag['route'] . '.index');
         } catch (\Throwable $th) {
             DB::rollBack();

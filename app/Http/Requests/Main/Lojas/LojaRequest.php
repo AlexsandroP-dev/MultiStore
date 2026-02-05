@@ -62,7 +62,7 @@ class LojaRequest extends FormRequest
     {
         return [
             'slug.unique'   => 'Esta URL já está em uso.',
-            'expira_em.required' => 'Selecione o tempo de expiração da loja.',
+            'expira_em.required' => 'Informe o tempo de expiração da loja.',
         ];
     }
 }

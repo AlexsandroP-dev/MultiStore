@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Main\Lojas\CargoController;
 use App\Http\Controllers\Main\Lojas\LojaController;
 use App\Http\Controllers\Main\MainDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -18,11 +19,19 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/apagados', [LojaController::class, 'deleted'])->name('deleted');
             Route::delete('/{loja}/destroy', [LojaController::class, 'destroy'])->name('destroy');
 
+            //Colaborador
             Route::prefix('/{loja}/show/colaborador')->name('show.colaborador.')->group(function () {
                 Route::post('/store', [LojaController::class, 'storeColaborador'])->name('store');
                 Route::post('/vincular', [LojaController::class, 'vincularColaborador'])->name('vincular');
                 Route::put('/inativar/{user}', [LojaController::class, 'inativarColaborador'])->name('inativar');
                 Route::put('/reativar/{user}', [LojaController::class, 'reativarColaborador'])->name('reativar');
+            });
+
+            //Cargo
+            Route::prefix('/{loja}/show/cargo')->name('show.cargo.')->group(function () {
+                Route::post('/store', [CargoController::class, 'store'])->name('store');
+                Route::put('/update/{cargo}', [CargoController::class, 'update'])->name('update');
+                Route::delete('/reativar/{cargo}', [CargoController::class, 'destroy'])->name('destroy');
             });
         });
     });

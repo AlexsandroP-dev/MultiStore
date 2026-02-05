@@ -37,7 +37,7 @@ class Lojista extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function cargo() {
-        return $this->belongsTo(Cargo::class, 'cargo_id');
+    public function cargos() {
+        return $this->hasMany(CargosLojista::class, 'lojista_id');
     }
 }

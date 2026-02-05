@@ -15,7 +15,9 @@
                         </ul>
                     </div>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.15)'"
+                    onmouseout="this.style.transform='scale(1)'"></button>
             </div>
         @endif
 
@@ -23,7 +25,9 @@
             <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
                 <i class="bi bi-check-circle-fill me-2"></i>
                 {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.15)'"
+                    onmouseout="this.style.transform='scale(1)'"></button>
             </div>
         @endif
         <div class="row">
@@ -31,7 +35,9 @@
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 fw-bold text-primary">Informações da Loja</h5>
-                        <a href="{{ route($bag['route'] . '.edit', $loja->id) }}" class="btn btn-sm btn-outline-primary">
+                        <a href="{{ route($bag['route'] . '.edit', $loja->id) }}" class="btn btn-sm btn-outline-primary"
+                            style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
+                            onmouseout="this.style.transform='scale(1)'">
                             <i class="bi bi-pencil me-1"></i> Editar
                         </a>
                     </div>
@@ -52,7 +58,9 @@
                                         </code>
                                     </a>
                                     <button class="btn btn-sm btn-outline-secondary ms-2"
-                                        onclick="copyToClipboard('{{ $loja->url() }}', this)" title="Copiar Link">
+                                        onclick="copyToClipboard('{{ $loja->url() }}', this)"
+                                        style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'"
+                                        onmouseout="this.style.transform='scale(1)'" title="Copiar Link">
                                         <i class="bi bi-clipboard"></i>
                                     </button>
                                 </div>
@@ -82,7 +90,9 @@
 
                                     <button class="btn btn-sm btn-link text-primary p-0 ms-2 text-decoration-none"
                                         type="button" data-bs-toggle="collapse" data-bs-target="#collapseRenovacao"
-                                        aria-expanded="false">
+                                        aria-expanded="false" style="transition: transform 0.2s;"
+                                        onmouseover="this.style.transform='scale(1.1)'"
+                                        onmouseout="this.style.transform='scale(1)'">
                                         <i class="bi bi-plus-circle me-1"></i>Adicionar meses
                                     </button>
                                 </div>
@@ -146,7 +156,8 @@
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 fw-bold text-primary">Colaboradores Vinculados</h5>
                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modalColaborador">
+                            data-bs-target="#modalColaborador" style="transition: transform 0.2s;"
+                            onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="bi bi-person-plus me-1"></i> Gerenciar Colaboradores
                         </button>
 
@@ -156,7 +167,9 @@
                                     <div class="modal-header bg-primary text-white">
                                         <h5 class="modal-title">Gerenciar Colaborador</h5>
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                            aria-label="Close" style="transition: transform 0.2s;"
+                                            onmouseover="this.style.transform='scale(1.2)'"
+                                            onmouseout="this.style.transform='scale(1)'"></button>
                                     </div>
                                     <div class="modal-body">
                                         <ul class="nav nav-pills nav-fill mb-4" id="pills-tab" role="tablist">
@@ -212,7 +225,10 @@
                                                             'param' => 'password_confirmation',
                                                         ])
                                                     </div>
-                                                    <button type="submit" class="btn btn-success w-100">Criar Colaborador
+                                                    <button type="submit" class="btn btn-success w-100"
+                                                        style="transition: transform 0.2s;"
+                                                        onmouseover="this.style.transform='scale(1.02)'"
+                                                        onmouseout="this.style.transform='scale(1)'">Criar Colaborador
                                                         e
                                                         Vincular à Loja</button>
                                                 </form>
@@ -240,7 +256,10 @@
                                                         </div>
                                                         @include('utils.form.error', ['param' => 'email'])
                                                     </div>
-                                                    <button type="submit" class="btn btn-success w-100">Localizar e
+                                                    <button type="submit" class="btn btn-success w-100"
+                                                        style="transition: transform 0.2s;"
+                                                        onmouseover="this.style.transform='scale(1.02)'"
+                                                        onmouseout="this.style.transform='scale(1)'">Localizar e
                                                         Vincular à Loja</button>
                                                 </form>
                                             </div>
@@ -258,7 +277,19 @@
                                         <th class="ps-3">Nome</th>
                                         <th>E-mail</th>
                                         <th>Tipo</th>
-                                        <th>Cargo/Função</th>
+                                        <th>
+                                            <div class="d-flex align-items-center">
+                                                Cargo/Função
+                                                <button type="button"
+                                                    class="btn btn-xs btn-outline-secondary border-0 p-0 ms-1"
+                                                    data-bs-toggle="modal" data-bs-target="#modalListaCargos"
+                                                    title="Gerenciar Cargos" style="transition: transform 0.2s;"
+                                                    onmouseover="this.style.transform='scale(1.2)'"
+                                                    onmouseout="this.style.transform='scale(1)'">
+                                                    <i class="bi bi-gear-fill small"></i>
+                                                </button>
+                                            </div>
+                                        </th>
                                         <th class="text-center">Ações</th>
                                     </tr>
                                 </thead>
@@ -343,6 +374,79 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalListaCargos" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header bg-light">
+                        <h6 class="modal-title fw-bold">Gerenciar Cargos da Unidade</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.15)'"
+                            onmouseout="this.style.transform='scale(1)'"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="list-group list-group-flush" style="max-height: 350px; overflow-y: auto;">
+                            @forelse($loja->cargos ?? [] as $item)
+                                <div class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                    <div>
+                                        <span class="fw-semibold d-block text-dark">{{ $item->nome }}</span>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-xs btn-link text-primary p-1"><i
+                                                class="bi bi-pencil"></i></button>
+
+                                        <form
+                                            action="{{ route($bag['routeCargo'] . '.destroy', ['loja' => $loja->id, 'cargo' => $item->id]) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Deseja realmente excluir este cargo?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="btn btn-xs btn-link text-danger p-1"><i
+                                                    class="bi bi-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="p-4 text-center text-muted">
+                                    <i class="bi bi-briefcase fs-2 d-block mb-2"></i>
+                                    Nenhum cargo cadastrado.
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light border-0 py-2">
+                        <button type="button" class="btn btn-sm btn-primary w-100" data-bs-toggle="collapse"
+                            data-bs-target="#collapseNovoCargo" aria-expanded="false" style="transition: transform 0.2s;"
+                            onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                            <i class="bi bi-plus-lg me-1"></i> Adicionar Novo Cargo
+                        </button>
+                    </div>
+                    <div class="collapse" id="collapseNovoCargo">
+                        <div class="card-body bg-light border-bottom p-3">
+                            <form action="{{ route($bag['routeCargo'] . '.store', ['loja' => $loja->id]) }}"
+                                method="POST">
+                                @csrf
+
+                                <div class="input-group input-group-sm">
+                                    <input type="text" name="nome" class="form-control"
+                                        placeholder="Nome do cargo (ex: Gerente)" required>
+                                    <button class="btn btn-success" type="submit" style="transition: transform 0.2s;"
+                                        onmouseover="this.style.transform='scale(1.1)'"
+                                        onmouseout="this.style.transform='scale(1)'">
+                                        <i class="bi bi-check-lg"></i> Salvar
+                                    </button>
+                                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseNovoCargo" style="transition: transform 0.2s;"
+                                        onmouseover="this.style.transform='scale(1.1)'"
+                                        onmouseout="this.style.transform='scale(1)'">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

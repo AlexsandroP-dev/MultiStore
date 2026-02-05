@@ -76,15 +76,27 @@
     -   [x] 4.3. Tabela Lojistas.
         -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`, `bool:ativo`.
         -   [x] 4.3.2. Configurar model:
-             -   [x] 4.3.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
-             -   [x] 4.3.2.2. Configurar funções de relacionamentos.
+            -   [x] 4.3.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.3.2.2. Configurar funções de relacionamentos.
                 -   [x] 4.3.2.2.1. Relacionamentos loja(table: lojas, loja_id). 
                     - `Dependente do item 4.2.`
                 -   [x] 4.3.2.2.2. Relacionamentos user(table: users, user_id).
                     - `Dependente do item 3.1.`
+                -   [x] 4.3.2.2.3. Relacionamentos cargos(table: cargos_lojistas, lojista_id).
+                    - `Dependente do item 4.5.`
     -   [x] 4.4. Tabela Cargos.
         -   [x] 4.4.1. Adicionar campos: `uuid:id`, `foreignUuid:loja_id(lojas)`, `string:nome`.
         -   [x] 4.4.2. Configurar model:
-            -   [x] 4.4.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
-            -   [x] 4.4.2.2 Configurar funções de relacionamentos: loja(table: lojas, loja_id).
-                - `Dependente do item 4.2.`
+            -   [x] 4.4.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.4.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.4.2.2.1 Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+    -   [x] 4.5. Tabela Cargos_Lojista.
+        -   [x] 4.5.1. Adicionar campos: `uuid:id`, `foreignUuid:cargo_id(cargos)`, `foreignUuid:lojista_id(lojistas)`.
+        -   [x] 4.5.2. Configurar model:
+            -   [x] 4.5.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.5.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.5.2.2.1. Relacionamentos cargo(table: cargos, cargo_id).
+                    - `Dependente do item 4.4.`
+                -   [x] 4.5.2.2.2. Relacionamentos lojista(table: lojistas, lojista_id).
+                    - `Dependente do item 4.3.`

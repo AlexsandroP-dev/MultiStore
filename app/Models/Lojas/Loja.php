@@ -34,7 +34,7 @@ class Loja extends Model
     }
 
     public function cargos() {
-        return $this->hasMant(Cargo::class, 'loja_id');
+        return $this->hasMany(Cargo::class, 'loja_id');
     }
 
     public function cnpj(): string
