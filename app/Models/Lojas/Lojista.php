@@ -18,8 +18,15 @@ class Lojista extends Model
     protected $fillable = [
         'user_id',
         'loja_id',
-        'status'
+        'ativo'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'ativo' => 'boolean',
+        ];
+    }
 
     public function loja() {
         return $this->belongsTo(Loja::class, 'loja_id');

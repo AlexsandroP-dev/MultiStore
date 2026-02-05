@@ -267,11 +267,38 @@
                                         <tr>
                                             <td class="ps-3">
                                                 <div class="d-flex align-items-center">
-                                                    <div class="avatar-sm @if($item->status === 'Ativo') bg-success @else bg-danger @endif bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-2"
-                                                        style="width: 32px; height: 32px; border: 1px solid; border-color: @if($item->status === 'Ativo') green @else red @endif">
-                                                        {{ strtoupper(substr($item->user->nome, 0, 1)) }}
+                                                    @php
+                                                        $rotaStatus = $item->ativo
+                                                            ? route($bag['routeColaborador'] . '.inativar', [
+                                                                'loja' => $loja->id,
+                                                                'user' => $item->user_id,
+                                                            ])
+                                                            : route($bag['routeColaborador'] . '.reativar', [
+                                                                'loja' => $loja->id,
+                                                                'user' => $item->user_id,
+                                                            ]);
+                                                        $acaoTexto = $item->ativo ? 'Desativar' : 'Reativar';
+                                                    @endphp
+                                                    <form action="{{ $rotaStatus }}" method="POST"
+                                                        id="form-status-{{ $item->user_id }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="button" class="btn p-0 border-0 bg-transparent"
+                                                            onclick="confirmarTrocaStatus('{{ $acaoTexto }}', '{{ $item->user->nome }}', '{{ $item->user_id }}')"
+                                                            title="{{ $acaoTexto }} Colaborador">
+                                                            <div class="avatar-sm {{ $item->ativo ? 'bg-success' : 'bg-danger' }} bg-opacity-10 {{ $item->ativo ? 'text-success' : 'text-danger' }} rounded-circle d-flex align-items-center justify-content-center me-2"
+                                                                style="width: 32px; height: 32px; border: 1px solid {{ $item->ativo ? '#198754' : '#dc3545' }}; transition: transform 0.2s;"
+                                                                onmouseover="this.style.transform='scale(1.1)'"
+                                                                onmouseout="this.style.transform='scale(1)'">
+                                                                {{ strtoupper(substr($item->user->nome, 0, 1)) }}
+                                                            </div>
+                                                        </button>
+                                                    </form>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fw-semibold text-dark">{{ $item->user->nome }}</span>
+                                                        <small class="text-muted" style="font-size: 0.75rem;">ID:
+                                                            #{{ $item->user_id }}</small>
                                                     </div>
-                                                    <span class="fw-semibold">{{ $item->user->nome }}</span>
                                                 </div>
                                             </td>
                                             <td>{{ $item->user->email }}</td>
@@ -354,4 +381,19 @@
             });
         </script>
     @endif
+
+    <script>
+        function confirmarTrocaStatus(acao, nome, id) {
+            const msg = `Deseja realmente ${acao} o colaborador ${nome}?`;
+
+            if (confirm(msg)) {
+                const form = document.getElementById(`form-status-${id}`);
+                if (form) {
+                    form.submit();
+                } else {
+                    console.error("Formulário não encontrado: form-status-" + id);
+                }
+            }
+        }
+    </script>
 @endpush

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\View;
 class LojaController extends Controller
 {
     protected $lojas;
+    protected $lojistas;
     protected $bag = [
         'view' => 'sistema.main.lojas',
         'route' => 'dashboard.lojas',
@@ -31,10 +32,11 @@ class LojaController extends Controller
         ]
     ];
 
-    public function __construct(Loja $lojas)
+    public function __construct(Loja $lojas, Lojista $lojistas)
     {
         View::share('bag', $this->bag);
         $this->lojas = $lojas;
+        $this->lojistas = $lojistas;
     }
 
     public function index(Request $request)
@@ -121,10 +123,10 @@ class LojaController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            Lojista::Create([
+            $this->lojistas->Create([
                 'user_id' => $user->id,
                 'loja_id' => $loja->id,
-                'status' => 'Ativo'
+                'ativo' => true
             ]);
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Colaborador cadastrado ao sistema e vinculado a loja com sucesso!');
@@ -140,16 +142,46 @@ class LojaController extends Controller
         try {
             $user = User::where('email', $request->email)->firstOrFail();
 
-            Lojista::Create([
+            $this->lojistas->Create([
                 'user_id' => $user->id,
                 'loja_id' => $loja->id,
-                'status' => 'Ativo'
+                'ativo' => true
             ]);
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Colaborador vinculado a loja com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao vincular colaborador!']);
+        }
+    }
+
+    public function inativarColaborador(Loja $loja, User $user)
+    {
+        DB::beginTransaction();
+        try {
+            $this->lojistas->where('user_id', $user->id)->where('loja_id', $loja->id)->update([
+                'ativo' => false
+            ]);
+            DB::commit();
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Colaborador desativado da loja com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao inativar colaborador!']);
+        }
+    }
+
+    public function reativarColaborador(Loja $loja, User $user)
+    {
+        DB::beginTransaction();
+        try {
+            $this->lojistas->where('user_id', $user->id)->where('loja_id', $loja->id)->update([
+                'ativo' => true
+            ]);
+            DB::commit();
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Colaborador reativado na loja com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao reativar colaborador!']);
         }
     }
 }

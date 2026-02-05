@@ -47,6 +47,7 @@
                 -   [ ] 4.2.3.2.2. A implementar lista de colaboradores da loja.
                     -   [x] 4.2.3.2.2.1. Cadastrar colaborador na loja.
                     -   [x] 4.2.3.2.2.2. Vincular colaborador na loja.
+                    -   [x] 4.2.3.2.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
             -   [x] 4.2.3.3. create (com validação de cnpj).
             -   [x] 4.2.3.4. store (com request).
             -   [x] 4.2.3.5. edit.
@@ -60,11 +61,12 @@
                 -   [ ] 4.2.4.2.2. A implementar lista de colaboradores da loja.
                     -   [x] 4.2.4.2.2.1. Cadastrar colaborador na loja.
                     -   [x] 4.2.4.2.2.2. Vincular colaborador na loja.
+                    -   [x] 4.2.4.2.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
                 -   [x] 4.2.4.2.3. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
             -   [x] 4.2.4.3. create.
             -   [x] 4.2.4.4. edit.
     -   [x] 4.3. Tabela Lojistas.
-        -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`, `string:status`.
+        -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`, `bool:ativo`.
         -   [x] 4.3.2. Configurar model:
              -   [x] 4.3.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
              -   [x] 4.3.2.2 Configurar funções de relacionamentos: loja(table: lojas, loja_id), user(table: users, user_id).

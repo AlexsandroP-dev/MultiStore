@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->references('id')->on('users');
             $table->foreignUuid('loja_id')->references('id')->on('lojas');
-            $table->string('status');
+            $table->boolean('ativo')->default(false);
             $table->timestamps();
         });
     }
