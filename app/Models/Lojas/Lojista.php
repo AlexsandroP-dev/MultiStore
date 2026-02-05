@@ -18,6 +18,7 @@ class Lojista extends Model
     protected $fillable = [
         'user_id',
         'loja_id',
+        'cargo_id',
         'ativo'
     ];
 
@@ -34,5 +35,9 @@ class Lojista extends Model
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function cargo() {
+        return $this->belongsTo(Cargo::class, 'cargo_id');
     }
 }

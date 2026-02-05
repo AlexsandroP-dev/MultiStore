@@ -9,29 +9,31 @@
     -   [x] 1.5. Instalar pacote de tradução pt_BR.
 
 -   [x] **Fase 2: Estrutura Tema Principal**
-    -   [x] 1.1. Views de botões utilitários.
-    -   [x] 1.2. Pacote de ícones do Bootstrap 5.
-    -   [x] 1.3. View estrututal base e autenticação.
-    -   [x] 1.4. Desenvolver e estruturar sidebar, footer e topnav principal.
-        -   [x] 1.4.1. Sidebar
-            -   [x] 1.4.1.1. Layout.
-            -   [x] 1.4.1.2. Configurar para que os menus da sidebar fiquem separados no arquivo config/mainTheme.php.
-            -   [x] 1.4.1.3. Configurar para que o título do sistema na sidebar fiquem separados no arquivo config/mainTheme.php.
-        -   [x] 1.4.2. Footer
-            -   [x] 1.4.2.1. Layout.
-            -   [x] 1.4.2.2. Configurar para que o parãmetro de nome do sistema fiqum separado no arquivo config/mainTheme.php.
-        -   [x] 1.4.3. Topnav
-            -   [x] 1.4.3.1. Layout.
-            -   [x] 1.4.3.2. Configurar para que o botão Perfil esteja no topnav.
-            -   [x] 1.4.3.3. Configurar para que os menus do topnav fiquem separados no arquivo config/mainTheme.php.
+    -   [x] 2.1. Views de botões utilitários.
+    -   [x] 2.2. Pacote de ícones do Bootstrap 5.
+    -   [x] 2.3. View estrututal base e autenticação.
+    -   [x] 2.4. Desenvolver e estruturar sidebar, footer e topnav principal.
+        -   [x] 2.4.1. Sidebar
+            -   [x] 2.4.1.1. Layout.
+            -   [x] 2.4.1.2. Configurar para que os menus da sidebar fiquem separados no arquivo config/mainTheme.php.
+            -   [x] 2.4.1.3. Configurar para que o título do sistema na sidebar fiquem separados no arquivo config/mainTheme.php.
+        -   [x] 2.4.2. Footer
+            -   [x] 2.4.2.1. Layout.
+            -   [x] 2.4.2.2. Configurar para que o parãmetro de nome do sistema fiqum separado no arquivo config/mainTheme.php.
+        -   [x] 2.4.3. Topnav
+            -   [x] 2.4.3.1. Layout.
+            -   [x] 2.4.3.2. Configurar para que o botão Perfil esteja no topnav.
+            -   [x] 2.4.3.3. Configurar para que os menus do topnav fiquem separados no arquivo config/mainTheme.php.
 
 -   [x] **Fase 3: Autenticação básica**
-    -   [x] 1.1. Tabela Users.
-        -   [x] 1.1.1. Adicionar campos: `uuid:id`, `string:cpf`, `string:cnpj`, `bool:admin`, `bool:administrativo`, `bool:lojista`, `bool:colaborador`, `bool:cliente` com default false 
-        -   [x] 4.1.2. Configurar model:
-            -   [x] 4.1.2.2 Configurar funções de relacionamentos: lojistas(table: lojistas, user_id).
-    -   [x] 1.1. Tela de Login.
-    -   [x] 1.2. Tela de Cadastro.
+    -   [x] 3.1. Tabela Users.
+        -   [x] 3.1.1. Adicionar campos: `uuid:id`, `string:cpf`, `string:cnpj`, `bool:admin`, `bool:administrativo`, `bool:lojista`, `bool:colaborador`, `bool:cliente` com default false 
+        -   [x] 3.1.2. Configurar model:
+            -   [x] 3.1.2.2. Configurar funções de relacionamentos.
+                -   [x] 3.1.2.2.1. Relacionamento lojistas(table: lojistas, loja_id). 
+                    - `Dependente do item 4.3.`
+    -   [x] 3.1. Tela de Login.
+    -   [x] 3.2. Tela de Cadastro.
 
 -   [x] **Fase 4: Features**
     -   [ ] 4.1. Adicionar diretório customizado de migrations no app/Providers/AppServiceProvider.
@@ -39,29 +41,35 @@
         -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`.
         -   [x] 4.2.2. Configurar model:
             -   [x] 4.2.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
-            -   [x] 4.2.2.2 Configurar funções de relacionamentos: lojistas(table: lojistas, loja_id).
+            -   [x] 4.2.2.2 Configurar funções de relacionamentos.
+                -   [x] 4.2.2.2.1. Relacionamento lojistas(table: lojistas, loja_id). 
+                    - `Dependente do item 4.3.`
+                -   [x] 4.2.2.2.2. Relacionamento cargos(table: cargos, cargo_id).
+                    - `Dependente do item 4.4.`
         -   [ ] 4.2.3. Backend CRUD lojas:
             -   [ ] 4.2.3.1. index (com paginação e pesquisa).
             -   [ ] 4.2.3.2. show.
                 -   [x] 4.2.4.2.1. Adicionar renovação de validade.
-                -   [ ] 4.2.3.2.2. A implementar lista de colaboradores da loja.
+                -   [x] 4.2.3.2.2. A implementar lista de colaboradores da loja.
                     -   [x] 4.2.3.2.2.1. Cadastrar colaborador na loja.
                     -   [x] 4.2.3.2.2.2. Vincular colaborador na loja.
-                    -   [x] 4.2.3.2.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
+                    -   [x] 4.2.3.2.2.3. Desativar/reativar colaborador na loja clicando no status(ícone verde ou vermelho) da lista de colaboradores.
+                    -   [ ] 4.2.3.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
             -   [x] 4.2.3.3. create (com validação de cnpj).
             -   [x] 4.2.3.4. store (com request).
             -   [x] 4.2.3.5. edit.
-            -   [ ] 4.2.3.6. update (com request).
+            -   [x] 4.2.3.6. update (com request).
                 -   [ ] 4.2.3.6. Adicionar renovação de validade.
             -   [ ] 4.2.3.7. delete.
         -   [ ] 4.2.4. Frontend CRUD lojas:
             -   [ ] 4.2.4.1. index (com paginação e pesquisa).
             -   [ ] 4.2.4.2. show.
                 -   [x] 4.2.4.2.1. Adicionar renovação de validade.
-                -   [ ] 4.2.4.2.2. A implementar lista de colaboradores da loja.
+                -   [x] 4.2.4.2.2. A implementar lista de colaboradores da loja.
                     -   [x] 4.2.4.2.2.1. Cadastrar colaborador na loja.
                     -   [x] 4.2.4.2.2.2. Vincular colaborador na loja.
                     -   [x] 4.2.4.2.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
+                    -   [ ] 4.2.4.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
                 -   [x] 4.2.4.2.3. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
             -   [x] 4.2.4.3. create.
             -   [x] 4.2.4.4. edit.
@@ -69,4 +77,14 @@
         -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`, `bool:ativo`.
         -   [x] 4.3.2. Configurar model:
              -   [x] 4.3.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
-             -   [x] 4.3.2.2 Configurar funções de relacionamentos: loja(table: lojas, loja_id), user(table: users, user_id).
+             -   [x] 4.3.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.3.2.2.1. Relacionamentos loja(table: lojas, loja_id). 
+                    - `Dependente do item 4.2.`
+                -   [x] 4.3.2.2.2. Relacionamentos user(table: users, user_id).
+                    - `Dependente do item 3.1.`
+     -   [x] 4.4. Tabela Cargos.
+        -   [x] 4.4.1. Adicionar campos: `uuid:id`, `foreignUuid:loja_id(lojas)`, `string:nome`.
+        -   [x] 4.4.2. Configurar model:
+            -   [x] 4.4.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.4.2.2 Configurar funções de relacionamentos: loja(table: lojas, loja_id).
+                - `Dependente do item 4.2.`
