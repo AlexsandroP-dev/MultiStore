@@ -82,7 +82,7 @@
                     - `Dependente do item 4.2.`
                 -   [x] 4.3.2.2.2. Relacionamentos user(table: users, user_id).
                     - `Dependente do item 3.1.`
-     -   [x] 4.4. Tabela Cargos.
+    -   [x] 4.4. Tabela Cargos.
         -   [x] 4.4.1. Adicionar campos: `uuid:id`, `foreignUuid:loja_id(lojas)`, `string:nome`.
         -   [x] 4.4.2. Configurar model:
             -   [x] 4.4.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
