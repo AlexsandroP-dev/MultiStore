@@ -56,12 +56,20 @@ class LojaController extends Controller
 
     public function show(Loja $loja)
     {
-        $loja->load(['lojistas' => function ($query) {
-            $query->orderBy('ativo', 'desc');
-        }, 'cargos' => function($query) {
-            $query->orderBy('nome', 'asc');
-        }]);
-        
+        $loja->load([
+            'lojistas' => function ($query) {
+                $query->select('lojistas.*')
+                    ->join('users', 'users.id', '=', 'lojistas.user_id')
+                    ->orderBy('lojistas.ativo', 'desc')
+                    ->orderBy('users.nome', 'asc');
+            },
+            'lojistas.user',
+            'lojistas.cargos.cargo',
+            'cargos' => function ($query) {
+                $query->orderBy('nome', 'asc');
+            }
+        ]);
+
         return view($this->bag['view'] . '.show', compact('loja'));
     }
 
