@@ -14,6 +14,11 @@ class CargosLojista extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $fillable = [
+        'cargo_id',
+        'lojista_id'
+    ];
+
     public function lojista()
     {
         return $this->belongsTo(Lojista::class, 'lojista_id');

@@ -54,7 +54,8 @@
                     -   [x] 4.2.3.2.2.1. Cadastrar colaborador na loja.
                     -   [x] 4.2.3.2.2.2. Vincular colaborador na loja.
                     -   [x] 4.2.3.2.2.3. Desativar/reativar colaborador na loja clicando no status(ícone verde ou vermelho) da lista de colaboradores.
-                    -   [ ] 4.2.3.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                    -   [x] 4.2.3.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                    -   [x] 4.2.3.2.2.5. Atribuir/remover cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
             -   [x] 4.2.3.3. create (com validação de cnpj).
             -   [x] 4.2.3.4. store (com request).
             -   [x] 4.2.3.5. edit.
@@ -69,7 +70,8 @@
                     -   [x] 4.2.4.2.2.1. Cadastrar colaborador na loja.
                     -   [x] 4.2.4.2.2.2. Vincular colaborador na loja.
                     -   [x] 4.2.4.2.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
-                    -   [ ] 4.2.4.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                    -   [x] 4.2.4.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                    -   [x] 4.2.4.2.2.5. Atribuir/remover cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
                 -   [x] 4.2.4.2.3. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
             -   [x] 4.2.4.3. create.
             -   [x] 4.2.4.4. edit.

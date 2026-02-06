@@ -356,7 +356,94 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                            <td><span class="badge bg-light text-muted border">Colaborador</span></td>
+                                            <td>
+                                                @php
+                                                    $cargosAtribuidosIds = $item->cargos->pluck('cargo_id')->toArray();
+                                                @endphp
+
+                                                @if (count($cargosAtribuidosIds) > 0)
+                                                    <div class="d-flex flex-wrap gap-1">
+                                                        @foreach ($item->cargos as $vinculo)
+                                                            <span class="badge bg-light text-primary border cursor-pointer"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modalCargosColaborador{{ $item->id }}"
+                                                                style="cursor: pointer; transition: transform 0.2s;"
+                                                                onmouseover="this.style.transform='scale(1.15)'"
+                                                                onmouseout="this.style.transform='scale(1)'">
+                                                                {{ $vinculo->cargo->nome }}
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
+                                                @else
+                                                    <a href="javascript:void(0)"
+                                                        class="text-primary small text-decoration-none"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalCargosColaborador{{ $item->id }}"
+                                                        style="transition: transform 0.2s;"
+                                                        onmouseover="this.style.transform='scale(1.1)'"
+                                                        onmouseout="this.style.transform='scale(1)'">
+                                                        <i class="bi bi-plus-circle me-1"></i> Nenhum cargo atribuído
+                                                    </a>
+                                                @endif
+
+                                                <div class="modal fade" id="modalCargosColaborador{{ $item->id }}"
+                                                    tabindex="-1" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                                                        <div class="modal-content border-0 shadow">
+                                                            <div class="modal-header bg-light py-2">
+                                                                <h6 class="modal-title fw-bold small">Cargos:
+                                                                    {{ $item->user->nome }}</h6>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"
+                                                                    style="transition: transform 0.2s;"
+                                                                    onmouseover="this.style.transform='scale(1.2)'"
+                                                                    onmouseout="this.style.transform='scale(1)'"></button>
+                                                            </div>
+                                                            <form
+                                                                action="{{ route($bag['routeColaborador'] . '.atribuirCargo', ['loja' => $loja->id, 'lojista' => $item->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+
+                                                                <div class="modal-body p-0">
+                                                                    <div class="list-group list-group-flush">
+                                                                        @forelse($loja->cargos as $cargoDaLoja)
+                                                                            <label
+                                                                                class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 cursor-pointer">
+                                                                                <span
+                                                                                    class="small text-dark">{{ $cargoDaLoja->nome }}</span>
+                                                                                <input class="form-check-input me-1"
+                                                                                    type="checkbox" name="cargos[]"
+                                                                                    value="{{ $cargoDaLoja->id }}"
+                                                                                    {{ in_array($cargoDaLoja->id, $cargosAtribuidosIds) ? 'checked' : '' }}>
+                                                                            </label>
+                                                                        @empty
+                                                                            <div class="p-4 text-center">
+                                                                                <p class="text-muted small mb-0">
+                                                                                    <i
+                                                                                        class="bi bi-exclamation-circle d-block mb-1"></i>
+                                                                                    Nenhum cargo ou função cadastrada para
+                                                                                    esta loja.
+                                                                                </p>
+                                                                            </div>
+                                                                        @endforelse
+                                                                    </div>
+                                                                </div>
+
+                                                                @if ($loja->cargos->count() > 0)
+                                                                    <div class="modal-footer bg-light border-0 py-2">
+                                                                        <button type="submit"
+                                                                            class="btn btn-sm btn-success w-100"
+                                                                            style="transition: transform 0.2s;"
+                                                                            onmouseover="this.style.transform='scale(1.03)'"
+                                                                            onmouseout="this.style.transform='scale(1)'">Atualizar
+                                                                            Cargos</button>
+                                                                    </div>
+                                                                @endif
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-link text-muted"><i
                                                         class="bi bi-eye"></i></button>
@@ -391,23 +478,64 @@
                     </div>
                     <div class="modal-body p-0">
                         <div class="list-group list-group-flush" style="max-height: 350px; overflow-y: auto;">
-                            @forelse($loja->cargos ?? [] as $item)
-                                <div class="list-group-item d-flex justify-content-between align-items-center py-3">
-                                    <div>
-                                        <span class="fw-semibold d-block text-dark">{{ $item->nome }}</span>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs btn-link text-primary p-1"><i
-                                                class="bi bi-pencil"></i></button>
+                            @forelse($loja->cargos ?? [] as $cargo)
+                                <div class="list-group-item p-0">
+                                    <div class="d-flex justify-content-between align-items-center py-3 px-3">
+                                        <div>
+                                            <span class="fw-semibold d-block text-dark">{{ $cargo->nome }}</span>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-xs btn-link text-primary p-1"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseEditCargo{{ $cargo->id }}"
+                                                style="transition: transform 0.2s;"
+                                                onmouseover="this.style.transform='scale(1.23)'"
+                                                onmouseout="this.style.transform='scale(1)'">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
 
-                                        <form
-                                            action="{{ route($bag['routeCargo'] . '.destroy', ['loja' => $loja->id, 'cargo' => $item->id]) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('Deseja realmente excluir este cargo?')">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" class="btn btn-xs btn-link text-danger p-1"><i
-                                                    class="bi bi-trash"></i></button>
-                                        </form>
+                                            <form
+                                                action="{{ route($bag['routeCargo'] . '.destroy', ['loja' => $loja->id, 'cargo' => $cargo->id]) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('Deseja realmente excluir este cargo?')">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="btn btn-xs btn-link text-danger p-1"
+                                                    style="transition: transform 0.2s;"
+                                                    onmouseover="this.style.transform='scale(1.23)'"
+                                                    onmouseout="this.style.transform='scale(1)'">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="collapse" id="collapseEditCargo{{ $cargo->id }}">
+                                        <div class="bg-light border-top p-2">
+                                            <form
+                                                action="{{ route($bag['routeCargo'] . '.update', ['loja' => $loja->id, 'cargo' => $cargo->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" name="nome" class="form-control"
+                                                        value="{{ $cargo->nome }}" required>
+                                                    <button class="btn btn-success" type="submit"
+                                                        style="transition: transform 0.2s;"
+                                                        onmouseover="this.style.transform='scale(1.1)'"
+                                                        onmouseout="this.style.transform='scale(1)'">
+                                                        <i class="bi bi-check-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseEditCargo{{ $cargo->id }}"
+                                                        style="transition: transform 0.2s;"
+                                                        onmouseover="this.style.transform='scale(1.1)'"
+                                                        onmouseout="this.style.transform='scale(1)'">
+                                                        <i class="bi bi-x-lg"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             @empty

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Main\Lojas;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Main\Lojas\ColaboradorRequest;
 use App\Http\Requests\Main\Lojas\LojaRequest;
+use App\Models\Lojas\Cargo;
+use App\Models\Lojas\CargosLojista;
 use App\Models\Lojas\Loja;
 use App\Models\Lojas\Lojista;
 use App\Models\User;
@@ -54,7 +56,12 @@ class LojaController extends Controller
 
     public function show(Loja $loja)
     {
-        $loja->load(['lojistas', 'cargos']);
+        $loja->load(['lojistas' => function ($query) {
+            $query->orderBy('ativo', 'desc');
+        }, 'cargos' => function($query) {
+            $query->orderBy('nome', 'asc');
+        }]);
+        
         return view($this->bag['view'] . '.show', compact('loja'));
     }
 
@@ -184,6 +191,25 @@ class LojaController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao reativar colaborador!']);
+        }
+    }
+
+    public function setCargoColaborador(Request $request, Loja $loja, Lojista $lojista)
+    {
+        DB::beginTransaction();
+        try {
+            CargosLojista::where('lojista_id', $lojista->id)->delete();
+            foreach ($request->cargos as $cargo_id) {
+                CargosLojista::create([
+                    'cargo_id' => $cargo_id,
+                    'lojista_id' => $lojista->id
+                ]);
+            }
+            DB::commit();
+            return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Cargo ou função atribuído ao colaborador com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao atribuir cargo ou função ao colaborador!']);
         }
     }
 }

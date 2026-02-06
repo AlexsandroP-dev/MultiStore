@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('/vincular', [LojaController::class, 'vincularColaborador'])->name('vincular');
                 Route::put('/inativar/{user}', [LojaController::class, 'inativarColaborador'])->name('inativar');
                 Route::put('/reativar/{user}', [LojaController::class, 'reativarColaborador'])->name('reativar');
+                Route::post('/{lojista}/cargo/atribuir', [LojaController::class, 'setCargoColaborador'])->name('atribuirCargo');
             });
 
             //Cargo
