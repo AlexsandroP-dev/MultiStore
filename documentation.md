@@ -103,18 +103,20 @@
                 -   [x] 4.5.2.2.2. Relacionamentos lojista(table: lojistas, lojista_id).
                     - `Dependente do item 4.3.`
     -   [x] 4.6. Tabela Categorias.
-        -   [x] 4.6.1. Adicionar campos: `uuid:id`, `string:nome`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.6.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug`, `bool:ativo`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.6.2. Configurar model:
-                -   [x] 4.6.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.6.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
                 -   [x] 4.6.2.2. Configurar funções de relacionamentos.
-                    -   [x] 4.6.2.2.1. Relacionamentos loja(table: lojas, loja_id).
+                -   [x] 4.6.2.2.1. Relacionamentos loja(table: lojas, loja_id).
                     - `Dependente do item 4.2.`
-                    -   [x] 4.6.2.2.2. Relacionamentos produtos(table: produtos, produto_id).
+                -   [x] 4.6.2.2.2. Relacionamentos produtos(table: produtos, produto_id).
                     - `Dependente do item 4.7.`
-    -   [ ] 4.7. Tabela Produtos.
-        -   [ ] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `foreignUuid:categoria_id(categorias)`.
+    -   [x] 4.7. Tabela Produtos.
+        -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.7.2. Configurar model:
             -   [x] 4.7.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.7.2.2. Configurar funções de relacionamentos.
                 -   [x] 4.7.2.2.1. Relacionamentos categoria(table: categorias, categoria_id).
                     - `Dependente do item 4.6.`
+                -   [x] 4.7.2.2.2. Relacionamentos loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`

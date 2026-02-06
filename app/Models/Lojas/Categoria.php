@@ -16,8 +16,17 @@ class Categoria extends Model
 
     protected $fillable = [
         'nome',
+        'slug',
+        'ativo',
         'loja_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'ativo' => 'boolean',
+        ];
+    }
 
     public function loja()
     {

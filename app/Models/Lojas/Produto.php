@@ -16,8 +16,16 @@ class Produto extends Model
 
     protected $fillable = [
         'nome',
+        'loja_id',
         'categoria_id',
+        'descricao',
+        'sku'
     ];
+
+    public function loja()
+    {
+        return $this->belongsTo(Loja:: class, 'loja_id');
+    }
 
     public function categoria()
     {

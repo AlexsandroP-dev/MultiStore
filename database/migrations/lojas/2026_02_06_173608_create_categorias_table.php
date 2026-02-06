@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nome');
             $table->foreignUuid('loja_id')->references('id')->on('lojas');
+            $table->string('nome');
+            $table->string('slug');
+            $table->boolean('ativo');
             $table->timestamps();
         });
     }
