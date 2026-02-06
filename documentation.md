@@ -35,9 +35,9 @@
     -   [x] 3.1. Tela de Login.
     -   [x] 3.2. Tela de Cadastro.
 
--   [x] **Fase 4: Features**
+-   [ ] **Fase 4: Features**
     -   [ ] 4.1. Adicionar diretório customizado de migrations no app/Providers/AppServiceProvider.
-    -   [x] 4.2. Tabela Lojas.
+    -   [ ] 4.2. Tabela Lojas.
         -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`.
         -   [x] 4.2.2. Configurar model:
             -   [x] 4.2.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
@@ -102,3 +102,19 @@
                     - `Dependente do item 4.4.`
                 -   [x] 4.5.2.2.2. Relacionamentos lojista(table: lojistas, lojista_id).
                     - `Dependente do item 4.3.`
+    -   [x] 4.6. Tabela Categorias.
+        -   [x] 4.6.1. Adicionar campos: `uuid:id`, `string:nome`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.6.2. Configurar model:
+                -   [x] 4.6.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+                -   [x] 4.6.2.2. Configurar funções de relacionamentos.
+                    -   [x] 4.6.2.2.1. Relacionamentos loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                    -   [x] 4.6.2.2.2. Relacionamentos produtos(table: produtos, produto_id).
+                    - `Dependente do item 4.7.`
+    -   [ ] 4.7. Tabela Produtos.
+        -   [ ] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `foreignUuid:categoria_id(categorias)`.
+        -   [x] 4.7.2. Configurar model:
+            -   [x] 4.7.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.7.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.7.2.2.1. Relacionamentos categoria(table: categorias, categoria_id).
+                    - `Dependente do item 4.6.`
