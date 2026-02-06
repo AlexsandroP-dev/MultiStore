@@ -52,12 +52,16 @@
                             <div class="col-md-12">
                                 <label class="text-muted small fw-bold text-uppercase">URL de Acesso</label>
                                 <div class="d-flex align-items-center">
-                                    <a href="{{ $loja->url() }}" target="_blank" class="text-decoration-none">
-                                        <code class="bg-light p-2 rounded text-primary border">
+                                    <a href="{{ $loja->url() }}" target="_blank"
+                                        class="text-decoration-none overflow-hidden flex-grow-1"
+                                        style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.01)'"
+                                        onmouseout="this.style.transform='scale(1)'">
+                                        <code class="bg-light p-2 rounded text-primary border d-block"
+                                            style="white-space: nowrap; overflow-x: auto; font-size: 0.85rem;">
                                             {{ $loja->url() }}
                                         </code>
                                     </a>
-                                    <button class="btn btn-sm btn-outline-secondary ms-2"
+                                    <button class="btn btn-sm btn-outline-secondary ms-2 flex-shrink-0"
                                         onclick="copyToClipboard('{{ $loja->url() }}', this)"
                                         style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'"
                                         onmouseout="this.style.transform='scale(1)'" title="Copiar Link">
@@ -376,11 +380,11 @@
                                                     </div>
                                                 @else
                                                     <a href="javascript:void(0)"
-                                                        class="text-primary small text-decoration-none"
+                                                        class="text-primary small text-decoration-none d-inline-block"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalCargosColaborador{{ $item->id }}"
                                                         style="transition: transform 0.2s;"
-                                                        onmouseover="this.style.transform='scale(1.1)'"
+                                                        onmouseover="this.style.transform='scale(1.05)'"
                                                         onmouseout="this.style.transform='scale(1)'">
                                                         <i class="bi bi-plus-circle me-1"></i> Nenhum cargo atribuído
                                                     </a>
