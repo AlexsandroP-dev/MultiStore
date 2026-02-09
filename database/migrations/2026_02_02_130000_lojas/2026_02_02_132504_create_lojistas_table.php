@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categorias', function (Blueprint $table) {
+        Schema::create('lojistas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('loja_id')->references('id')->on('lojas');
-            $table->string('nome');
-            $table->string('slug');
-            $table->boolean('ativo');
+            $table->foreignUuid('user_id')->constrained('users');
+            $table->foreignUuid('loja_id')->constrained('lojas');
+            $table->boolean('ativo')->default(false);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('lojistas');
     }
 };

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cargos', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome');
-            $table->foreignUuid('loja_id')->references('id')->on('lojas');
+            $table->foreignUuid('loja_id')->constrained('lojas');
             $table->timestamps();
         });
     }

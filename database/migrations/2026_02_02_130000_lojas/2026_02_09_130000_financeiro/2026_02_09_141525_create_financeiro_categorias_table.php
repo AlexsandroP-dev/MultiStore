@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lojistas', function (Blueprint $table) {
+        Schema::create('financeiro_categorias', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->references('id')->on('users');
-            $table->foreignUuid('loja_id')->references('id')->on('lojas');
-            $table->boolean('ativo')->default(false);
+            $table->foreignUuid('loja_id')->constrained('lojas');
+            $table->string('nome'); //Nome da categoria, ex: vendas, marketing, manutenção, reposição de estoque, investimento, etc.
+            $table->string('tipo'); //Entrada ou saída
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lojistas');
+        Schema::dropIfExists('financeiro_categorias');
     }
 };

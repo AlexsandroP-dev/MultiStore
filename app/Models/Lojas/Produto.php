@@ -31,4 +31,9 @@ class Produto extends Model
     {
         return $this->belongsTo(Categoria::class, 'categoria_id');
     }
+
+    public function estoques()
+    {
+        return $this->hasMany(Estoque::class, 'produto_id');
+    }
 }

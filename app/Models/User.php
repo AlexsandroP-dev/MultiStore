@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Clientes\Pedido;
 use App\Models\Lojas\Lojista;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -53,5 +54,10 @@ class User extends Authenticatable
 
     public function lojistas () {
         return $this->hasMany(Lojista::class, 'user_id');
+    }
+
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class, 'user_id');
     }
 }

@@ -23,7 +23,9 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         
         $this->loadMigrationsFrom([
-        database_path('migrations/lojas'),
+        database_path('migrations/2026_02_02_130000_lojas'),
+        database_path('migrations/2026_02_09_130000_clientes'),
+        database_path('migrations/2026_02_02_130000_lojas/2026_02_09_130000_financeiro'),
     ]);
     }
 }

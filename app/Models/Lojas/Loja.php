@@ -2,6 +2,9 @@
 
 namespace App\Models\Lojas;
 
+use App\Models\Clientes\Pedido;
+use App\Models\Financeiro\FinanceiroCategoria;
+use App\Models\Lojas\Financeiro\FinanceiroMovimentacao;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
@@ -60,5 +63,20 @@ class Loja extends Model
     {
         $base = strtolower(config('themes.mainTheme.base.HeaderTitle'));
         return "https://{$base}.com/loja/{$this->slug}";
+    }
+
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class, 'loja_id');
+    }
+
+    public function financeiro_categoria()
+    {
+        return $this->hasMany(FinanceiroCategoria::class, 'loja_id');
+    }
+
+    public function movimentacoes()
+    {
+        return $this->hasMany(FinanceiroMovimentacao::class, 'loja_id');
     }
 }

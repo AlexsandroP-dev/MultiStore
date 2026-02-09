@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('produtos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('loja_id')->references('id')->on('lojas');
-            $table->foreignUuid('categoria_id')->references('id')->on('categorias');
+            $table->foreignUuid('loja_id')->constrained('lojas');
+            $table->foreignUuid('categoria_id')->constrained('categorias');
             $table->string('nome');
             $table->text('descricao')->nullable();
             $table->string('sku')->nullable();

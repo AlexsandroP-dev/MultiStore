@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('cargos_lojistas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('cargo_id')->references('id')->on('cargos');
-            $table->foreignUuid('lojista_id')->references('id')->on('lojistas');
+            $table->foreignUuid('cargo_id')->constrained('cargos');
+            $table->foreignUuid('lojista_id')->constrained('lojistas');
             $table->timestamps();
         });
     }

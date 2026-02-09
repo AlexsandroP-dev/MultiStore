@@ -32,6 +32,8 @@
             -   [x] 3.1.2.2. Configurar funções de relacionamentos.
                 -   [x] 3.1.2.2.1. Relacionamento lojistas(table: lojistas, loja_id). 
                     - `Dependente do item 4.3.`
+                -   [x] 3.1.2.2.2. Relacionamento pedidos(table: pedidos, user_id). 
+                    - `Dependente do item 5.0.`
     -   [x] 3.1. Tela de Login.
     -   [x] 3.2. Tela de Cadastro.
 
@@ -46,6 +48,12 @@
                     - `Dependente do item 4.3.`
                 -   [x] 4.2.2.2.2. Relacionamento cargos(table: cargos, cargo_id).
                     - `Dependente do item 4.4.`
+                -   [x] 4.2.2.2.3. Relacionamento pedidos(table: pedidos, pedido_id).
+                    - `Dependente do item 5.0.`
+                -   [x] 4.2.2.2.4. Relacionamento financeiro_categoria(table: financeiro_categorias, loja_id).
+                    - `Dependente do item 5.3.`
+                -   [x] 4.2.2.2.4. Relacionamento movimentacoes(table: financeiro_movimentacoes, loja_id).
+                    - `Dependente do item 5.4.`
         -   [ ] 4.2.3. Backend CRUD lojas:
             -   [ ] 4.2.3.1. index (com paginação e pesquisa).
             -   [ ] 4.2.3.2. show.
@@ -80,11 +88,11 @@
         -   [x] 4.3.2. Configurar model:
             -   [x] 4.3.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.3.2.2. Configurar funções de relacionamentos.
-                -   [x] 4.3.2.2.1. Relacionamentos loja(table: lojas, loja_id). 
+                -   [x] 4.3.2.2.1. Relacionamento loja(table: lojas, loja_id). 
                     - `Dependente do item 4.2.`
-                -   [x] 4.3.2.2.2. Relacionamentos user(table: users, user_id).
+                -   [x] 4.3.2.2.2. Relacionamento user(table: users, user_id).
                     - `Dependente do item 3.1.`
-                -   [x] 4.3.2.2.3. Relacionamentos cargos(table: cargos_lojistas, lojista_id).
+                -   [x] 4.3.2.2.3. Relacionamento cargos(table: cargos_lojistas, lojista_id).
                     - `Dependente do item 4.5.`
     -   [x] 4.4. Tabela Cargos.
         -   [x] 4.4.1. Adicionar campos: `uuid:id`, `foreignUuid:loja_id(lojas)`, `string:nome`.
@@ -98,25 +106,94 @@
         -   [x] 4.5.2. Configurar model:
             -   [x] 4.5.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.5.2.2. Configurar funções de relacionamentos.
-                -   [x] 4.5.2.2.1. Relacionamentos cargo(table: cargos, cargo_id).
+                -   [x] 4.5.2.2.1. Relacionamento cargo(table: cargos, cargo_id).
                     - `Dependente do item 4.4.`
-                -   [x] 4.5.2.2.2. Relacionamentos lojista(table: lojistas, lojista_id).
+                -   [x] 4.5.2.2.2. Relacionamento lojista(table: lojistas, lojista_id).
                     - `Dependente do item 4.3.`
     -   [x] 4.6. Tabela Categorias.
         -   [x] 4.6.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug`, `bool:ativo`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.6.2. Configurar model:
             -   [x] 4.6.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
                 -   [x] 4.6.2.2. Configurar funções de relacionamentos.
-                -   [x] 4.6.2.2.1. Relacionamentos loja(table: lojas, loja_id).
+                -   [x] 4.6.2.2.1. Relacionamento loja(table: lojas, loja_id).
                     - `Dependente do item 4.2.`
-                -   [x] 4.6.2.2.2. Relacionamentos produtos(table: produtos, produto_id).
+                -   [x] 4.6.2.2.2. Relacionamento produtos(table: produtos, produto_id).
                     - `Dependente do item 4.7.`
     -   [x] 4.7. Tabela Produtos.
         -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.7.2. Configurar model:
             -   [x] 4.7.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.7.2.2. Configurar funções de relacionamentos.
-                -   [x] 4.7.2.2.1. Relacionamentos categoria(table: categorias, categoria_id).
+                -   [x] 4.7.2.2.1. Relacionamento categoria(table: categorias, categoria_id).
                     - `Dependente do item 4.6.`
-                -   [x] 4.7.2.2.2. Relacionamentos loja(table: lojas, loja_id).
+                -   [x] 4.7.2.2.2. Relacionamento loja(table: lojas, loja_id).
                     - `Dependente do item 4.2.`
+                -   [x] 4.7.2.2.3. Relacionamento estoques(table: estoques, estoque_id).
+                    - `Dependente do item 4.8.`
+    -   [x] 4.8. Tabela Estoques.
+        -   [x] 4.8.1. Adicionar campos: `uuid:id`, `string:medida`, `decimal:preco_venda`, `decimal:preco_custo`, `decimal:quantidade`, `decimal:estoque_minimo`, `bool:disponivel`, `foreignUuid:produto_id(produtos)`.
+        -   [x] 4.8.2. Configurar model:
+            -   [x] 4.8.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.8.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.8.2.2.1. Relacionamento produto(table: produtos, produto_id).
+                    - `Dependente do item 4.7.`
+    -   [x] 4.9. Tabela Carrinhos.
+        -   [x] 4.9.1. Adicionar campos: `uuid:id`, `decimal:quantidade`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`, `foreignUuid:estoque_id(estoques)`
+        -   [x] 4.9.2. Configurar model:
+            -   [x] 4.9.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.9.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.9.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 4.9.2.2.2. Relacionamento estoque(table: estoques, estoque_id).
+                    - `Dependente do item 4.8.`
+    -   [x] 5.0. Tabela Pedidos.
+        -   [x] 5.0.1. Adicionar campos: `uuid:id`, `decimal:total`, `string:status`, `string:metodo_entrega`, `decimal:valor_frete`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 5.0.2. Configurar model:
+            -   [x] 5.0.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.0.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.0.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 5.0.2.2.2. Relacionamento cliente(table: users, user_id).
+                    - `Dependente do item 3.1.`
+                -   [x] 5.0.2.2.3. Relacionamento venda(table: pedido_items, pedido_id).
+                    - `Dependente do item 5.1.`
+                -   [x] 5.0.2.2.3. Relacionamento historicos(table: pedido_status_historicos, pedido_id).
+                    - `Dependente do item 5.2.`
+    -   [x] 5.1. Tabela Pedido_items.
+        -   [x] 5.1.1. Adicionar campos: `uuid:id`, `string:produto_nome`, `string:medida`, `decimal:quantidade`, `decimal:preco_venda`, `decimal:subtotal`, `foreignUuid:pedido_id(pedidos)`, `foreignUuid:estoque_id(estoques)`.
+        -   [x] 5.1.2. Configurar model:
+            -   [x] 5.1.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.1.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.1.2.2.1. Relacionamento pedido(table: pedidos, pedido_id).
+                    - `Dependente do item 5.0.`
+                -   [x] 5.1.2.2.2. Relacionamento estoque(table: estoques, estoque_id).
+                    - `Dependente do item 4.8.`
+    -   [x] 5.2. Tabela Pedido_status_historicos.
+        -   [x] 5.2.1. Adicionar campos: `uuid:id`, `string:status_anterior`, `string:status_novo`, `text:comentario`, `foreignUuid:pedido_id(pedidos)`, `foreignUuid:lojista_id(lojistas)`.
+        -   [x] 5.2.2. Configurar model:
+            -   [x] 5.2.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.2.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.2.2.2.1. Relacionamento pedido(table: pedidos, pedido_id).
+                    - `Dependente do item 5.0.`
+                -   [x] 5.2.2.2.2. Relacionamento estoque(table: estoques, estoque_id).
+                    - `Dependente do item 4.3.`
+    -   [x] 5.3. Tabela Financeiro_categorias.
+        -   [x] 5.3.1. Adicionar campos: `uuid:id`, `string:nome`, `string:tipo`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 5.3.2. Configurar model:
+            -   [x] 5.3.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.3.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.3.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 5.3.2.2.2. Relacionamento movimentacoes(table: financeiro_movimentacoes, categoria_id).
+                    - `Dependente do item 5.4.`
+    -   [x] 5.4. Tabela Financeiro_categorias.
+        -   [x] 5.4.1. Adicionar campos: `uuid:id`, `string:descricao`, `date:data_vencimento`, `date:data_pagamento`, `foreignUuid:loja_id(lojas)`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:pedido_id(pedidos)`.
+        -   [x] 5.4.2. Configurar model:
+            -   [x] 5.4.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.4.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.4.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 5.4.2.2.2. Relacionamento categoria(table: financeiro_categorias, categoria_id).
+                    - `Dependente do item 5.3.`
+                -   [x] 5.4.2.2.2. Relacionamento pedido(table: pedidos, pedido_id).
+                    - `Dependente do item 5.0.`
