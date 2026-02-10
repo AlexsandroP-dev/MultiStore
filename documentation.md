@@ -203,5 +203,5 @@
         -   [x] 5.5.2. Configurar updated:
             -   [x] 5.5.2.1. Registrar entrada financeira automaticamente ao setar status de pedido como "pago":
             -   [x] 5.5.2.2. Dar baixa no estoque automaticamente ao setar status de pedido como "em_producao":
-            -   [x] 5.5.2.3. devolver ao estoque automaticamente ao setar status de pedido como "cancelado":
-            -   [x] 5.5.2.4. Registrar saida(estorno) financeira automaticamente ao setar status de pedido como "cancelado" se ele ja estiver com status anterior "pago", "em_producao", "concluido" ou "entregue":
+            -   [x] 5.5.2.3. devolver ao estoque automaticamente ao setar status de pedido como "cancelado e retornado":
+            -   [x] 5.5.2.4. Registrar saida(estorno) financeira automaticamente ao setar status de pedido como "cancelado" se ele ja estiver com status anterior como "pago"

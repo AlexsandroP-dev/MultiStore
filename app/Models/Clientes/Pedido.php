@@ -20,7 +20,7 @@ class Pedido extends Model
         'user_id',
         'loja_id',
         'total',
-        // Status: 'pendente', 'pago', 'em_producao', 'concluido', 'entregue', 'cancelado'
+        // Status: 'pendente', 'pago', 'em_producao', 'concluido', 'entregue', 'cancelado', 'cancelado e retornado'
         'status',
         // Metodo_entrega: 'Retirada', 'Transportadora', 'Uber', etc
         'metodo_entrega',

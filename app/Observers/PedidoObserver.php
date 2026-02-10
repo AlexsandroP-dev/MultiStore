@@ -26,11 +26,14 @@ class PedidoObserver
             $this->baixarEstoquePedido($pedido);
         }
 
-        // 3. Devolver ao estoque se for CANCELADO ou 
-        // estorno de valor pago caso status depois de Pago
-        // LÓGICA DE CANCELAMENTO
+        // 3. Estorno de valor pago caso status tiver sido 'pago' e depois 'cancelado'
         if ($pedido->isDirty('status') && $pedido->status === 'cancelado') {
             $this->processarCancelamento($pedido);
+        }
+
+        // 4. Devolver ao estoque caso status tiver sido 'em_producao', 'concluido' ou 'entregue' e depois 'cancelado e retornado'
+        if ($pedido->isDirty('status') && $pedido->status === 'cancelado e retornado') {
+            $this->retornarEstoquePedido($pedido);
         }
     }
 
@@ -89,11 +92,11 @@ class PedidoObserver
             $this->registrarEstornoFinanceiro($pedido);
         }
 
-        // B. Estorno de Estoque (Se já estava em produção ou posterior)
-        $statusQueSubtraemEstoque = ['em_producao', 'concluido', 'entregue'];
-        if (in_array($statusAnterior, $statusQueSubtraemEstoque)) {
-            $this->estornarEstoquePedido($pedido);
-        }
+        // B. Retorno de Estoque (Se já estava em produção ou posterior)
+        // $statusQueSubtraemEstoque = ['em_producao', 'concluido', 'entregue'];
+        // if (in_array($statusAnterior, $statusQueSubtraemEstoque)) {
+        //     $this->retornarEstoquePedido($pedido);
+        // }
     }
 
     private function registrarEstornoFinanceiro(Pedido $pedido)
@@ -116,14 +119,19 @@ class PedidoObserver
         ]);
     }
 
-    private function estornarEstoquePedido(Pedido $pedido)
+    private function retornarEstoquePedido(Pedido $pedido)
     {
-        DB::transaction(function () use ($pedido) {
-            foreach ($pedido->items as $item) {
-                if ($item->estoque) {
-                    $item->estoque->increment('quantidade', $item->quantidade);
+        $statusAnterior = $pedido->getOriginal('status');
+        $statusQueSubtraemEstoque = ['em_producao', 'concluido', 'entregue'];
+
+        if (in_array($statusAnterior, $statusQueSubtraemEstoque)) {
+            DB::transaction(function () use ($pedido) {
+                foreach ($pedido->items as $item) {
+                    if ($item->estoque) {
+                        $item->estoque->increment('quantidade', $item->quantidade);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
