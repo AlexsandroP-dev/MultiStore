@@ -40,7 +40,7 @@
 -   [ ] **Fase 4: Features**
     -   [ ] 4.1. Adicionar diretório customizado de migrations no app/Providers/AppServiceProvider.
     -   [ ] 4.2. Tabela Lojas.
-        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`.
+        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`, `string:diretorio_logo`.
         -   [x] 4.2.2. Configurar model:
             -   [x] 4.2.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.2.2.2 Configurar funções de relacionamentos.
@@ -120,7 +120,7 @@
                 -   [x] 4.6.2.2.2. Relacionamento produtos(table: produtos, produto_id).
                     - `Dependente do item 4.7.`
     -   [x] 4.7. Tabela Produtos.
-        -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `string:diretorio_imagem`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.7.2. Configurar model:
             -   [x] 4.7.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.7.2.2. Configurar funções de relacionamentos.

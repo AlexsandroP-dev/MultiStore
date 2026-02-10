@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('cnpj')->nullable()->unique();
             $table->dateTime('expira_em')->nullable();
+            $table->string('diretorio_logo')->nullable();
             $table->timestamps();
         });
     }
