@@ -53,9 +53,9 @@ class Pedido extends Model
         return $this->belongsTo(Loja::class, 'loja_id');
     }
 
-    public function venda()
+    public function items()
     {
-        return $this->hasOne(PedidoItem::class, 'pedido_id');
+        return $this->hasMany(PedidoItem::class, 'pedido_id');
     }
 
     public function historicos()

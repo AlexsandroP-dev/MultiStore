@@ -155,7 +155,7 @@
                     - `Dependente do item 4.2.`
                 -   [x] 5.0.2.2.2. Relacionamento cliente(table: users, user_id).
                     - `Dependente do item 3.1.`
-                -   [x] 5.0.2.2.3. Relacionamento venda(table: pedido_items, pedido_id).
+                -   [x] 5.0.2.2.3. Relacionamento items(table: pedido_items, pedido_id).
                     - `Dependente do item 5.1.`
                 -   [x] 5.0.2.2.3. Relacionamento historicos(table: pedido_status_historicos, pedido_id).
                     - `Dependente do item 5.2.`
@@ -186,8 +186,8 @@
                     - `Dependente do item 4.2.`
                 -   [x] 5.3.2.2.2. Relacionamento movimentacoes(table: financeiro_movimentacoes, categoria_id).
                     - `Dependente do item 5.4.`
-    -   [x] 5.4. Tabela Financeiro_categorias.
-        -   [x] 5.4.1. Adicionar campos: `uuid:id`, `string:descricao`, `date:data_vencimento`, `date:data_pagamento`, `foreignUuid:loja_id(lojas)`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:pedido_id(pedidos)`.
+    -   [x] 5.4. Tabela Financeiro_movimentacoes.
+        -   [x] 5.4.1. Adicionar campos: `uuid:id`, `string:descricao`, `decimal:valor`, `date:data_vencimento`, `date:data_pagamento`, `foreignUuid:loja_id(lojas)`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:pedido_id(pedidos)`.
         -   [x] 5.4.2. Configurar model:
             -   [x] 5.4.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 5.4.2.2. Configurar funções de relacionamentos.

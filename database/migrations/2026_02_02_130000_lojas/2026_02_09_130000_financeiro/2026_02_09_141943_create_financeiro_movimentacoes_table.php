@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignUuid('pedido_id')->nullable()->constrained('pedidos');
 
             $table->string('descricao'); //Exemplo: #pedido->id, "Pagamento de Aluguel mês/ano
+            $table->decimal('valor', 12, 2);
 
             $table->date('data_vencimento');
             $table->date('data_pagamento')->nullable(); //Caso for nulo então é uma conta a pagar ou dinheiro a receber
