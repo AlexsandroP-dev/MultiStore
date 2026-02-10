@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignUuid('loja_id')->constrained('lojas');
             $table->string('nome');
             $table->string('slug');
-            $table->boolean('ativo');
+            $table->boolean('ativo')->default(true);
             $table->timestamps();
         });
     }

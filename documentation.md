@@ -207,3 +207,18 @@
             -   [x] 5.5.2.4. Registrar saida(estorno) financeira automaticamente ao setar status de pedido como "cancelado" se ele ja estiver com status anterior como "pago"
 -   [ ] **Fase 6: Segurança/Auditoria**
     -   [x] 6.1. Middleware ConfigLojaSession para evitar repetir query da loja pelo slug toda vez que o lojista recarregar página
+-   [ ] **Fase 7: Features Lojista**
+    -   [ ] 7.1.3. Backend CRUD Produtos:
+        -   [ ] 7.1.3.1. index (com paginação e pesquisa).
+        -   [ ] 7.1.3.2. show.
+        -   [ ] 7.1.3.3. create.
+        -   [ ] 7.1.3.4. store (com request).
+        -   [ ] 7.1.3.5. edit.
+        -   [ ] 7.1.3.6. update (com request).
+            -   [ ] 7.1.3.6. Adicionar renovação de validade.
+        -   [ ] 7.1.3.7. delete.
+    -   [ ] 7.1.4. Frontend CRUD Produtos:
+        -   [ ] 7.1.4.1. index (com paginação e pesquisa).
+        -   [ ] 7.1.4.2. show.
+        -   [ ] 7.1.4.3. create.
+        -   [ ] 7.1.4.4. edit.

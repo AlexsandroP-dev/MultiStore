@@ -24,10 +24,10 @@ return [
                 // ],
                 [
                     "name" => "Meus Produtos",
-                    "route" => "loja.dashboard.index",
+                    "route" => "loja.dashboard.produtos.index",
                     "params" => function() { return ['loja' => session('loja_slug')]; },
-                    "active_prefix" => "loja.dashboard.*",
-                    "icon" => "bi bi-tags"
+                    "active_prefix" => "loja.dashboard.produtos.*",
+                    "icon" => "bi bi-backpack"
                 ],
             ]
         ],
