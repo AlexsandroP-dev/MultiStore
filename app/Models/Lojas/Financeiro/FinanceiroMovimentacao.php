@@ -24,6 +24,7 @@ class FinanceiroMovimentacao extends Model
         // nem todas as entradas serão de produtos
         'pedido_id',
         'descricao', //Exemplo: #pedido->id, "Pagamento de Aluguel mês/ano
+        'valor',
         'data_vencimento',
         'data_pagamento' //Caso for nulo então é uma conta a pagar ou dinheiro a receber
     ];
@@ -31,6 +32,7 @@ class FinanceiroMovimentacao extends Model
     protected function casts(): array
     {
         return [
+            'valor' => 'decimal:2',
             'data_vencimento' => 'datetime:d-m-Y',
             'data_pagamento' => 'datetime:d-m-Y',
         ];

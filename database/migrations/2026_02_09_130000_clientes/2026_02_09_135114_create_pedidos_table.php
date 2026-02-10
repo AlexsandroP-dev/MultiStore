@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignUuid('user_id')->constrained('users'); // Cliente que comprou
             $table->foreignUuid('loja_id')->constrained('lojas');
             $table->decimal('total', 12, 2);
-            // Status: 'pendente', 'pago', 'em_producao', 'concluido', 'entregue', 'cancelado'
+            // Status: 'pendente', 'pago', 'em_producao', 'concluido', 'entregue', 'cancelado', 'cancelado e retornado'
             $table->string('status')->default('pendente');
 
             $table->string('metodo_entrega')->nullable(); // 'Retirada', 'Transportadora', 'Uber', etc

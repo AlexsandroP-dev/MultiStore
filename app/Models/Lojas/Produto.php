@@ -19,7 +19,8 @@ class Produto extends Model
         'loja_id',
         'categoria_id',
         'descricao',
-        'sku'
+        'sku',
+        'diretorio_imagem'
     ];
 
     public function loja()

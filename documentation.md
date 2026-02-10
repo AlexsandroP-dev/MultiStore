@@ -40,7 +40,7 @@
 -   [ ] **Fase 4: Features**
     -   [ ] 4.1. Adicionar diretório customizado de migrations no app/Providers/AppServiceProvider.
     -   [ ] 4.2. Tabela Lojas.
-        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`.
+        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`, `string:diretorio_logo`.
         -   [x] 4.2.2. Configurar model:
             -   [x] 4.2.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.2.2.2 Configurar funções de relacionamentos.
@@ -120,7 +120,7 @@
                 -   [x] 4.6.2.2.2. Relacionamento produtos(table: produtos, produto_id).
                     - `Dependente do item 4.7.`
     -   [x] 4.7. Tabela Produtos.
-        -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `string:diretorio_imagem`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.7.2. Configurar model:
             -   [x] 4.7.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.7.2.2. Configurar funções de relacionamentos.
@@ -155,7 +155,7 @@
                     - `Dependente do item 4.2.`
                 -   [x] 5.0.2.2.2. Relacionamento cliente(table: users, user_id).
                     - `Dependente do item 3.1.`
-                -   [x] 5.0.2.2.3. Relacionamento venda(table: pedido_items, pedido_id).
+                -   [x] 5.0.2.2.3. Relacionamento items(table: pedido_items, pedido_id).
                     - `Dependente do item 5.1.`
                 -   [x] 5.0.2.2.3. Relacionamento historicos(table: pedido_status_historicos, pedido_id).
                     - `Dependente do item 5.2.`
@@ -186,8 +186,8 @@
                     - `Dependente do item 4.2.`
                 -   [x] 5.3.2.2.2. Relacionamento movimentacoes(table: financeiro_movimentacoes, categoria_id).
                     - `Dependente do item 5.4.`
-    -   [x] 5.4. Tabela Financeiro_categorias.
-        -   [x] 5.4.1. Adicionar campos: `uuid:id`, `string:descricao`, `date:data_vencimento`, `date:data_pagamento`, `foreignUuid:loja_id(lojas)`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:pedido_id(pedidos)`.
+    -   [x] 5.4. Tabela Financeiro_movimentacoes.
+        -   [x] 5.4.1. Adicionar campos: `uuid:id`, `string:descricao`, `decimal:valor`, `date:data_vencimento`, `date:data_pagamento`, `foreignUuid:loja_id(lojas)`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:pedido_id(pedidos)`.
         -   [x] 5.4.2. Configurar model:
             -   [x] 5.4.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 5.4.2.2. Configurar funções de relacionamentos.
@@ -197,5 +197,13 @@
                     - `Dependente do item 5.3.`
                 -   [x] 5.4.2.2.2. Relacionamento pedido(table: pedidos, pedido_id).
                     - `Dependente do item 5.0.`
+    -   [x] 5.5. PedidoObserver.
+        - `Dependente do item 5.0.`, `Dependente do item 5.1.`, `Dependente do item 5.3.` e `Dependente do item 5.4.`
+        -   [x] 5.5.1. Registrar no AppServiceProvider:
+        -   [x] 5.5.2. Configurar updated:
+            -   [x] 5.5.2.1. Registrar entrada financeira automaticamente ao setar status de pedido como "pago":
+            -   [x] 5.5.2.2. Dar baixa no estoque automaticamente ao setar status de pedido como "em_producao":
+            -   [x] 5.5.2.3. devolver ao estoque automaticamente ao setar status de pedido como "cancelado e retornado":
+            -   [x] 5.5.2.4. Registrar saida(estorno) financeira automaticamente ao setar status de pedido como "cancelado" se ele ja estiver com status anterior como "pago"
 -   [ ] **Fase 6: Segurança/Auditoria**
     -   [x] 6.1. Middleware ConfigLojaSession para evitar repetir query da loja pelo slug toda vez que o lojista recarregar página

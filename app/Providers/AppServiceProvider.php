@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Clientes\Pedido;
+use App\Observers\PedidoObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+        Pedido::observe(PedidoObserver::class);
         
         $this->loadMigrationsFrom([
         database_path('migrations/2026_02_02_130000_lojas'),
