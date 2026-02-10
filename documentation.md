@@ -197,3 +197,11 @@
                     - `Dependente do item 5.3.`
                 -   [x] 5.4.2.2.2. Relacionamento pedido(table: pedidos, pedido_id).
                     - `Dependente do item 5.0.`
+    -   [x] 5.5. PedidoObserver.
+        - `Dependente do item 5.0.`, `Dependente do item 5.1.`, `Dependente do item 5.3.` e `Dependente do item 5.4.`
+        -   [x] 5.5.1. Registrar no AppServiceProvider:
+        -   [x] 5.5.2. Configurar updated:
+            -   [x] 5.5.2.1. Registrar entrada financeira automaticamente ao setar status de pedido como "pago":
+            -   [x] 5.5.2.2. Dar baixa no estoque automaticamente ao setar status de pedido como "em_producao":
+            -   [x] 5.5.2.3. devolver ao estoque automaticamente ao setar status de pedido como "cancelado":
+            -   [x] 5.5.2.4. Registrar saida(estorno) financeira automaticamente ao setar status de pedido como "cancelado" se ele ja estiver com status anterior "pago", "em_producao", "concluido" ou "entregue":
