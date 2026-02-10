@@ -197,3 +197,5 @@
                     - `Dependente do item 5.3.`
                 -   [x] 5.4.2.2.2. Relacionamento pedido(table: pedidos, pedido_id).
                     - `Dependente do item 5.0.`
+-   [ ] **Fase 6: Segurança/Auditoria**
+    -   [x] 6.1. Middleware ConfigLojaSession para evitar repetir query da loja pelo slug toda vez que o lojista recarregar página

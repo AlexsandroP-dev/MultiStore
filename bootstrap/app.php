@@ -15,7 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'config.loja' => \App\Http\Middleware\ConfigLojaSession::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

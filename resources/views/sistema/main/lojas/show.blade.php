@@ -143,7 +143,11 @@
                         <h6 class="fw-bold mb-1">{{ $loja->nome }}</h6>
                         <p class="text-muted small mb-3">ID: {{ $loja->id }}</p>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary btn-sm">Acessar Painel da Loja</button>
+                            <a href="{{ route($bag['routeLojista'] . '.index', ['loja' => $loja->slug]) }}"
+                                class="btn btn-primary btn-sm" style="transition: transform 0.2s;"
+                                onmouseover="this.style.transform='scale(1.02)'"
+                                onmouseout="this.style.transform='scale(1)'"> Acessar Painel da Loja
+                            </a>
                             <form action="{{ route($bag['route'] . '.destroy', $loja->id) }}" method="POST"
                                 onsubmit="return confirm('Deseja excluir esta loja?')">
                                 @csrf @method('DELETE')

@@ -31,12 +31,26 @@ class Loja extends Model
         ];
     }
 
+    public function resolveRouteBinding($value, $field = null)
+    {
+        // Regex para validar formato UUID: 8-4-4-4-12 caracteres hexadecimais
+        $isUuid = preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value);
+
+        return $this->where(function ($query) use ($value, $isUuid) {
+            if ($isUuid) {
+                $query->where('id', $value);
+            }
+            $query->orWhere('slug', $value);
+        })->firstOrFail();
+    }
+
     public function lojistas()
     {
         return $this->hasMany(Lojista::class, 'loja_id');
     }
 
-    public function cargos() {
+    public function cargos()
+    {
         return $this->hasMany(Cargo::class, 'loja_id');
     }
 

@@ -25,6 +25,7 @@ class LojaController extends Controller
         'route' => 'dashboard.lojas',
         'routeColaborador' => 'dashboard.lojas.show.colaborador',
         'routeCargo' => 'dashboard.lojas.show.cargo',
+        'routeLojista' => 'loja.dashboard',
         'title' => 'Lojas',
         'subtitle' => 'todas as lojas',
         'section' => [
