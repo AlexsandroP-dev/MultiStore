@@ -50,7 +50,7 @@ class ProdutoController extends Controller
         return view($this->bag['view'] . '.create', compact('categorias'));
     }
 
-    public function show(Produto $produto)
+    public function show($loja, $categoria, Produto $produto)
     {
         return view($this->bag['view'] . '.show', compact('produto'));
     }
@@ -70,19 +70,23 @@ class ProdutoController extends Controller
             $dados['loja_id'] = session('loja_id');
             $produto = $this->produtos->create($dados);
             DB::commit();
-            return redirect()->route($this->bag['route'] . '.show', ['produto' => $produto->id])->with('success', 'Produto cadastrado com sucesso!');
+            return redirect()->route($this->bag['route'] . '.show', [
+                'loja' => session('loja_slug'), 
+                'categoria' => $categoria->slug, 
+                'produto' => $produto->id])
+                ->with('success', 'Produto cadastrado com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao cadastrar novo produto!']);
         }
     }
 
-    public function edit(Produto $produto)
+    public function edit($loja, $categoria, Produto $produto)
     {
         return view($this->bag['view'] . '.edit', compact('produto'));
     }
 
-    public function update(ProdutoRequest $request, Produto $produto)
+    public function update(ProdutoRequest $request, $loja, $categoria, Produto $produto)
     {
         DB::beginTransaction();
         try {
@@ -97,7 +101,11 @@ class ProdutoController extends Controller
             $dados['loja_id'] = session('loja_id');
             $produto = $this->produtos->where('id', $produto->id)->update($dados);
             DB::commit();
-            return redirect()->route($this->bag['route'] . '.show', ['produto' => $produto->id])->with('success', 'Dados do produto alterados com sucesso!');
+            return redirect()->route($this->bag['route'] . '.show', [
+                'loja' => session('loja_slug'), 
+                'categoria' => $categoria->slug, 
+                'produto' => $produto->id])
+                ->with('success', 'Dados do produto alterados com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withInput();

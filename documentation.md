@@ -42,8 +42,8 @@
     -   [ ] 4.2. Tabela Lojas.
         -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`, `string:diretorio_logo`.
         -   [x] 4.2.2. Configurar model:
-            -   [x] 4.2.2.1 Configurar protected $primaryKey, $table, $fillable, public $incrementing.
-            -   [x] 4.2.2.2 Configurar funções de relacionamentos.
+            -   [x] 4.2.2.1. Configurar protected $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.2.2.2. Configurar funções de relacionamentos.
                 -   [x] 4.2.2.2.1. Relacionamento lojistas(table: lojistas, loja_id). 
                     - `Dependente do item 4.3.`
                 -   [x] 4.2.2.2.2. Relacionamento cargos(table: cargos, cargo_id).
@@ -54,6 +54,7 @@
                     - `Dependente do item 5.3.`
                 -   [x] 4.2.2.2.4. Relacionamento movimentacoes(table: financeiro_movimentacoes, loja_id).
                     - `Dependente do item 5.4.`
+            -   [x] 4.2.2.3. Configurar resolveRouteBinding para receber tanto id da loja quanto slug.
         -   [ ] 4.2.3. Backend CRUD lojas:
             -   [ ] 4.2.3.1. index (com paginação e pesquisa).
             -   [ ] 4.2.3.2. show.
@@ -114,11 +115,12 @@
         -   [x] 4.6.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug`, `bool:ativo`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.6.2. Configurar model:
             -   [x] 4.6.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
-                -   [x] 4.6.2.2. Configurar funções de relacionamentos.
+            -   [x] 4.6.2.2. Configurar funções de relacionamentos.
                 -   [x] 4.6.2.2.1. Relacionamento loja(table: lojas, loja_id).
                     - `Dependente do item 4.2.`
                 -   [x] 4.6.2.2.2. Relacionamento produtos(table: produtos, produto_id).
                     - `Dependente do item 4.7.`
+            -   [x] 4.6.2.3. Configurar resolveRouteBinding para receber tanto id da categoria quanto slug.
     -   [x] 4.7. Tabela Produtos.
         -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `string:diretorio_imagem`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.7.2. Configurar model:
@@ -211,8 +213,8 @@
     -   [ ] 7.1.3. Backend CRUD Produtos:
         -   [ ] 7.1.3.1. index (com paginação e pesquisa).
         -   [ ] 7.1.3.2. show.
-        -   [ ] 7.1.3.3. create.
-        -   [ ] 7.1.3.4. store (com request).
+        -   [x] 7.1.3.3. create (com cadastro de categoria opcional).
+        -   [x] 7.1.3.4. store (com request).
         -   [ ] 7.1.3.5. edit.
         -   [ ] 7.1.3.6. update (com request).
             -   [ ] 7.1.3.6. Adicionar renovação de validade.
@@ -220,5 +222,5 @@
     -   [ ] 7.1.4. Frontend CRUD Produtos:
         -   [ ] 7.1.4.1. index (com paginação e pesquisa).
         -   [ ] 7.1.4.2. show.
-        -   [ ] 7.1.4.3. create.
+        -   [x] 7.1.4.3. create (com cadastro de categoria opcional).
         -   [ ] 7.1.4.4. edit.

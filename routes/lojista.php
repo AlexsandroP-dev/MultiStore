@@ -9,12 +9,14 @@ Route::group(['middleware' => ['auth', 'config.loja']], function () {
         Route::get('/', [LojaDashboardController::class, 'index'])->name('index');
         Route::prefix('/produtos')->name('produtos.')->group(function () {
             Route::get('/', [ProdutoController::class, 'index'])->name('index');
-            Route::get('/{produto}/show', [ProdutoController::class, 'show'])->name('show');
             Route::get('/create', [ProdutoController::class, 'create'])->name('create');
             Route::post('/store', [ProdutoController::class, 'store'])->name('store');
             Route::post('/store/categoria', [ProdutoController::class, 'storeCategoria'])->name('store.categoria');
-            Route::get('/{produto}/edit', [ProdutoController::class, 'edit'])->name('edit');
-            Route::put('/{produto}/update', [ProdutoController::class, 'update'])->name('update');
+        });
+        Route::prefix('/categoria')->name('produtos.')->group(function () {
+            Route::get('/{categoria}/produto/{produto}/show', [ProdutoController::class, 'show'])->name('show');
+            Route::get('/{categoria}/produto/{produto}/edit', [ProdutoController::class, 'edit'])->name('edit');
+            Route::put('/{categoria}/produto/{produto}/update', [ProdutoController::class, 'update'])->name('update');
         });
     });
 });

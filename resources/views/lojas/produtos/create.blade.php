@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container-fluid py-4">
+        @include('utils.layout.alertsCustom')
         <div class="row justify-content-center">
             <div class="col-12 col-lg-12">
                 <div class="card shadow-sm border-0">
@@ -36,7 +37,10 @@
                                         class="form-select @error('categoria_id') is-invalid @enderror">
                                         <option value="">Selecione...</option>
                                         @foreach ($categorias as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nome }}</option>
+                                            <option value="{{ $item->id }}"
+                                                {{ old('categoria_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->nome }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @include('utils.form.error', ['param' => 'categoria_id'])
@@ -44,8 +48,8 @@
                                         <div class="card card-body bg-light border-0 shadow-sm">
                                             <div class="input-group input-group-sm">
                                                 <input type="text" name="nome_categoria" form="formNovaCategoria"
-                                                    class="form-control form-control-sm" placeholder="Nome da categoria (ex: Adesivos)"
-                                                    required>
+                                                    class="form-control form-control-sm"
+                                                    placeholder="Nome da categoria (ex: Adesivos)" required>
                                                 <button class="btn btn-success" type="submit" form="formNovaCategoria"
                                                     style="transition: transform 0.2s;"
                                                     onmouseover="this.style.transform='scale(1.1)'"
@@ -74,6 +78,8 @@
                                     <input type="file" name="diretorio_imagem" id="diretorio_imagem"
                                         class="form-control @error('diretorio_imagem') is-invalid @enderror">
                                     <small class="text-muted">Formatos aceitos: JPG, JPEG, PNG. Tamanho máx: 3MB.</small>
+                                    <p><small class="text-muted">Caso cadastre uma nova categoria, será necessário
+                                            selecionar a imagem novamente.</small></p>
                                 </div>
                                 @include('utils.form.error', ['param' => 'diretorio_imagem'])
                                 <hr class="my-4 text-muted">
@@ -101,41 +107,23 @@
     </form>
 @endsection
 
-@push('css')
-    <style>
-        /* Mobile: Ajustes para o modo empilhado */
-        @media (max-width: 767.98px) {
-            .border-column-fix {
-                border-radius: 0.375rem 0.375rem 0 0 !important;
-                border-bottom: none !important;
-                width: 100%;
-                text-align: left;
-                justify-content: flex-start;
-            }
+@push('scripts')
+    <script>
+        document.getElementById('formNovaCategoria').addEventListener('submit', function(e) {
+            // Captura os dados do formulário de produto
+            const formProduto = document.querySelector('form[action*="store"]');
+            const formData = new FormData(formProduto);
 
-            .input-column-fix {
-                border-radius: 0 0 0.375rem 0.375rem !important;
-                width: 100%;
+            // Adiciona cada campo do produto como um input hidden no form de categoria
+            for (let [key, value] of formData.entries()) {
+                if (key !== '_token' && key !== 'diretorio_imagem' && value !== "") {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = key;
+                    hiddenInput.value = value;
+                    this.appendChild(hiddenInput);
+                }
             }
-        }
-
-        /* Desktop: Força o comportamento original do input-group (span ao lado do input) */
-        @media (min-width: 768px) {
-            .input-group.flex-md-row {
-                flex-wrap: nowrap !important;
-            }
-
-            .border-column-fix {
-                border-radius: 0.375rem 0 0 0.375rem !important;
-                border-bottom: 1px solid #dee2e6 !important;
-                width: auto;
-            }
-
-            .input-column-fix {
-                border-radius: 0 0.375rem 0.375rem 0 !important;
-                flex: 1 1 auto;
-                width: 1%;
-            }
-        }
-    </style>
+        });
+    </script>
 @endpush
