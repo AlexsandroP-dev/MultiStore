@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('descricao')->nullable();
             $table->string('sku')->nullable();
             $table->string('diretorio_imagem')->nullable();
+            $table->string('slug');
             $table->timestamps();
         });
     }

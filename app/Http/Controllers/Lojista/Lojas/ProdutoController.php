@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Lojista\Lojas;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Lojas\ProdutoRequest;
 use App\Models\Lojas\Categoria;
+use App\Models\Lojas\Loja;
 use App\Models\Lojas\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -50,7 +51,7 @@ class ProdutoController extends Controller
         return view($this->bag['view'] . '.create', compact('categorias'));
     }
 
-    public function show($loja, $categoria, Produto $produto)
+    public function show(Loja $loja, Categoria $categoria, Produto $produto)
     {
         return view($this->bag['view'] . '.show', compact('produto'));
     }
@@ -67,13 +68,16 @@ class ProdutoController extends Controller
                     . $categoria->id . '/produtos', 'public');
                 $dados['diretorio_imagem'] = $path;
             }
-            $dados['loja_id'] = session('loja_id');
-            $produto = $this->produtos->create($dados);
+
+            $produto = $this->produtos->create($dados + [
+                'slug' => Str::slug($dados['nome']),
+                'loja_id' => session('loja_id'),
+            ]);
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', [
                 'loja' => session('loja_slug'), 
                 'categoria' => $categoria->slug, 
-                'produto' => $produto->id])
+                'produto' => $produto->slug])
                 ->with('success', 'Produto cadastrado com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -81,30 +85,34 @@ class ProdutoController extends Controller
         }
     }
 
-    public function edit($loja, $categoria, Produto $produto)
+    public function edit(Loja $loja, Categoria $categoria, Produto $produto)
     {
         return view($this->bag['view'] . '.edit', compact('produto'));
     }
 
-    public function update(ProdutoRequest $request, $loja, $categoria, Produto $produto)
+    public function update(ProdutoRequest $request, Loja $loja, Categoria $categoria, Produto $produto)
     {
         DB::beginTransaction();
         try {
             $dados = $request->validated();
-            $categoria = $this->categorias->where('id', $dados['categoria_id'])->where('loja_id', session('loja_id'))->firstOrFail();
+            // $categoria = $this->categorias->where('id', $dados['categoria_id'])->where('loja_id', session('loja_id'))->firstOrFail();
             if ($request->hasFile('diretorio_imagem') && $request->file('diretorio_imagem')->isValid()) {
                 $path = $request->file('diretorio_imagem')->store('lojas/'
                     . session('loja_id') . '/categorias' . '/'
                     . $categoria->id . '/produtos', 'public');
                 $dados['diretorio_imagem'] = $path;
             }
-            $dados['loja_id'] = session('loja_id');
-            $produto = $this->produtos->where('id', $produto->id)->update($dados);
+
+            $produto = $this->produtos->where('id', $produto->id)->update($dados + [
+                'slug' => Str::slug($dados['nome']),
+                'loja_id' => session('loja_id'),
+                'categoria_id' => $categoria->id,
+            ]);
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', [
                 'loja' => session('loja_slug'), 
                 'categoria' => $categoria->slug, 
-                'produto' => $produto->id])
+                'produto' => $produto->slug])
                 ->with('success', 'Dados do produto alterados com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();

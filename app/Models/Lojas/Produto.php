@@ -20,12 +20,28 @@ class Produto extends Model
         'categoria_id',
         'descricao',
         'sku',
-        'diretorio_imagem'
+        'diretorio_imagem',
+        'slug'
     ];
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        // Regex para validar se a string é um UUID
+        $isUuid = preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value);
+
+        return $this->where('loja_id', session('loja_id'))
+            ->where(function ($query) use ($value, $isUuid) {
+                if ($isUuid) {
+                    $query->where('id', $value);
+                }
+                $query->orWhere('slug', $value);
+            })
+            ->firstOrFail();
+    }
 
     public function loja()
     {
-        return $this->belongsTo(Loja:: class, 'loja_id');
+        return $this->belongsTo(Loja::class, 'loja_id');
     }
 
     public function categoria()

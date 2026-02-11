@@ -120,9 +120,9 @@
                     - `Dependente do item 4.2.`
                 -   [x] 4.6.2.2.2. Relacionamento produtos(table: produtos, produto_id).
                     - `Dependente do item 4.7.`
-            -   [x] 4.6.2.3. Configurar resolveRouteBinding para receber tanto id da categoria quanto slug.
+            -   [x] 4.6.2.3. Configurar resolveRouteBinding para receber tanto id da categoria quanto slug mas categoria deve pertencer a loja (loja_id).
     -   [x] 4.7. Tabela Produtos.
-        -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `string:diretorio_imagem`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `string:diretorio_imagem`, `string:slug`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
         -   [x] 4.7.2. Configurar model:
             -   [x] 4.7.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.7.2.2. Configurar funções de relacionamentos.
@@ -132,6 +132,7 @@
                     - `Dependente do item 4.2.`
                 -   [x] 4.7.2.2.3. Relacionamento estoques(table: estoques, estoque_id).
                     - `Dependente do item 4.8.`
+            -   [x] 4.7.2.3. Configurar resolveRouteBinding para receber tanto id do produto quanto slug mas o produto deve pertencer a categoria (categoria_id) que pertence a loja (loja_id).
     -   [x] 4.8. Tabela Estoques.
         -   [x] 4.8.1. Adicionar campos: `uuid:id`, `string:medida`, `decimal:preco_venda`, `decimal:preco_custo`, `decimal:quantidade`, `decimal:estoque_minimo`, `bool:disponivel`, `foreignUuid:produto_id(produtos)`.
         -   [x] 4.8.2. Configurar model:
