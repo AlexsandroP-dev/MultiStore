@@ -34,11 +34,11 @@
                                 <td class="text-center">
                                     @include('utils.buttons.show', [
                                         'route' => $bag['route'],
-                                        'params' => ['produto' => $item->id],
+                                        'params' => ['loja' => session('loja_slug'), 'categoria' => $item->categoria->slug, 'produto' => $item->slug],
                                     ])
                                     @include('utils.buttons.edit', [
                                         'route' => $bag['route'],
-                                        'params' => ['produto' => $item->id],
+                                        'params' => ['loja' => session('loja_slug'), 'categoria' => $item->categoria->slug, 'produto' => $item->slug],
                                     ])
                                 </td>
                             </tr>
