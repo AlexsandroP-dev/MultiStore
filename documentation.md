@@ -218,7 +218,6 @@
         -   [x] 7.1.3.4. store (com request).
         -   [ ] 7.1.3.5. edit.
         -   [ ] 7.1.3.6. update (com request).
-            -   [ ] 7.1.3.6. Adicionar renovação de validade.
         -   [ ] 7.1.3.7. delete.
     -   [ ] 7.1.4. Frontend CRUD Produtos:
         -   [ ] 7.1.4.1. index (com paginação e pesquisa).

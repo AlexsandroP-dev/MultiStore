@@ -10,6 +10,7 @@ use App\Models\Lojas\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 
 class ProdutoController extends Controller
@@ -63,10 +64,9 @@ class ProdutoController extends Controller
         try {
             $dados = $request->validated();
             $categoria = $this->categorias->where('id', $dados['categoria_id'])->where('loja_id', session('loja_id'))->firstOrFail();
+
             if ($request->hasFile('diretorio_imagem') && $request->file('diretorio_imagem')->isValid()) {
-                $path = $request->file('diretorio_imagem')->store('lojas/'
-                    . session('loja_id') . '/categorias' . '/'
-                    . $categoria->id . '/produtos', 'public');
+                $path = $request->file('diretorio_imagem')->store('lojas/' . session('loja_id') . '/produtos', 'public');
                 $dados['diretorio_imagem'] = $path;
             }
 
@@ -97,10 +97,15 @@ class ProdutoController extends Controller
         DB::beginTransaction();
         try {
             $dados = $request->validated();
+
             if ($request->hasFile('diretorio_imagem') && $request->file('diretorio_imagem')->isValid()) {
-                $path = $request->file('diretorio_imagem')->store('lojas/'
-                    . session('loja_id') . '/categorias' . '/'
-                    . $categoria->id . '/produtos', 'public');
+                // Apaga a imagem antiga se ela existir
+                if ($produto->diretorio_imagem) {
+                    Storage::disk('public')->delete($produto->diretorio_imagem);
+                }
+
+                // Sobe a nova para a pasta da loja
+                $path = $request->file('diretorio_imagem')->store('lojas/' . session('loja_id') . '/produtos', 'public');
                 $dados['diretorio_imagem'] = $path;
             }
 
