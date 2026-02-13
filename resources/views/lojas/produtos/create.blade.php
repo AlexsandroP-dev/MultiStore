@@ -77,9 +77,9 @@
                                     <label for="diretorio_imagem" class="form-label fw-semibold">Imagem do Produto</label>
                                     <input type="file" name="diretorio_imagem" id="diretorio_imagem"
                                         class="form-control @error('diretorio_imagem') is-invalid @enderror">
-                                    <small class="text-muted">Formatos aceitos: JPG, JPEG, PNG. Tamanho máx: 3MB.</small>
-                                    <p><small class="text-muted">Caso cadastre uma nova categoria, será necessário
-                                            selecionar a imagem novamente.</small></p>
+                                    <p class="text-muted small mb-0">Formatos aceitos: JPG, JPEG, PNG. Tamanho máx: 3MB.</p>
+                                    <p class="text-muted small">Caso cadastre uma nova categoria, será necessário
+                                        selecionar a imagem novamente.</p>
                                 </div>
                                 @include('utils.form.error', ['param' => 'diretorio_imagem'])
                                 <hr class="my-4 text-muted">
@@ -91,7 +91,7 @@
                                     <button type="submit" class="btn btn-success px-4" style="transition: transform 0.2s;"
                                         onmouseover="this.style.transform='scale(1.05)'"
                                         onmouseout="this.style.transform='scale(1)'">
-                                        <i class="bi bi-check2-circle me-1"></i> Salvar Loja
+                                        <i class="bi bi-check2-circle me-1"></i> Salvar
                                     </button>
                                 </div>
                             </div>

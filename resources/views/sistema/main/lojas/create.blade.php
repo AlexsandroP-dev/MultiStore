@@ -59,7 +59,7 @@
                                 <button type="submit" class="btn btn-success px-4" style="transition: transform 0.2s;"
                                     onmouseover="this.style.transform='scale(1.05)'"
                                     onmouseout="this.style.transform='scale(1)'">
-                                    <i class="bi bi-check2-circle me-1"></i> Salvar Loja
+                                    <i class="bi bi-check2-circle me-1"></i> Salvar
                                 </button>
                             </div>
                         </form>

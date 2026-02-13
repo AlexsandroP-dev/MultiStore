@@ -65,15 +65,19 @@ class ProdutoController extends Controller
             $dados = $request->validated();
             $categoria = $this->categorias->where('id', $dados['categoria_id'])->where('loja_id', session('loja_id'))->firstOrFail();
 
-            if ($request->hasFile('diretorio_imagem') && $request->file('diretorio_imagem')->isValid()) {
-                $path = $request->file('diretorio_imagem')->store('lojas/' . session('loja_id') . '/produtos', 'public');
-                $dados['diretorio_imagem'] = $path;
-            }
-
             $produto = $this->produtos->create($dados + [
                 'slug' => Str::slug($dados['nome']),
                 'loja_id' => session('loja_id'),
             ]);
+
+            if ($request->hasFile('diretorio_imagem') && $request->file('diretorio_imagem')->isValid()) {
+                $file = $request->file('diretorio_imagem');
+                $folder = 'lojas/' . session('loja_id') . '/produtos';
+                $filename = $produto->nome . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs($folder, $filename, 'public');
+                $dados['diretorio_imagem'] = $path;
+            }
+
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', [
                 'loja' => session('loja_slug'),
@@ -89,7 +93,8 @@ class ProdutoController extends Controller
 
     public function edit(Loja $loja, Categoria $categoria, Produto $produto)
     {
-        return view($this->bag['view'] . '.edit', compact('produto'));
+        $categorias = $this->categorias->where('loja_id', session('loja_id'))->get();
+        return view($this->bag['view'] . '.edit', compact('produto', 'categorias'));
     }
 
     public function update(ProdutoRequest $request, Loja $loja, Categoria $categoria, Produto $produto)
@@ -105,16 +110,14 @@ class ProdutoController extends Controller
                 }
 
                 // Sobe a nova para a pasta da loja
-                $path = $request->file('diretorio_imagem')->store('lojas/' . session('loja_id') . '/produtos', 'public');
+                $file = $request->file('diretorio_imagem');
+                $folder = 'lojas/' . session('loja_id') . '/produtos';
+                $filename = $dados['nome'] . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs($folder, $filename, 'public');
                 $dados['diretorio_imagem'] = $path;
             }
 
-            $this->produtos->where('id', $produto->id)
-                ->update($dados + [
-                    'slug' => Str::slug($dados['nome']),
-                    'loja_id' => session('loja_id'),
-                    'categoria_id' => $categoria->id,
-                ]);
+            $produto->update($dados + ['slug' => Str::slug($dados['nome'])]);
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', [
                 'loja' => session('loja_slug'),
@@ -124,7 +127,7 @@ class ProdutoController extends Controller
                 ->with('success', 'Dados do produto alterados com sucesso!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao atualizar os dados do produto!']);
         }
     }
 

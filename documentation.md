@@ -212,15 +212,15 @@
     -   [x] 6.1. Middleware ConfigLojaSession para evitar repetir query da loja pelo slug toda vez que o lojista recarregar página
 -   [ ] **Fase 7: Features Lojista**
     -   [ ] 7.1.3. Backend CRUD Produtos:
-        -   [ ] 7.1.3.1. index (com paginação e pesquisa).
+        -   [ ] 7.1.3.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
         -   [x] 7.1.3.2. show (com atalho de cadastrar ou alterar categoria do produto).
         -   [x] 7.1.3.3. create (com cadastro de categoria opcional).
         -   [x] 7.1.3.4. store (com request).
-        -   [ ] 7.1.3.5. edit.
-        -   [ ] 7.1.3.6. update (com request).
+        -   [x] 7.1.3.5. edit.
+        -   [x] 7.1.3.6. update (com request).
         -   [ ] 7.1.3.7. delete.
     -   [ ] 7.1.4. Frontend CRUD Produtos:
-        -   [ ] 7.1.4.1. index (com paginação e pesquisa).
+        -   [ ] 7.1.4.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
         -   [x] 7.1.4.2. show (com atalho de cadastrar ou alterar categoria do produto).
         -   [x] 7.1.4.3. create (com cadastro de categoria opcional).
-        -   [ ] 7.1.4.4. edit.
+        -   [x] 7.1.4.4. edit.

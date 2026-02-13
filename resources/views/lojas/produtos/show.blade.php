@@ -9,7 +9,7 @@
                 <div class="d-flex justify-content-end mb-4">
                     <div class="d-flex gap-2">
                         <a href="{{ route($bag['route'] . '.edit', ['loja' => session('loja_slug'), 'categoria' => $produto->categoria->slug, 'produto' => $produto->slug]) }}"
-                            class="btn btn-outline-primary" style="transition: transform 0.2s;"
+                            class="btn btn-sm btn-outline-primary" style="transition: transform 0.2s;"
                             onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="bi bi-pencil me-1"></i> Editar
                         </a>
@@ -23,7 +23,7 @@
                                 style="min-height: 400px;">
                                 @if ($produto->diretorio_imagem)
                                     <img src="{{ asset('storage/' . $produto->diretorio_imagem) }}"
-                                        alt="{{ $produto->nome }}" class="img-fluid rounded shadow-sm"
+                                        alt="{{ $produto->nome }}" class="img-thumbnail rounded shadow-sm"
                                         style="max-height: 350px; object-fit: contain;">
                                 @else
                                     <div class="text-center text-muted">
