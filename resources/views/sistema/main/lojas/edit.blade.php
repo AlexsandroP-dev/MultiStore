@@ -15,7 +15,7 @@
                         </span>
                     </div>
                     <div class="card-body p-4">
-                        <form action="{{ route($bag['route'] . '.update', $loja->id) }}" method="POST">
+                        <form action="{{ route($bag['route'] . '.update', $loja->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -49,21 +49,50 @@
                                     @include('utils.form.error', ['param' => 'cnpj'])
                                 </div>
                                 <div class="col-md-6">
+                                    <label for="contato" class="form-label fw-semibold">WhatsApp de Contato</label>
+                                    <input type="text" name="contato" id="contato"
+                                        class="form-control @error('contato') is-invalid @enderror"
+                                        placeholder="(00) 00000-0000" value="{{ old('contato', $loja->contato) }}">
+                                    @include('utils.form.error', ['param' => 'contato'])
+                                </div>
+                                <div class="col-md-6">
                                     <label for="expira_em" class="form-label fw-semibold">Adicionar Tempo de Validade
                                         (Meses)</label>
                                     <input type="number" name="expira_em" id="expira_em"
                                         class="form-control @error('expira_em') is-invalid @enderror"
-                                        placeholder="Quantidade de meses para somar" value="{{ old('expira_em') }}">
+                                        placeholder="Quantidade de meses para somar" value="{{ old('expira_em') ?? 0 }}">
                                     @include('utils.form.error', ['param' => 'expira_em'])
                                     <small class="text-info">
                                         <i class="bi bi-info-circle me-1"></i>
                                         A quantidade informada será somada à validade atual.
                                     </small>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="diretorio_logo" class="form-label fw-semibold">Logomarca</label>
+                                    <div
+                                        class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-3">
+                                        @if ($loja->diretorio_logo)
+                                            <div class="text-center">
+                                                <img src="{{ asset('storage/' . $loja->diretorio_logo) }}"
+                                                    class="img-thumbnail shadow-sm"
+                                                    style="width: 80px; height: 80px; object-fit: contain; background-color: #f8f9fa;">
+                                                <small class="d-block text-muted mt-1">Logo Atual</small>
+                                            </div>
+                                        @endif
+
+                                        <div class="flex-grow-1 w-100">
+                                            <input type="file" name="diretorio_logo" id="diretorio_logo"
+                                                class="form-control @error('diretorio_logo') is-invalid @enderror">
+                                            <div class="form-text small">Selecione apenas para alterar. JPG, JPEG, PNG (Máx: 3MB).
+                                            </div>
+                                            @include('utils.form.error', ['param' => 'diretorio_logo'])
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <hr class="my-4 text-muted">
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="{{ route($bag['route'] . '.index') }}" class="btn btn-light border"
+                                <a href="{{ route($bag['route'] . '.show', ['loja' => $loja->id]) }}" class="btn btn-light border"
                                     style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
                                     onmouseout="this.style.transform='scale(1)'">Cancelar</a>
                                 <button type="submit" class="btn btn-success px-4" style="transition: transform 0.2s;"
@@ -149,6 +178,34 @@
                     .replace(/^-|-$/g, '');
                 slugInput.value = slug;
             }
+        });
+    </script>
+    <script>
+        const contatoInput = document.getElementById('contato');
+
+        const formatWhatsApp = (val) => {
+            let value = val.replace(/\D/g, ''); // Remove caracteres que não são números
+            if (value.length > 11) value = value.slice(0, 11);
+
+            if (value.length > 10) {
+                return value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (value.length > 6) {
+                return value.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else if (value.length > 2) {
+                return value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            } else {
+                return value.length > 0 ? '(' + value : value;
+            }
+        };
+
+        // Formata ao carregar a página
+        if (contatoInput.value) {
+            contatoInput.value = formatWhatsApp(contatoInput.value);
+        }
+
+        // Formata ao digitar
+        contatoInput.addEventListener('input', (e) => {
+            e.target.value = formatWhatsApp(e.target.value);
         });
     </script>
 @endpush

@@ -18,7 +18,9 @@ class LojaRequest extends FormRequest
         if ($this->cnpj) {
             $this->merge([
                 // Remover pontos, barra e traço para validar apenas os números
-                'cnpj' => preg_replace('/\D/', '', $this->cnpj),
+                // 'cnpj' => preg_replace('/\D/', '', $this->cnpj),
+                'cnpj'    => $this->cnpj ? preg_replace('/\D/', '', $this->cnpj) : null,
+                'contato' => $this->contato ? preg_replace('/\D/', '', $this->contato) : null,
             ]);
         }
     }
@@ -30,7 +32,9 @@ class LojaRequest extends FormRequest
             'nome' => ['sometimes', 'required', 'string', 'max:255', 'min:3'],
             'slug' => ['sometimes', 'required', 'string', 'max:255', Rule::unique('lojas', 'slug')->ignore($loja?->id),],
             'cnpj' => ['nullable', 'string', new CnpjValidator],
+            'contato' => ['nullable', 'string', 'size:11'],
             'expira_em' => ['required', 'integer', 'min:0'],
+            'diretorio_logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:3072'],
         ];
     }
 

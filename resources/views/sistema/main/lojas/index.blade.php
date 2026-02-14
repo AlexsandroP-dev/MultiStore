@@ -16,6 +16,7 @@
                     <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Logo</th>
                             <th>Nome</th>
                             <th>Cadastrado em</th>
                             <th>Válido até</th>
@@ -26,6 +27,15 @@
                         @foreach ($lojas as $item)
                             <tr>
                                 <td class="text-muted small">{{ $item->id }}</td>
+                                <td>
+                                    @if ($item->diretorio_logo)
+                                        <img src="{{ asset('storage/' . $item->diretorio_logo) }}" alt="{{ $item->nome }}"
+                                            class="img-thumbnail rounded shadow-sm"
+                                            style="width: 60px; height: 60px; object-fit: cover;">
+                                    @else
+                                        <i class="bi bi-shop fs-1 justify-content-center"></i>
+                                    @endif
+                                </td>
                                 <td class="fw-semibold">{{ $item->nome }}</td>
                                 <td>{{ $item->created_at->format('d/m/Y') }}</td>
                                 <td>

@@ -21,6 +21,7 @@ class Loja extends Model
         'nome',
         'slug',
         'cnpj',
+        'contato',
         'expira_em',
         'diretorio_logo'
     ];

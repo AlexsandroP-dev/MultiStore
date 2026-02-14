@@ -114,7 +114,12 @@
                     <div class="card-body text-center py-4">
                         <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
                             style="width: 70px; height: 70px;">
-                            <i class="bi bi-shop fs-1"></i>
+                            @if ($loja->diretorio_logo)
+                                <img src="{{ asset('storage/' . $loja->diretorio_logo) }}" class="img-thumbnail shadow-sm"
+                                    style="object-fit: cover;">
+                            @else
+                                <i class="bi bi-shop fs-1"></i>
+                            @endif
                         </div>
                         <h6 class="fw-bold mb-1">{{ $loja->nome }}</h6>
                         <p class="text-muted small mb-3">ID: {{ $loja->id }}</p>

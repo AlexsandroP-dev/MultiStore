@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 
 class LojaController extends Controller
@@ -79,6 +80,15 @@ class LojaController extends Controller
         DB::beginTransaction();
         try {
             $loja = $this->lojas->create($request->validated());
+
+            if ($request->hasFile('diretorio_logo') && $request->file('diretorio_logo')->isValid()) {
+                $file = $request->file('diretorio_logo');
+                $folder = 'lojas/' . $loja->id . '/logo';
+                $filename = $loja->nome . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs($folder, $filename, 'public');
+                $dados['diretorio_logo'] = $path;
+            }
+
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Loja cadastrada com sucesso!');
         } catch (\Throwable $th) {
@@ -96,7 +106,22 @@ class LojaController extends Controller
     {
         DB::beginTransaction();
         try {
-            $loja->update($request->validated());
+            $dados = $request->validated();
+            if ($request->hasFile('diretorio_logo') && $request->file('diretorio_logo')->isValid()) {
+                // Apaga a imagem antiga se ela existir
+                if ($loja->diretorio_logo) {
+                    Storage::disk('public')->delete($loja->diretorio_logo);
+                }
+
+                // Sobe a nova para a pasta da loja
+                $file = $request->file('diretorio_logo');
+                $folder = 'lojas/' . $loja->id . '/logo';
+                $filename = $dados['nome'] . '_logo.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs($folder, $filename, 'public');
+                $dados['diretorio_logo'] = $path;
+            }
+
+            $loja->update($dados);
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Dados da loja alterados com sucesso!');
         } catch (\Throwable $th) {

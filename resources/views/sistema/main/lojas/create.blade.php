@@ -43,6 +43,13 @@
                                     <small class="text-muted">Deixe em branco se não possuir.</small>
                                 </div>
                                 <div class="col-md-6">
+                                    <label for="contato" class="form-label fw-semibold">WhatsApp de Contato</label>
+                                    <input type="text" name="contato" id="contato"
+                                        class="form-control @error('contato') is-invalid @enderror"
+                                        placeholder="(00) 00000-0000" value="{{ old('contato') }}">
+                                    @include('utils.form.error', ['param' => 'contato'])
+                                </div>
+                                <div class="col-md-6">
                                     <label for="expira_em" class="form-label fw-semibold">Validade (Meses)</label>
                                     <input type="number" name="expira_em" id="expira_em"
                                         class="form-control @error('expira_em') is-invalid @enderror" placeholder="meses"
@@ -50,11 +57,18 @@
                                     @include('utils.form.error', ['param' => 'expira_em'])
                                     <small class="text-muted">Período de validade da loja.</small>
                                 </div>
+                                <div class="col-md-6">
+                                    <label for="diretorio_logo" class="form-label fw-semibold">Logomarca (Opcional)</label>
+                                    <input type="file" name="diretorio_logo" id="diretorio_logo"
+                                        class="form-control @error('diretorio_logo') is-invalid @enderror">
+                                    <div class="form-text small">Formatos: JPG, JPEG ou PNG. Máx: 3MB.</div>
+                                    @include('utils.form.error', ['param' => 'diretorio_logo'])
+                                </div>
                             </div>
                             <hr class="my-4 text-muted">
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="{{ route($bag['route'] . '.index') }}" class="btn btn-light border" style="transition: transform 0.2s;"
-                                    onmouseover="this.style.transform='scale(1.1)'"
+                                <a href="{{ route($bag['route'] . '.index') }}" class="btn btn-light border"
+                                    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
                                     onmouseout="this.style.transform='scale(1)'">Cancelar</a>
                                 <button type="submit" class="btn btn-success px-4" style="transition: transform 0.2s;"
                                     onmouseover="this.style.transform='scale(1.05)'"
@@ -137,6 +151,26 @@
                 .replace(/-+/g, '-')
                 .replace(/^-|-$/g, '');
             slugInput.value = slug;
+        });
+    </script>
+    <script>
+        const contatoInput = document.getElementById('contato');
+
+        contatoInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+            if (value.length > 11) value = value.slice(0, 11);
+
+            // Formatação (XX) XXXXX-XXXX
+            if (value.length > 10) {
+                value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (value.length > 6) {
+                value = value.replace(/^(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+            } else if (value.length > 2) {
+                value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            } else if (value.length > 0) {
+                value = value.replace(/^(\d*)/, '($1');
+            }
+            e.target.value = value;
         });
     </script>
 @endpush

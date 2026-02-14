@@ -40,7 +40,7 @@
 -   [ ] **Fase 4: Features**
     -   [ ] 4.1. Adicionar diretório customizado de migrations no app/Providers/AppServiceProvider.
     -   [ ] 4.2. Tabela Lojas.
-        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`, `string:diretorio_logo`.
+        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`, `string:diretorio_logo`, `string:contato`.
         -   [x] 4.2.2. Configurar model:
             -   [x] 4.2.2.1. Configurar protected $primaryKey, $table, $fillable, public $incrementing.
             -   [x] 4.2.2.2. Configurar funções de relacionamentos.
