@@ -1,10 +1,21 @@
 <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark transition-all"
     style="width: 280px; min-height: 100vh;">
-    <div class="d-flex align-items-center justify-content-between w-100 mb-3">
-        <a class="text-white text-decoration-none" href="{{ route(config('themes.lojas.sidebar.sideBarHeaderRoute') , ['loja' => session('loja_slug')]) }}"><span
-                class="fs-4 logo-text fw-bold">{{ config('themes.lojas.sidebar.sideBarHeaderName') }}</span></a>
+    <div class="d-flex align-items-center justify-content-center position-relative w-100 mb-3 sidebar-header-container"
+        style="min-height: 70px;">
+        <a class="text-white text-decoration-none d-flex align-items-center justify-content-center w-100"
+            href="{{ route(config('themes.lojas.sidebar.sideBarHeaderRoute'), ['loja' => session('loja_slug')]) }}">
 
-        <button class="btn text-white border-0 p-0" id="mobileSideBarToggle">
+            @if (session('loja_logo'))
+                <img src="{{ asset('storage/' . session('loja_logo')) }}" alt="Logo" class="img-fluid logo-img"
+                    style="max-height: 60px; object-fit: contain; transition: all 0.3s ease;">
+            @else
+                <i class="bi bi-shop fs-1 logo-icon"></i>
+            @endif
+
+        </a>
+
+        <button class="btn text-white border-0 p-0 position-absolute end-0 d-md-none" id="mobileSideBarToggle"
+            style="right: 0;">
             <i class="bi bi-x-lg fs-3 d-inline d-md-none"></i>
         </button>
     </div>
@@ -47,7 +58,7 @@
                         <ul class="nav flex-column ms-3 mt-1 small border-start border-secondary border-opacity-25">
                             @foreach ($item['submenu'] as $sub)
                                 <li class="nav-item">
-                                    <a href="{{ route($sub['route'], is_callable($sub['params'] ?? null) ? $sub['params']() : ($sub['params'] ?? [])) }}"
+                                    <a href="{{ route($sub['route'], is_callable($sub['params'] ?? null) ? $sub['params']() : $sub['params'] ?? []) }}"
                                         class="nav-link py-2 {{ request()->routeIs($sub['active_prefix']) ? 'text-primary fw-bold active-sub' : 'text-white-50' }}">
                                         <i class="{{ $sub['icon'] ?? 'bi bi-circle' }} me-2"
                                             style="font-size: 0.7rem;"></i>
@@ -61,7 +72,7 @@
             @else
                 {{-- Item Simples --}}
                 <li class="nav-item">
-                    <a href="{{ route($item['route'], is_callable($item['params'] ?? null) ? $item['params']() : ($item['params'] ?? [])) }}"
+                    <a href="{{ route($item['route'], is_callable($item['params'] ?? null) ? $item['params']() : $item['params'] ?? []) }}"
                         class="nav-link {{ request()->routeIs($item['route']) ? 'active' : '' }} py-3"
                         data-bs-toggle="tooltip" data-bs-placement="right" title="{{ $item['name'] }}">
                         <i class="{{ $item['icon'] }} me-2"></i>
@@ -119,8 +130,35 @@
             }
         }
 
+        /* Força a logo a aparecer e centralizar no colapso */
+        .sidebar-collapsed .sidebar-header-container {
+            margin-bottom: 1rem !important;
+            padding: 0 !important;
+        }
+
+        .sidebar-collapsed .logo-img {
+            max-width: 50px !important;
+            max-height: 40px !important;
+            display: block !important;
+            margin: 0 auto;
+        }
+
+        /* Centraliza os ícones do menu para alinhar com a logo */
+        .sidebar-collapsed .nav-link {
+            display: flex !important;
+            justify-content: center !important;
+            padding: 0.8rem 0 !important;
+        }
+
+        .sidebar-collapsed .nav-link i {
+            margin-right: 0 !important;
+            font-size: 1.3rem;
+        }
+
         .sidebar-collapsed {
             width: 80px !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
         }
 
         .sidebar-collapsed .logo-text,
