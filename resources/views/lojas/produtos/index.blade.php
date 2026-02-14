@@ -31,7 +31,7 @@
                                     @if ($item->diretorio_imagem)
                                         <img src="{{ asset('storage/' . $item->diretorio_imagem) }}"
                                             alt="{{ $item->nome }}" class="img-thumbnail rounded shadow-sm"
-                                            style="width: 100px; height: 100px; object-fit: cover;">
+                                            style="width: 100px; height: 100px;">
                                     @else
                                         <div class="text-center text-muted">
                                             <i class="bi bi-image fs-1 d-block mb-2"></i>

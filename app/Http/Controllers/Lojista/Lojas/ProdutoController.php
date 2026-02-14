@@ -65,18 +65,18 @@ class ProdutoController extends Controller
             $dados = $request->validated();
             $categoria = $this->categorias->where('id', $dados['categoria_id'])->where('loja_id', session('loja_id'))->firstOrFail();
 
+            if ($request->hasFile('diretorio_imagem') && $request->file('diretorio_imagem')->isValid()) {
+                $file = $request->file('diretorio_imagem');
+                $folder = 'lojas/' . session('loja_id') . '/produtos';
+                $filename = $dados['nome'] . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs($folder, $filename, 'public');
+                $dados['diretorio_imagem'] = $path;
+            }
+
             $produto = $this->produtos->create($dados + [
                 'slug' => Str::slug($dados['nome']),
                 'loja_id' => session('loja_id'),
             ]);
-
-            if ($request->hasFile('diretorio_imagem') && $request->file('diretorio_imagem')->isValid()) {
-                $file = $request->file('diretorio_imagem');
-                $folder = 'lojas/' . session('loja_id') . '/produtos';
-                $filename = $produto->nome . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs($folder, $filename, 'public');
-                $dados['diretorio_imagem'] = $path;
-            }
 
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', [
