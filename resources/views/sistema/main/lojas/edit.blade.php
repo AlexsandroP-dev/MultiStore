@@ -15,7 +15,8 @@
                         </span>
                     </div>
                     <div class="card-body p-4">
-                        <form action="{{ route($bag['route'] . '.update', $loja->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route($bag['route'] . '.update', $loja->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -67,23 +68,29 @@
                                         A quantidade informada será somada à validade atual.
                                     </small>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label for="diretorio_logo" class="form-label fw-semibold">Logomarca</label>
                                     <div
                                         class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-3">
                                         @if ($loja->diretorio_logo)
                                             <div class="text-center">
-                                                <img src="{{ asset('storage/' . $loja->diretorio_logo) }}"
-                                                    class="img-thumbnail shadow-sm"
-                                                    style="width: 80px; height: 80px; object-fit: contain; background-color: #f8f9fa;">
-                                                <small class="d-block text-muted mt-1">Logo Atual</small>
+                                                <div class="position-relative">
+                                                    <img src="{{ asset('storage/' . $loja->diretorio_logo) }}"
+                                                        class="img-thumbnail shadow-sm"
+                                                        style="width: 70px; height: 70px; object-fit: cover;">
+                                                    <span
+                                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark border border-light">
+                                                        Atual
+                                                    </span>
+                                                </div>
                                             </div>
                                         @endif
 
                                         <div class="flex-grow-1 w-100">
                                             <input type="file" name="diretorio_logo" id="diretorio_logo"
                                                 class="form-control @error('diretorio_logo') is-invalid @enderror">
-                                            <div class="form-text small">Selecione apenas para alterar. JPG, JPEG, PNG (Máx: 3MB).
+                                            <div class="form-text small">Selecione apenas para alterar. JPG, JPEG, PNG (Máx:
+                                                3MB).
                                             </div>
                                             @include('utils.form.error', ['param' => 'diretorio_logo'])
                                         </div>
@@ -92,8 +99,9 @@
                             </div>
                             <hr class="my-4 text-muted">
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="{{ route($bag['route'] . '.show', ['loja' => $loja->id]) }}" class="btn btn-light border"
-                                    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
+                                <a href="{{ route($bag['route'] . '.show', ['loja' => $loja->id]) }}"
+                                    class="btn btn-light border" style="transition: transform 0.2s;"
+                                    onmouseover="this.style.transform='scale(1.1)'"
                                     onmouseout="this.style.transform='scale(1)'">Cancelar</a>
                                 <button type="submit" class="btn btn-success px-4" style="transition: transform 0.2s;"
                                     onmouseover="this.style.transform='scale(1.05)'"
