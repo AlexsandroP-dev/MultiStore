@@ -19,7 +19,7 @@
                 title="Visualizar como Tabela"><i class="bi bi-table"></i></a>
             <a href="{{ route($bag['route'] . '.set.visualizacao', ['loja' => session('loja_slug'), 'modo' => 'grid']) }}"
                 class="btn btn-sm btn-outline-primary {{ session('loja_produto_visualizacao') == 'grid' ? 'active' : '' }}"
-                title="Visualizar como Grade"><i class="bi bi-grid-3x3-gap"></i></a>
+                title="Visualizar como Grade"><i class="bi bi-grid"></i></a>
         </div>
     </div>
     @if (session('loja_produto_visualizacao', 'tabela') == 'tabela')
