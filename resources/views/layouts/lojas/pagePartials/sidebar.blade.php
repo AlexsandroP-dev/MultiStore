@@ -264,6 +264,14 @@
             const sidebar = document.getElementById('sidebar');
             // Seleciona o botão da sidebar e também o da TopNav (se houver)
             const togglers = document.querySelectorAll('#sidebarToggle, #mobileSideBarToggle');
+            const STORAGE_SIDEBARSTATE_KEY = 'sidebar_collapsed';
+
+            if (window.innerWidth >= 768) {
+                const isCollapsed = localStorage.getItem(STORAGE_SIDEBARSTATE_KEY) === 'true';
+                if (isCollapsed) {
+                    sidebar.classList.add('sidebar-collapsed');
+                }
+            }
 
             // Criar overlay dinamicamente se não existir
             let overlay = document.querySelector('.sidebar-overlay');
@@ -275,10 +283,14 @@
 
             const toggleMenu = () => {
                 if (window.innerWidth < 768) {
+                    // Comportamento Mobile: apenas abre/fecha overlay
                     sidebar.classList.toggle('show-mobile');
                     overlay.classList.toggle('active');
                 } else {
+                    // Comportamento Desktop: alterna classe e salva no localStorage
                     sidebar.classList.toggle('sidebar-collapsed');
+                    const nowCollapsed = sidebar.classList.contains('sidebar-collapsed');
+                    localStorage.setItem(STORAGE_SIDEBARSTATE_KEY, nowCollapsed);
                 }
             };
 
