@@ -16,10 +16,14 @@
         <div class="btn-group shadow-sm" role="group" aria-label="Visualização">
             <a href="{{ route($bag['route'] . '.set.visualizacao', ['loja' => session('loja_slug'), 'modo' => 'tabela']) }}"
                 class="btn btn-sm btn-outline-primary me-2 {{ session('loja_produto_visualizacao', 'tabela') == 'tabela' ? 'active' : '' }}"
-                title="Visualizar como Tabela"><i class="bi bi-table"></i></a>
+                title="Visualizar como Tabela" style="transition: transform 0.2s;"
+                onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"><i
+                    class="bi bi-table"></i></a>
             <a href="{{ route($bag['route'] . '.set.visualizacao', ['loja' => session('loja_slug'), 'modo' => 'grid']) }}"
                 class="btn btn-sm btn-outline-primary {{ session('loja_produto_visualizacao') == 'grid' ? 'active' : '' }}"
-                title="Visualizar como Grade"><i class="bi bi-grid"></i></a>
+                title="Visualizar como Grade" style="transition: transform 0.2s;"
+                onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"><i
+                    class="bi bi-grid"></i></a>
         </div>
     </div>
     @if (session('loja_produto_visualizacao', 'tabela') == 'tabela')
@@ -90,16 +94,17 @@
                     <div class="card h-100 border-0 shadow-sm">
                         @if ($item->diretorio_imagem)
                             <img src="{{ asset('storage/' . $item->diretorio_imagem) }}" alt="{{ $item->nome }}"
-                                class="img-thumbnail rounded shadow-sm d-block mx-auto" style="width: 180px; height: 180px; object-fit: cover;">
+                                class="img-thumbnail rounded shadow-sm d-block mx-auto"
+                                style="width: 180px; height: 180px; object-fit: cover;">
                         @else
-                            <div class="bg-light d-flex align-items-center justify-content-center"
-                                style="height: 180px;">
+                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 180px;">
                                 <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
                             </div>
                         @endif
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ $item->nome }}</h5>
-                            <p class="card-text text-muted mb-2" style="font-size: 0.875rem;">Categoria: #{{ $item->categoria->nome }}</p>
+                            <p class="card-text text-muted mb-2" style="font-size: 0.875rem;">Categoria:
+                                #{{ $item->categoria->nome }}</p>
                             <div class="mt-auto">
                                 @include('utils.buttons.show', [
                                     'route' => $bag['route'],

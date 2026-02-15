@@ -101,7 +101,8 @@
                                         <div class="flex-grow-1 w-100">
                                             <input type="file" name="diretorio_imagem" id="diretorio_imagem"
                                                 class="form-control">
-                                            <p class="text-muted small mb-0">Selecione apenas se desejar <strong>substituir</strong> a imagem
+                                            <p class="text-muted small mb-0">Selecione apenas se desejar
+                                                <strong>substituir</strong> a imagem
                                                 atual.</p>
                                             <p class="text-muted small mb-0">Formatos aceitos: JPG, JPEG, PNG. Tamanho máx:
                                                 3MB.</p>
@@ -112,18 +113,13 @@
                                 </div>
                             </div>
                             @include('utils.form.error', ['param' => 'diretorio_imagem'])
-                            <hr class="my-4 text-muted">
-                            <div class="d-flex justify-content-end gap-2">
-                                <a href="{{ route($bag['route'] . '.show', ['loja' => session('loja_slug'), 'categoria' => $produto->categoria->slug ?? $produto->categoria_id, 'produto' => $produto->slug]) }}"
-                                    class="btn btn-light border" style="transition: transform 0.2s;"
-                                    onmouseover="this.style.transform='scale(1.1)'"
-                                    onmouseout="this.style.transform='scale(1)'">Cancelar</a>
-                                <button type="submit" class="btn btn-success px-4" style="transition: transform 0.2s;"
-                                    onmouseover="this.style.transform='scale(1.05)'"
-                                    onmouseout="this.style.transform='scale(1)'">
-                                    <i class="bi bi-save me-1"></i> Salvar
-                                </button>
-                            </div>
+                            @include('utils.form.cancelsubmitbuttons', [
+                                'cancel_route' => route($bag['route'] . '.show', [
+                                    'loja' => session('loja_slug'),
+                                    'categoria' => $produto->categoria->slug ?? $produto->categoria_id,
+                                    'produto' => $produto->slug,
+                                ]),
+                            ])
                         </form>
                     </div>
                 </div>

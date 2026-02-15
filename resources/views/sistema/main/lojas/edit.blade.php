@@ -97,18 +97,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr class="my-4 text-muted">
-                            <div class="d-flex justify-content-end gap-2">
-                                <a href="{{ route($bag['route'] . '.show', ['loja' => $loja->id]) }}"
-                                    class="btn btn-light border" style="transition: transform 0.2s;"
-                                    onmouseover="this.style.transform='scale(1.1)'"
-                                    onmouseout="this.style.transform='scale(1)'">Cancelar</a>
-                                <button type="submit" class="btn btn-success px-4" style="transition: transform 0.2s;"
-                                    onmouseover="this.style.transform='scale(1.05)'"
-                                    onmouseout="this.style.transform='scale(1)'">
-                                    <i class="bi bi-save me-1"></i> Salvar
-                                </button>
-                            </div>
+                            @include('utils.form.cancelsubmitbuttons', [
+                                'cancel_route' => route($bag['route'] . '.show', ['loja' => $loja->id]),
+                            ])
                         </form>
                     </div>
                 </div>
