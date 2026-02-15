@@ -41,7 +41,7 @@ class ProdutoController extends Controller
 
     public function index(Request $request)
     {
-        $produtos = $this->produtos->paginate(30);
+        $produtos = $this->produtos->with('categoria')->where('loja_id', session('loja_id'))->paginate(30);
         $links = $produtos->appends($request->except('page'));
         return view($this->bag['view'] . '.index', compact('produtos', 'links'));
     }
@@ -147,5 +147,14 @@ class ProdutoController extends Controller
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao cadastrar nova categoria!']);
         }
+    }
+
+    public function setVisualizacao($loja, $modo)
+    {
+        $modoValido = in_array($modo, ['tabela', 'grid']) ? $modo : 'tabela';
+
+        session(['loja_produto_visualizacao' => $modoValido]);
+
+        return redirect()->back();
     }
 }

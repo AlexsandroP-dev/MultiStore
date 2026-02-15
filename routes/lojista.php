@@ -12,6 +12,7 @@ Route::group(['middleware' => ['auth', 'config.loja']], function () {
             Route::get('/create', [ProdutoController::class, 'create'])->name('create');
             Route::post('/store', [ProdutoController::class, 'store'])->name('store');
             Route::post('/store/categoria', [ProdutoController::class, 'storeCategoria'])->name('store.categoria');
+            Route::get('/setVisualizacao/{modo}', [ProdutoController::class, 'setVisualizacao'])->name('set.visualizacao');
         });
         Route::prefix('/categoria')->name('produtos.')->group(function () {
             Route::get('/{categoria}/produto/{produto}/show', [ProdutoController::class, 'show'])->name('show');
