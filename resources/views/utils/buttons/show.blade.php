@@ -5,5 +5,5 @@
 
 @include('utils.buttons.link', [
     'title' => 'Ver este Registro',
-    // 'icon' => 'fa fa-search',
+    'icon' => 'bi bi-file-earmark',
 ])

@@ -43,7 +43,7 @@
                         id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-person-circle fs-5 {{ Auth::check() ? 'me-sm-2' : '' }}"></i>
                         <span class="d-none d-sm-inline">
-                            {{ Auth::user()->name }}
+                            {{ Auth::user()->nome }}
                         </span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenu">

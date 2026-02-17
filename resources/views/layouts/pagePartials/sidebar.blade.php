@@ -1,8 +1,12 @@
 <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark transition-all"
     style="width: 280px; min-height: 100vh;">
-    <div class="d-flex align-items-center justify-content-between w-100 mb-3">
-        <a class="text-white text-decoration-none" href="{{ route(config('themes.mainTheme.sidebar.sideBarHeaderRoute')) }}"><span
-                class="fs-4 logo-text fw-bold">{{ config('themes.mainTheme.sidebar.sideBarHeaderName') }}</span></a>
+    <div class="d-flex align-items-center justify-content-center position-relative w-100 mb-3 sidebar-header-container"
+        style="min-height: 70px;">
+        <a class="text-white text-decoration-none"
+            href="{{ route(config('themes.mainTheme.sidebar.sideBarHeaderRoute')) }}">
+            {{-- <span class="fs-4 logo-text fw-bold">{{ config('themes.mainTheme.sidebar.sideBarHeaderName') }}</span> --}}
+            <i class="bi bi-shop fs-1 logo-icon"></i>
+            </a>
 
         <button class="btn text-white border-0 p-0" id="mobileSideBarToggle">
             <i class="bi bi-x-lg fs-3 d-inline d-md-none"></i>
@@ -16,8 +20,16 @@
                 <li class="nav-item">
                     @php
                         $subRoutes = collect($item['submenu'])->pluck('route')->toArray();
+                        $active_prefix = collect($item['submenu'])->pluck('active_prefix')->toArray();
                         $isOpen = false;
                         foreach ($subRoutes as $sr) {
+                            if (request()->routeIs($sr)) {
+                                $isOpen = true;
+                                break;
+                            }
+                        }
+
+                        foreach ($active_prefix as $sr) {
                             if (request()->routeIs($sr)) {
                                 $isOpen = true;
                                 break;
@@ -40,7 +52,7 @@
                             @foreach ($item['submenu'] as $sub)
                                 <li class="nav-item">
                                     <a href="{{ route($sub['route']) }}"
-                                        class="nav-link py-2 {{ request()->routeIs($sub['route']) ? 'text-primary fw-bold active-sub' : 'text-white-50' }}">
+                                        class="nav-link py-2 {{ request()->routeIs($sub['active_prefix']) ? 'text-primary fw-bold active-sub' : 'text-white-50' }}">
                                         <i class="{{ $sub['icon'] ?? 'bi bi-circle' }} me-2"
                                             style="font-size: 0.7rem;"></i>
                                         {{ $sub['name'] }}
@@ -111,8 +123,35 @@
             }
         }
 
+        /* Força a logo a aparecer e centralizar no colapso */
+        .sidebar-collapsed .sidebar-header-container {
+            margin-bottom: 1rem !important;
+            padding: 0 !important;
+        }
+
+        .sidebar-collapsed .logo-img {
+            max-width: 50px !important;
+            max-height: 40px !important;
+            display: block !important;
+            margin: 0 auto;
+        }
+
+        /* Centraliza os ícones do menu para alinhar com a logo */
+        .sidebar-collapsed .nav-link {
+            display: flex !important;
+            justify-content: center !important;
+            padding: 0.8rem 0 !important;
+        }
+
+        .sidebar-collapsed .nav-link i {
+            margin-right: 0 !important;
+            font-size: 1.3rem;
+        }
+
         .sidebar-collapsed {
             width: 80px !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
         }
 
         .sidebar-collapsed .logo-text,
@@ -218,6 +257,14 @@
             const sidebar = document.getElementById('sidebar');
             // Seleciona o botão da sidebar e também o da TopNav (se houver)
             const togglers = document.querySelectorAll('#sidebarToggle, #mobileSideBarToggle');
+            const STORAGE_SIDEBARSTATE_KEY = 'sidebar_collapsed';
+
+            if (window.innerWidth >= 768) {
+                const isCollapsed = localStorage.getItem(STORAGE_SIDEBARSTATE_KEY) === 'true';
+                if (isCollapsed) {
+                    sidebar.classList.add('sidebar-collapsed');
+                }
+            }
 
             // Criar overlay dinamicamente se não existir
             let overlay = document.querySelector('.sidebar-overlay');
@@ -229,10 +276,14 @@
 
             const toggleMenu = () => {
                 if (window.innerWidth < 768) {
+                    // Comportamento Mobile: apenas abre/fecha overlay
                     sidebar.classList.toggle('show-mobile');
                     overlay.classList.toggle('active');
                 } else {
+                    // Comportamento Desktop: alterna classe e salva no localStorage
                     sidebar.classList.toggle('sidebar-collapsed');
+                    const nowCollapsed = sidebar.classList.contains('sidebar-collapsed');
+                    localStorage.setItem(STORAGE_SIDEBARSTATE_KEY, nowCollapsed);
                 }
             };
 

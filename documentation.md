@@ -9,24 +9,218 @@
     -   [x] 1.5. Instalar pacote de tradução pt_BR.
 
 -   [x] **Fase 2: Estrutura Tema Principal**
-    -   [x] 1.1. Views de botões utilitários.
-    -   [x] 1.2. Pacote de ícones do Bootstrap 5.
-    -   [x] 1.3. View estrututal base e autenticação.
-    -   [x] 1.4. Desenvolver e estruturar sidebar, footer e topnav principal.
-        -   [x] 1.4.1. Sidebar
-            -   [x] 1.4.1.1. Layout.
-            -   [x] 1.4.1.2. Configurar para que os menus da sidebar fiquem separados no arquivo config/mainTheme.php.
-            -   [x] 1.4.1.3. Configurar para que o título do sistema na sidebar fiquem separados no arquivo config/mainTheme.php.
-        -   [x] 1.4.2. Footer
-            -   [x] 1.4.2.1. Layout.
-            -   [x] 1.4.2.2. Configurar para que o parãmetro de nome do sistema fiqum separado no arquivo config/mainTheme.php.
-        -   [x] 1.4.3. Topnav
-            -   [x] 1.4.3.1. Layout.
-            -   [x] 1.4.3.2. Configurar para que o botão Perfil esteja no topnav.
-            -   [x] 1.4.3.3. Configurar para que os menus do topnav fiquem separados no arquivo config/mainTheme.php.
+    -   [x] 2.1. Views de botões utilitários.
+    -   [x] 2.2. Pacote de ícones do Bootstrap 5.
+    -   [x] 2.3. View estrututal base e autenticação.
+    -   [x] 2.4. Desenvolver e estruturar sidebar, footer e topnav principal.
+        -   [x] 2.4.1. Sidebar
+            -   [x] 2.4.1.1. Layout.
+            -   [x] 2.4.1.2. Configurar para que os menus da sidebar fiquem separados no arquivo config/mainTheme.php.
+            -   [x] 2.4.1.3. Configurar para que o título do sistema na sidebar fiquem separados no arquivo config/mainTheme.php.
+        -   [x] 2.4.2. Footer
+            -   [x] 2.4.2.1. Layout.
+            -   [x] 2.4.2.2. Configurar para que o parãmetro de nome do sistema fiqum separado no arquivo config/mainTheme.php.
+        -   [x] 2.4.3. Topnav
+            -   [x] 2.4.3.1. Layout.
+            -   [x] 2.4.3.2. Configurar para que o botão Perfil esteja no topnav.
+            -   [x] 2.4.3.3. Configurar para que os menus do topnav fiquem separados no arquivo config/mainTheme.php.
 
--   [ ] **Fase 3: Autenticação básica**
-    -   [x] 1.1. Tabela Users.
-        -   [x] 1.1.1. Adicionar campos: `string:cpf`, `string:cnpj`, `bool:admin`, `bool:administrativo`, `bool:lojista`, `bool:colaborador`, `bool:cliente` com default false 
-    -   [x] 1.1. Tela de Login.
-    -   [x] 1.2. Tela de Cadastro.
+-   [x] **Fase 3: Autenticação básica**
+    -   [x] 3.1. Tabela Users.
+        -   [x] 3.1.1. Adicionar campos: `uuid:id`, `string:cpf`, `string:cnpj`, `bool:admin`, `bool:administrativo`, `bool:lojista`, `bool:colaborador`, `bool:cliente` com default false 
+        -   [x] 3.1.2. Configurar model:
+            -   [x] 3.1.2.2. Configurar funções de relacionamentos.
+                -   [x] 3.1.2.2.1. Relacionamento lojistas(table: lojistas, loja_id). 
+                    - `Dependente do item 4.3.`
+                -   [x] 3.1.2.2.2. Relacionamento pedidos(table: pedidos, user_id). 
+                    - `Dependente do item 5.0.`
+    -   [x] 3.1. Tela de Login.
+    -   [x] 3.2. Tela de Cadastro.
+
+-   [ ] **Fase 4: Features**
+    -   [ ] 4.1. Adicionar diretório customizado de migrations no app/Providers/AppServiceProvider.
+    -   [ ] 4.2. Tabela Lojas.
+        -   [x] 4.2.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug(unique)`, `string:cnpj(nullable, unique)`, `string:diretorio_logo`, `string:contato`.
+        -   [x] 4.2.2. Configurar model:
+            -   [x] 4.2.2.1. Configurar protected $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.2.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.2.2.2.1. Relacionamento lojistas(table: lojistas, loja_id). 
+                    - `Dependente do item 4.3.`
+                -   [x] 4.2.2.2.2. Relacionamento cargos(table: cargos, cargo_id).
+                    - `Dependente do item 4.4.`
+                -   [x] 4.2.2.2.3. Relacionamento pedidos(table: pedidos, pedido_id).
+                    - `Dependente do item 5.0.`
+                -   [x] 4.2.2.2.4. Relacionamento financeiro_categoria(table: financeiro_categorias, loja_id).
+                    - `Dependente do item 5.3.`
+                -   [x] 4.2.2.2.4. Relacionamento movimentacoes(table: financeiro_movimentacoes, loja_id).
+                    - `Dependente do item 5.4.`
+            -   [x] 4.2.2.3. Configurar resolveRouteBinding para receber tanto id da loja quanto slug.
+        -   [ ] 4.2.3. Backend CRUD lojas:
+            -   [ ] 4.2.3.1. index (com paginação e pesquisa).
+            -   [ ] 4.2.3.2. show.
+                -   [x] 4.2.4.2.1. Adicionar renovação de validade.
+                -   [x] 4.2.3.2.2. A implementar lista de colaboradores da loja.
+                    -   [x] 4.2.3.2.2.1. Cadastrar colaborador na loja.
+                    -   [x] 4.2.3.2.2.2. Vincular colaborador na loja.
+                    -   [x] 4.2.3.2.2.3. Desativar/reativar colaborador na loja clicando no status(ícone verde ou vermelho) da lista de colaboradores.
+                    -   [x] 4.2.3.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                    -   [x] 4.2.3.2.2.5. Atribuir/remover cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+            -   [x] 4.2.3.3. create (com validação de cnpj).
+            -   [x] 4.2.3.4. store (com request).
+            -   [x] 4.2.3.5. edit.
+            -   [x] 4.2.3.6. update (com request).
+                -   [ ] 4.2.3.6. Adicionar renovação de validade.
+            -   [ ] 4.2.3.7. delete.
+        -   [ ] 4.2.4. Frontend CRUD lojas:
+            -   [ ] 4.2.4.1. index (com paginação e pesquisa).
+            -   [ ] 4.2.4.2. show.
+                -   [x] 4.2.4.2.1. Adicionar renovação de validade.
+                -   [x] 4.2.4.2.2. A implementar lista de colaboradores da loja.
+                    -   [x] 4.2.4.2.2.1. Cadastrar colaborador na loja.
+                    -   [x] 4.2.4.2.2.2. Vincular colaborador na loja.
+                    -   [x] 4.2.4.2.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
+                    -   [x] 4.2.4.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                    -   [x] 4.2.4.2.2.5. Atribuir/remover cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                -   [x] 4.2.4.2.3. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
+            -   [x] 4.2.4.3. create.
+            -   [x] 4.2.4.4. edit.
+    -   [x] 4.3. Tabela Lojistas.
+        -   [x] 4.3.1. Adicionar campos: `uuid:id`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`, `bool:ativo`.
+        -   [x] 4.3.2. Configurar model:
+            -   [x] 4.3.2.1 Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.3.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.3.2.2.1. Relacionamento loja(table: lojas, loja_id). 
+                    - `Dependente do item 4.2.`
+                -   [x] 4.3.2.2.2. Relacionamento user(table: users, user_id).
+                    - `Dependente do item 3.1.`
+                -   [x] 4.3.2.2.3. Relacionamento cargos(table: cargos_lojistas, lojista_id).
+                    - `Dependente do item 4.5.`
+    -   [x] 4.4. Tabela Cargos.
+        -   [x] 4.4.1. Adicionar campos: `uuid:id`, `foreignUuid:loja_id(lojas)`, `string:nome`.
+        -   [x] 4.4.2. Configurar model:
+            -   [x] 4.4.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.4.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.4.2.2.1 Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+    -   [x] 4.5. Tabela Cargos_Lojista.
+        -   [x] 4.5.1. Adicionar campos: `uuid:id`, `foreignUuid:cargo_id(cargos)`, `foreignUuid:lojista_id(lojistas)`.
+        -   [x] 4.5.2. Configurar model:
+            -   [x] 4.5.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.5.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.5.2.2.1. Relacionamento cargo(table: cargos, cargo_id).
+                    - `Dependente do item 4.4.`
+                -   [x] 4.5.2.2.2. Relacionamento lojista(table: lojistas, lojista_id).
+                    - `Dependente do item 4.3.`
+    -   [x] 4.6. Tabela Categorias.
+        -   [x] 4.6.1. Adicionar campos: `uuid:id`, `string:nome`, `string:slug`, `bool:ativo`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.6.2. Configurar model:
+            -   [x] 4.6.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.6.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.6.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 4.6.2.2.2. Relacionamento produtos(table: produtos, produto_id).
+                    - `Dependente do item 4.7.`
+            -   [x] 4.6.2.3. Configurar resolveRouteBinding para receber tanto id da categoria quanto slug mas categoria deve pertencer a loja (loja_id).
+    -   [x] 4.7. Tabela Produtos.
+        -   [x] 4.7.1. Adicionar campos: `uuid:id`, `string:nome`, `text:descricao`, `string:sku`, `string:diretorio_imagem`, `string:slug`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 4.7.2. Configurar model:
+            -   [x] 4.7.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.7.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.7.2.2.1. Relacionamento categoria(table: categorias, categoria_id).
+                    - `Dependente do item 4.6.`
+                -   [x] 4.7.2.2.2. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 4.7.2.2.3. Relacionamento estoques(table: estoques, estoque_id).
+                    - `Dependente do item 4.8.`
+            -   [x] 4.7.2.3. Configurar resolveRouteBinding para receber tanto id do produto quanto slug mas o produto deve pertencer a categoria (categoria_id) que pertence a loja (loja_id).
+    -   [x] 4.8. Tabela Estoques.
+        -   [x] 4.8.1. Adicionar campos: `uuid:id`, `string:medida`, `decimal:preco_venda`, `decimal:preco_custo`, `decimal:quantidade`, `decimal:estoque_minimo`, `bool:disponivel`, `foreignUuid:produto_id(produtos)`.
+        -   [x] 4.8.2. Configurar model:
+            -   [x] 4.8.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.8.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.8.2.2.1. Relacionamento produto(table: produtos, produto_id).
+                    - `Dependente do item 4.7.`
+    -   [x] 4.9. Tabela Carrinhos.
+        -   [x] 4.9.1. Adicionar campos: `uuid:id`, `decimal:quantidade`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`, `foreignUuid:estoque_id(estoques)`
+        -   [x] 4.9.2. Configurar model:
+            -   [x] 4.9.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 4.9.2.2. Configurar funções de relacionamentos.
+                -   [x] 4.9.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 4.9.2.2.2. Relacionamento estoque(table: estoques, estoque_id).
+                    - `Dependente do item 4.8.`
+    -   [x] 5.0. Tabela Pedidos.
+        -   [x] 5.0.1. Adicionar campos: `uuid:id`, `decimal:total`, `string:status`, `string:metodo_entrega`, `decimal:valor_frete`, `foreignUuid:user_id(users)`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 5.0.2. Configurar model:
+            -   [x] 5.0.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.0.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.0.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 5.0.2.2.2. Relacionamento cliente(table: users, user_id).
+                    - `Dependente do item 3.1.`
+                -   [x] 5.0.2.2.3. Relacionamento items(table: pedido_items, pedido_id).
+                    - `Dependente do item 5.1.`
+                -   [x] 5.0.2.2.3. Relacionamento historicos(table: pedido_status_historicos, pedido_id).
+                    - `Dependente do item 5.2.`
+    -   [x] 5.1. Tabela Pedido_items.
+        -   [x] 5.1.1. Adicionar campos: `uuid:id`, `string:produto_nome`, `string:medida`, `decimal:quantidade`, `decimal:preco_venda`, `decimal:subtotal`, `foreignUuid:pedido_id(pedidos)`, `foreignUuid:estoque_id(estoques)`.
+        -   [x] 5.1.2. Configurar model:
+            -   [x] 5.1.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.1.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.1.2.2.1. Relacionamento pedido(table: pedidos, pedido_id).
+                    - `Dependente do item 5.0.`
+                -   [x] 5.1.2.2.2. Relacionamento estoque(table: estoques, estoque_id).
+                    - `Dependente do item 4.8.`
+    -   [x] 5.2. Tabela Pedido_status_historicos.
+        -   [x] 5.2.1. Adicionar campos: `uuid:id`, `string:status_anterior`, `string:status_novo`, `text:comentario`, `foreignUuid:pedido_id(pedidos)`, `foreignUuid:lojista_id(lojistas)`.
+        -   [x] 5.2.2. Configurar model:
+            -   [x] 5.2.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.2.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.2.2.2.1. Relacionamento pedido(table: pedidos, pedido_id).
+                    - `Dependente do item 5.0.`
+                -   [x] 5.2.2.2.2. Relacionamento estoque(table: estoques, estoque_id).
+                    - `Dependente do item 4.3.`
+    -   [x] 5.3. Tabela Financeiro_categorias.
+        -   [x] 5.3.1. Adicionar campos: `uuid:id`, `string:nome`, `string:tipo`, `foreignUuid:loja_id(lojas)`.
+        -   [x] 5.3.2. Configurar model:
+            -   [x] 5.3.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.3.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.3.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 5.3.2.2.2. Relacionamento movimentacoes(table: financeiro_movimentacoes, categoria_id).
+                    - `Dependente do item 5.4.`
+    -   [x] 5.4. Tabela Financeiro_movimentacoes.
+        -   [x] 5.4.1. Adicionar campos: `uuid:id`, `string:descricao`, `decimal:valor`, `date:data_vencimento`, `date:data_pagamento`, `foreignUuid:loja_id(lojas)`, `foreignUuid:categoria_id(categorias)`, `foreignUuid:pedido_id(pedidos)`.
+        -   [x] 5.4.2. Configurar model:
+            -   [x] 5.4.2.1. Configurar protected: $primaryKey, $table, $fillable, public $incrementing.
+            -   [x] 5.4.2.2. Configurar funções de relacionamentos.
+                -   [x] 5.4.2.2.1. Relacionamento loja(table: lojas, loja_id).
+                    - `Dependente do item 4.2.`
+                -   [x] 5.4.2.2.2. Relacionamento categoria(table: financeiro_categorias, categoria_id).
+                    - `Dependente do item 5.3.`
+                -   [x] 5.4.2.2.2. Relacionamento pedido(table: pedidos, pedido_id).
+                    - `Dependente do item 5.0.`
+    -   [x] 5.5. PedidoObserver.
+        - `Dependente do item 5.0.`, `Dependente do item 5.1.`, `Dependente do item 5.3.` e `Dependente do item 5.4.`
+        -   [x] 5.5.1. Registrar no AppServiceProvider:
+        -   [x] 5.5.2. Configurar updated:
+            -   [x] 5.5.2.1. Registrar entrada financeira automaticamente ao setar status de pedido como "pago":
+            -   [x] 5.5.2.2. Dar baixa no estoque automaticamente ao setar status de pedido como "em_producao":
+            -   [x] 5.5.2.3. devolver ao estoque automaticamente ao setar status de pedido como "cancelado e retornado":
+            -   [x] 5.5.2.4. Registrar saida(estorno) financeira automaticamente ao setar status de pedido como "cancelado" se ele ja estiver com status anterior como "pago"
+-   [ ] **Fase 6: Segurança/Auditoria**
+    -   [x] 6.1. Middleware ConfigLojaSession para evitar repetir query da loja pelo slug toda vez que o lojista recarregar página
+-   [ ] **Fase 7: Features Lojista**
+    -   [ ] 7.1.3. Backend CRUD Produtos:
+        -   [ ] 7.1.3.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
+        -   [x] 7.1.3.2. show (com atalho de cadastrar ou alterar categoria do produto).
+        -   [x] 7.1.3.3. create (com cadastro de categoria opcional).
+        -   [x] 7.1.3.4. store (com request).
+        -   [x] 7.1.3.5. edit.
+        -   [x] 7.1.3.6. update (com request).
+        -   [ ] 7.1.3.7. delete.
+    -   [ ] 7.1.4. Frontend CRUD Produtos:
+        -   [ ] 7.1.4.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
+        -   [x] 7.1.4.2. show (com atalho de cadastrar ou alterar categoria do produto).
+        -   [x] 7.1.4.3. create (com cadastro de categoria opcional).
+        -   [x] 7.1.4.4. edit.
