@@ -151,7 +151,7 @@ class ProdutoController extends Controller
 
     public function setVisualizacao($loja, $modo)
     {
-        $modoValido = in_array($modo, ['tabela', 'grid']) ? $modo : 'tabela';
+        $modoValido = in_array($modo, ['tabela', 'grid']) ? $modo : 'grid';
 
         session(['loja_produto_visualizacao' => $modoValido]);
 

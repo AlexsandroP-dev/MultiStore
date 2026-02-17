@@ -246,4 +246,13 @@ class LojaController extends Controller
             return redirect()->back()->withInput()->withErrors(['error' => 'Algum erro aconteceu ao atribuir cargo ou função ao colaborador!']);
         }
     }
+
+    public function setVisualizacao($modo)
+    {
+        $modoValido = in_array($modo, ['tabela', 'grid']) ? $modo : 'grid';
+
+        session(['lojas_visualizacao' => $modoValido]);
+
+        return redirect()->back();
+    }
 }

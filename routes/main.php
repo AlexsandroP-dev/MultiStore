@@ -18,6 +18,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('/{loja}/renovar', [LojaController::class, 'renew'])->name('update.renew');
             Route::get('/apagados', [LojaController::class, 'deleted'])->name('deleted');
             Route::delete('/{loja}/destroy', [LojaController::class, 'destroy'])->name('destroy');
+            Route::get('/setVisualizacao/{modo}', [LojaController::class, 'setVisualizacao'])->name('set.visualizacao');
 
             //Colaborador
             Route::prefix('/{loja}/show/colaborador')->name('show.colaborador.')->group(function () {
