@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Lojista\LojaDashboardController;
+use App\Http\Controllers\Lojista\Lojas\CargoController;
+use App\Http\Controllers\Lojista\Lojas\ColaboradorController;
 use App\Http\Controllers\Lojista\Lojas\ProdutoController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +16,32 @@ Route::group(['middleware' => ['auth', 'config.loja']], function () {
             Route::post('/store/categoria', [ProdutoController::class, 'storeCategoria'])->name('store.categoria');
             Route::get('/setVisualizacao/{modo}', [ProdutoController::class, 'setVisualizacao'])->name('set.visualizacao');
         });
+
+        //Categorias
         Route::prefix('/categoria')->name('produtos.')->group(function () {
             Route::get('/{categoria}/produto/{produto}/show', [ProdutoController::class, 'show'])->name('show');
             Route::get('/{categoria}/produto/{produto}/edit', [ProdutoController::class, 'edit'])->name('edit');
             Route::put('/{categoria}/produto/{produto}/update', [ProdutoController::class, 'update'])->name('update');
         });
+
+        //Colaboradores
+        Route::prefix('/colaboradores')->name('colaboradores.')->group(function () {
+            Route::get('/', [ColaboradorController::class, 'index'])->name('index');
+            Route::get('/create', [ColaboradorController::class, 'create'])->name('create');
+            Route::post('/store', [ColaboradorController::class, 'store'])->name('store');
+            Route::post('/vincular', [ColaboradorController::class, 'vincularColaborador'])->name('vincular');
+            Route::put('/{colaborador}/inativar/', [ColaboradorController::class, 'inativarColaborador'])->name('inativar');
+            Route::put('/{colaborador}/reativar/', [ColaboradorController::class, 'reativarColaborador'])->name('reativar');
+            Route::post('/{colaborador}/cargo/atribuir', [ColaboradorController::class, 'setCargoColaborador'])->name('atribuirCargo');
+            Route::get('/setVisualizacao/{modo}', [ColaboradorController::class, 'setVisualizacao'])->name('set.visualizacao');
+
+            //Cargos
+            Route::prefix('/cargo')->name('cargo.')->group(function () {
+                Route::post('/store', [CargoController::class, 'store'])->name('store');
+                Route::put('/update/{cargo}', [CargoController::class, 'update'])->name('update');
+                Route::delete('/reativar/{cargo}', [CargoController::class, 'destroy'])->name('destroy');
+            });
+        });
+
     });
 });

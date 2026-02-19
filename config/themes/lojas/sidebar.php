@@ -13,6 +13,12 @@ return [
             "params" => function() { return ['loja' => session('loja_slug')]; }
         ],
         [
+            "name" => "Colaboradores",
+            "icon" => "bi bi-people",
+            "route" => "loja.dashboard.colaboradores.index",
+            "params" => function() { return ['loja' => session('loja_slug')]; }
+        ],
+        [
             "name" => "Cadastros",
             "icon" => "bi bi-grid",
             "submenu" => [
