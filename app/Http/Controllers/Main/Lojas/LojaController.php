@@ -234,11 +234,13 @@ class LojaController extends Controller
         DB::beginTransaction();
         try {
             CargosLojista::where('lojista_id', $lojista->id)->delete();
-            foreach ($request->cargos as $cargo_id) {
-                CargosLojista::create([
-                    'cargo_id' => $cargo_id,
-                    'lojista_id' => $lojista->id
-                ]);
+            if ($request->cargos) {
+                foreach ($request->cargos as $cargo_id) {
+                    CargosLojista::create([
+                        'cargo_id' => $cargo_id,
+                        'lojista_id' => $lojista->id
+                    ]);
+                }
             }
             DB::commit();
             return redirect()->route($this->bag['route'] . '.show', ['loja' => $loja->id])->with('success', 'Cargo ou função atribuído ao colaborador com sucesso!');

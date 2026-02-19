@@ -123,11 +123,13 @@ class ColaboradorController extends Controller
         DB::beginTransaction();
         try {
             CargosLojista::where('lojista_id', $colaborador->id)->delete();
-            foreach ($request->cargos as $cargo_id) {
-                CargosLojista::create([
-                    'cargo_id' => $cargo_id,
-                    'lojista_id' => $colaborador->id
-                ]);
+            if ($request->cargos) {
+                foreach ($request->cargos as $cargo_id) {
+                    CargosLojista::create([
+                        'cargo_id' => $cargo_id,
+                        'lojista_id' => $colaborador->id
+                    ]);
+                }
             }
             DB::commit();
             return redirect()->back()->with('success', 'Cargo ou função atribuído ao colaborador com sucesso!');
