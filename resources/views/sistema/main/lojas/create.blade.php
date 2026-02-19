@@ -10,7 +10,7 @@
                         <small class="text-muted">Preencha os dados abaixo para configurar sua unidade.</small>
                     </div>
                     <div class="card-body p-4">
-                        <form action="{{ route($bag['route'] . '.store') }}" method="POST">
+                        <form action="{{ route($bag['route'] . '.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-12">

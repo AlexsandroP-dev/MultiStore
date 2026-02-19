@@ -87,6 +87,7 @@ class LojaController extends Controller
                 $filename = $loja->nome . '.' . $file->getClientOriginalExtension();
                 $path = $file->storeAs($folder, $filename, 'public');
                 $dados['diretorio_logo'] = $path;
+                $loja->update(['diretorio_logo' => $path]);
             }
 
             DB::commit();
