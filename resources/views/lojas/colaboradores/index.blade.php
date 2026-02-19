@@ -11,20 +11,154 @@
             @foreach ($colaboradores as $item)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm">
-                        {{-- @if ($item->diretorio_imagem)
-                            <img src="{{ asset('storage/' . $item->diretorio_imagem) }}" alt="{{ $item->nome }}"
-                                class="img-thumbnail rounded shadow-sm d-block mx-auto"
-                                style="width: 180px; height: 180px; object-fit: cover;">
-                        @else
-                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 180px;">
-                                <i class="bi bi-image text-muted" style="font-size: 2rem;"></i>
-                            </div>
-                        @endif
+                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 180px;">
+                            @php
+                                $rotaStatus = $item->ativo
+                                    ? route($bag['route'] . '.inativar', [
+                                        'loja' => session('loja_slug'),
+                                        'colaborador' => $item->user_id,
+                                    ])
+                                    : route($bag['route'] . '.reativar', [
+                                        'loja' => session('loja_slug'),
+                                        'colaborador' => $item->user_id,
+                                    ]);
+                                $acaoTexto = $item->ativo ? 'Desativar' : 'Reativar';
+                            @endphp
+                            <form action="{{ $rotaStatus }}" method="POST" id="form-status-{{ $item->user_id }}">
+                                @csrf
+                                @method('PUT')
+                                <button type="button" class="btn p-0 border-0 bg-transparent"
+                                    onclick="confirmarTrocaStatus('{{ $acaoTexto }}', '{{ $item->user->nome }}', '{{ $item->user_id }}')"
+                                    title="{{ $acaoTexto }} Colaborador">
+                                    <div class="avatar-sm {{ $item->ativo ? 'bg-success' : 'bg-danger' }} bg-opacity-10 {{ $item->ativo ? 'text-success' : 'text-danger' }} rounded-circle d-flex align-items-center justify-content-center me-2"
+                                        style="width: 96px; height: 96px; border: 1px solid {{ $item->ativo ? '#198754' : '#dc3545' }}; transition: transform 0.2s;"
+                                        onmouseover="this.style.transform='scale(1.05)'"
+                                        onmouseout="this.style.transform='scale(1)'">
+                                        {{-- {{ strtoupper(substr($item->user->nome, 0, 1)) }} --}}
+                                        <i class="bi bi-person {{ $item->ativo ? 'text-success' : 'text-danger' }}"
+                                            style="font-size: 4rem;"></i>
+                                    </div>
+                                </button>
+                            </form>
+                        </div>
+
                         <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">{{ $item->nome }}</h5>
-                            <p class="card-text text-muted mb-2" style="font-size: 0.875rem;">Categoria:
-                                #{{ $item->categoria->nome }}</p>
-                            <div class="mt-auto">
+                            <h5 class="card-title">{{ $item->user->nome }}</h5>
+                            <p class="card-text text-muted mb-2" style="font-size: 0.875rem;">E-mail:
+                                {{ $item->user->email }}</p>
+                            <p class="card-text text-muted mb-2" style="font-size: 0.875rem;">Tipo:
+                                @if ($item->user->admin)
+                                    <span class="badge bg-dark text-white">Admin</span>
+                                @endif
+
+                                @if ($item->user->administrativo)
+                                    <span class="badge bg-primary">Administrativo</span>
+                                @endif
+
+                                @if ($item->user->lojista)
+                                    <span class="badge bg-info text-dark">Lojista</span>
+                                @endif
+
+                                @if ($item->user->colaborador)
+                                    <span class="badge bg-secondary">Colaborador</span>
+                                @endif
+
+                                @if (!($item->user->admin || $item->user->administrativo || $item->user->lojista || $item->user->colaborador))
+                                    <span class="text-muted small">Sem tipo definido</span>
+                                @endif
+                            </p>
+                            <p class="card-text text-muted mb-2" style="font-size: 0.875rem;">
+                                <button type="button" class="btn btn-xs text-primary border-0 p-0"
+                                    data-bs-toggle="modal" data-bs-target="#modalListaCargos" title="Gerenciar Cargos"
+                                    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'"
+                                    onmouseout="this.style.transform='scale(1)'">
+                                    Cargo/Função:
+                                </button>
+                                @php
+                                    $cargosAtribuidosIds = $item->cargos->pluck('cargo_id')->toArray();
+                                @endphp
+
+                                @if (count($cargosAtribuidosIds) > 0)
+                                    <div class="d-flex gap-1">
+                                        @foreach ($item->cargos as $vinculo)
+                                            <span class="badge bg-light text-primary border cursor-pointer"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalCargosColaborador{{ $item->id }}"
+                                                style="cursor: pointer; transition: transform 0.2s;"
+                                                onmouseover="this.style.transform='scale(1.15)'"
+                                                onmouseout="this.style.transform='scale(1)'">
+                                                {{ $vinculo->cargo->nome }}
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="d-flex gap-1">
+                                        <a href="javascript:void(0)"
+                                            class="text-primary small text-decoration-none d-inline-block"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalCargosColaborador{{ $item->id }}"
+                                            style="transition: transform 0.2s;"
+                                            onmouseover="this.style.transform='scale(1.05)'"
+                                            onmouseout="this.style.transform='scale(1)'">
+                                            <i class="bi bi-plus-circle me-1"></i> Nenhum cargo atribuído
+                                        </a>
+                                    </div>
+                                @endif
+
+                            <div class="modal fade" id="modalCargosColaborador{{ $item->id }}" tabindex="-1"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-sm">
+                                    <div class="modal-content border-0 shadow">
+                                        <div class="modal-header bg-light py-2">
+                                            <h6 class="modal-title fw-bold small">Cargos:
+                                                {{ $item->user->nome }}</h6>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close" style="transition: transform 0.2s;"
+                                                onmouseover="this.style.transform='scale(1.2)'"
+                                                onmouseout="this.style.transform='scale(1)'"></button>
+                                        </div>
+                                        <form
+                                            action="{{ route($bag['route'] . '.atribuirCargo', ['loja' => session('loja_slug'), 'colaborador' => $item->id]) }}"
+                                            method="POST">
+                                            @csrf
+
+                                            <div class="modal-body p-0">
+                                                <div class="list-group list-group-flush">
+                                                    @forelse($cargos as $cargoDaLoja)
+                                                        <label
+                                                            class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 cursor-pointer">
+                                                            <span class="small text-dark">{{ $cargoDaLoja->nome }}</span>
+                                                            <input class="form-check-input me-1" type="checkbox"
+                                                                name="cargos[]" value="{{ $cargoDaLoja->id }}"
+                                                                {{ in_array($cargoDaLoja->id, $cargosAtribuidosIds) ? 'checked' : '' }}>
+                                                        </label>
+                                                    @empty
+                                                        <div class="p-4 text-center">
+                                                            <p class="text-muted small mb-0">
+                                                                <i class="bi bi-exclamation-circle d-block mb-1"></i>
+                                                                Nenhum cargo ou função cadastrada para
+                                                                esta loja.
+                                                            </p>
+                                                        </div>
+                                                    @endforelse
+                                                </div>
+                                            </div>
+
+                                            @if ($cargos->count() > 0)
+                                                <div class="modal-footer bg-light border-0 py-2">
+                                                    <button type="submit" class="btn btn-sm btn-success w-100"
+                                                        style="transition: transform 0.2s;"
+                                                        onmouseover="this.style.transform='scale(1.03)'"
+                                                        onmouseout="this.style.transform='scale(1)'">Atualizar
+                                                        Cargos</button>
+                                                </div>
+                                            @endif
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            </p>
+                            {{-- <div class="mt-auto">
                                 @include('utils.buttons.show', [
                                     'route' => $bag['route'],
                                     'params' => [
@@ -41,8 +175,8 @@
                                         'produto' => $item->slug,
                                     ],
                                 ])
-                            </div>
-                        </div> --}}
+                            </div> --}}
+                        </div>
                     </div>
                 </div>
             @endforeach
@@ -51,9 +185,9 @@
         <div class="card">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0 fw-bold text-primary">Colaboradores Vinculados</h5>
-                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalColaborador"
-                    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'"
-                    onmouseout="this.style.transform='scale(1)'">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#modalColaborador" style="transition: transform 0.2s;"
+                    onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                     <i class="bi bi-person-plus me-1"></i> Gerenciar Colaboradores
                 </button>
             </div>
@@ -195,8 +329,9 @@
                                                                         class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 cursor-pointer">
                                                                         <span
                                                                             class="small text-dark">{{ $cargoDaLoja->nome }}</span>
-                                                                        <input class="form-check-input me-1" type="checkbox"
-                                                                            name="cargos[]" value="{{ $cargoDaLoja->id }}"
+                                                                        <input class="form-check-input me-1"
+                                                                            type="checkbox" name="cargos[]"
+                                                                            value="{{ $cargoDaLoja->id }}"
                                                                             {{ in_array($cargoDaLoja->id, $cargosAtribuidosIds) ? 'checked' : '' }}>
                                                                     </label>
                                                                 @empty
@@ -214,7 +349,8 @@
 
                                                         @if ($cargos->count() > 0)
                                                             <div class="modal-footer bg-light border-0 py-2">
-                                                                <button type="submit" class="btn btn-sm btn-success w-100"
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-success w-100"
                                                                     style="transition: transform 0.2s;"
                                                                     onmouseover="this.style.transform='scale(1.03)'"
                                                                     onmouseout="this.style.transform='scale(1)'">Atualizar
