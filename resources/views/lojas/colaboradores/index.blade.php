@@ -9,6 +9,16 @@
     ])
     @include('utils.layout.alertsCustom')
     @if (session('loja_colaboradores_visualizacao', 'grid') == 'grid')
+        <div class="card">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-primary">Colaboradores Vinculados</h5>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalColaborador"
+                    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'"
+                    onmouseout="this.style.transform='scale(1)'">
+                    <i class="bi bi-person-plus me-1"></i> Gerenciar Colaboradores
+                </button>
+            </div>
+        </div>
         <div class="row g-3">
             @foreach ($colaboradores as $item)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -70,8 +80,8 @@
                                 @endif
                             </p>
                             <p class="card-text text-muted mb-2" style="font-size: 0.875rem;">
-                                <button type="button" class="btn btn-xs text-primary border-0 p-0"
-                                    data-bs-toggle="modal" data-bs-target="#modalListaCargos" title="Gerenciar Cargos"
+                                <button type="button" class="btn btn-xs text-primary border-0 p-0" data-bs-toggle="modal"
+                                    data-bs-target="#modalListaCargos" title="Gerenciar Cargos"
                                     style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'"
                                     onmouseout="this.style.transform='scale(1)'">
                                     Cargo/Função:
