@@ -215,8 +215,8 @@
         -   [ ] 7.1.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
         -   [ ] 7.1.2. show (com atalho de cadastrar ou alterar categoria do produto e gestão de estoque abaixo do produto).
             -   [ ] 7.1.2.1. Gestão de Estoque (Controller EstoqueController).
-                -   [ ] 7.1.2.1.1. Cadastrar novo estoque.
-                -   [ ] 7.1.2.1.1. Editar estoque.
+                -   [x] 7.1.2.1.1. Cadastrar novo estoque.
+                -   [x] 7.1.2.1.1. Editar estoque.
         -   [x] 7.1.3. create (com cadastro de categoria opcional).
         -   [x] 7.1.4. store (com request).
         -   [x] 7.1.5. edit.

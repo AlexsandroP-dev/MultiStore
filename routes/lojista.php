@@ -3,12 +3,14 @@
 use App\Http\Controllers\Lojista\LojaDashboardController;
 use App\Http\Controllers\Lojista\Lojas\CargoController;
 use App\Http\Controllers\Lojista\Lojas\ColaboradorController;
+use App\Http\Controllers\Lojista\Lojas\EstoqueController;
 use App\Http\Controllers\Lojista\Lojas\ProdutoController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth', 'config.loja']], function () {
     Route::prefix('loja/{loja}/dashboard')->name('loja.dashboard.')->group(function () {
         Route::get('/', [LojaDashboardController::class, 'index'])->name('index');
+        //Produtos
         Route::prefix('/produtos')->name('produtos.')->group(function () {
             Route::get('/', [ProdutoController::class, 'index'])->name('index');
             Route::get('/create', [ProdutoController::class, 'create'])->name('create');
@@ -17,11 +19,17 @@ Route::group(['middleware' => ['auth', 'config.loja']], function () {
             Route::get('/setVisualizacao/{modo}', [ProdutoController::class, 'setVisualizacao'])->name('set.visualizacao');
         });
 
-        //Categorias
-        Route::prefix('/categoria')->name('produtos.')->group(function () {
-            Route::get('/{categoria}/produto/{produto}/show', [ProdutoController::class, 'show'])->name('show');
-            Route::get('/{categoria}/produto/{produto}/edit', [ProdutoController::class, 'edit'])->name('edit');
-            Route::put('/{categoria}/produto/{produto}/update', [ProdutoController::class, 'update'])->name('update');
+        //Produtos cujo requerem parametro categoria
+        Route::prefix('/categoria/{categoria}/produto/{produto}')->name('produtos.')->group(function () {
+            Route::get('/show', [ProdutoController::class, 'show'])->name('show');
+            Route::get('/edit', [ProdutoController::class, 'edit'])->name('edit');
+            Route::put('/update', [ProdutoController::class, 'update'])->name('update');
+            
+            //Estoque do produto
+            Route::prefix('/show')->name('show.estoque.')->group(function () {
+                Route::post('/estoque/store', [EstoqueController::class, 'store'])->name('store');
+                Route::put('/estoque/update/{estoque}', [EstoqueController::class, 'update'])->name('update');
+            });
         });
 
         //Colaboradores
