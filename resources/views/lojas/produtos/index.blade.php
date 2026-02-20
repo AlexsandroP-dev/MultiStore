@@ -2,10 +2,12 @@
 
 @section('content')
     @include('utils.layout.indexHeader', [
+        'enableHeaderButtons' => true,
+        'session' => 'loja_produto_visualizacao',
         'route' => $bag['route'],
         'params' => ['loja' => session('loja_slug')]
     ])
-    @if (session('loja_produto_visualizacao', 'tabela') == 'grid')
+    @if (session('loja_produto_visualizacao', 'grid') == 'grid')
         <div class="row g-3">
             @foreach ($produtos as $item)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
