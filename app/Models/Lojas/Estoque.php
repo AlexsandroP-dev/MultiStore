@@ -37,6 +37,16 @@ class Estoque extends Model
         ];
     }
 
+    public function preco_venda()
+    {
+        return number_format($this->preco_venda, 2, ',', '.');
+    }
+
+    public function preco_custo()
+    {
+        return number_format($this->preco_custo, 2, ',', '.');
+    }
+
     public function produto()
     {
         return $this->belongsTo(Produto::class, 'produto_id');

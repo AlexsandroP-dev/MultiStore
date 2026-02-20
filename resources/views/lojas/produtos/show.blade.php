@@ -35,7 +35,8 @@
 
                             <div class="col-md-7 p-4 p-lg-5">
                                 <div class="mb-4">
-                                    <h5 class="text-uppercase text-muted small fw-bold mb-3">Descrição do Produto: {{ $produto->nome }}</h5>
+                                    <h5 class="text-uppercase text-muted small fw-bold mb-3">Descrição do Produto:
+                                        {{ $produto->nome }}</h5>
                                     <div class="text-dark lh-base">
                                         {!! nl2br(e($produto->descricao)) !!}
                                     </div>
@@ -61,17 +62,15 @@
                                         </div>
 
                                         <div class="d-flex align-items-center gap-2">
-                                            <span class="badge bg-primary-subtle text-primary px-3 py-2">
-                                                {{ $produto->categoria->nome ?? 'Sem categoria' }}
+                                            <span class="badge bg-primary-subtle text-primary px-2 py-1">
+                                                <button class="btn btn-sm btn-link text-decoration-none p-0" type="button"
+                                                    style="transition: transform 0.2s;"
+                                                    onmouseover="this.style.transform='scale(1.1)'"
+                                                    onmouseout="this.style.transform='scale(1)'" data-bs-toggle="collapse"
+                                                    data-bs-target="#collapseAlterarCategoria">
+                                                    {{ $produto->categoria->nome ?? 'Sem categoria' }}
+                                                </button>
                                             </span>
-                                            <button class="btn btn-sm btn-link text-decoration-none p-0" type="button"
-                                                style="transition: transform 0.2s;"
-                                                onmouseover="this.style.transform='scale(1.07)'"
-                                                onmouseout="this.style.transform='scale(1)'" data-bs-toggle="collapse"
-                                                data-bs-target="#collapseAlterarCategoria">
-                                                <i class="bi bi-plus-circle"></i> <small>Alterar categoria do
-                                                    produto</small>
-                                            </button>
                                         </div>
 
                                         <div class="collapse mt-2" id="collapseNovaCategoria">
@@ -127,6 +126,58 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold text-primary">
+                            <i class="bi bi-box-seam me-2"></i>Gestão de Estoque
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Quantidade</th>
+                                        <th>Preço de Venda / Preço de Custo</th>
+                                        <th>Última Atualização</th>
+                                        <th class="text-center pe-4">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($produto->estoques as $estoque)
+                                        <tr>
+                                            <td>
+                                                <span
+                                                    class="fs-5">{{ number_format($estoque->quantidade, 0, ',', '.') }}</span>
+                                                <small class="text-muted">{{ $estoque->medida }}</small>
+                                            </td>
+                                            <td>{{ $estoque->preco_venda() }}R$ por {{ $estoque->medida }} / {{ $estoque->preco_custo() }}R$ no total</td>
+                                            <td>{{ $estoque->updated_at->format('d/m/Y H:i') }}</td>
+                                            <td class="text-center pe-4">
+                                                @if ($estoque->quantidade <= ($estoque->estoque_minimo ?? 5))
+                                                    <span class="badge bg-danger-subtle text-danger">Estoque Baixo</span>
+                                                @else
+                                                    <span class="badge bg-success-subtle text-success">Estoque Adequado</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center py-4 text-muted">
+                                                <i class="bi bi-info-circle me-1"></i> Nenhum registro de estoque
+                                                encontrado para este produto.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

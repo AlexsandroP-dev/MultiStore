@@ -55,6 +55,7 @@ class ProdutoController extends Controller
     public function show(Loja $loja, Categoria $categoria, Produto $produto)
     {
         $categorias = $this->categorias->where('loja_id', session('loja_id'))->get();
+        $produto = $this->produtos->with(['categoria', 'estoques'])->where('id', $produto->id)->firstOrFail();
         return view($this->bag['view'] . '.show', compact('produto', 'categorias'));
     }
 
