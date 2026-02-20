@@ -213,7 +213,10 @@
 -   [ ] **Fase 7: Features Lojista**
     -   [ ] 7.1. Backend CRUD Produtos:
         -   [ ] 7.1.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
-        -   [x] 7.1.2. show (com atalho de cadastrar ou alterar categoria do produto).
+        -   [ ] 7.1.2. show (com atalho de cadastrar ou alterar categoria do produto e gestão de estoque abaixo do produto).
+            -   [ ] 7.1.2.1. Gestão de Estoque (Controller EstoqueController).
+                -   [ ] 7.1.2.1.1. Cadastrar novo estoque.
+                -   [ ] 7.1.2.1.1. Editar estoque.
         -   [x] 7.1.3. create (com cadastro de categoria opcional).
         -   [x] 7.1.4. store (com request).
         -   [x] 7.1.5. edit.
@@ -221,7 +224,11 @@
         -   [ ] 7.1.7. delete.
     -   [ ] 7.1.4. Frontend CRUD Produtos:
         -   [ ] 7.1.4.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
-        -   [x] 7.1.4.2. show (com atalho de cadastrar ou alterar categoria do produto).
+        -   [ ] 7.1.4.2. show (com atalho de cadastrar ou alterar categoria do produto e gestão de estoque abaixo do produto).
+            -   [ ] 7.1.4.2.1. Gestão de Estoque.
+                -   [x] 7.1.4.2.1.1. Listar estoques do produto (com destaque para caso o estoque minimo estiver baixo).
+                -   [ ] 7.1.4.2.1.2. Cadastrar novo estoque.
+                -   [ ] 7.1.4.2.1.3. Editar o estoque.
         -   [x] 7.1.4.3. create (com cadastro de categoria opcional).
         -   [x] 7.1.4.4. edit.
     -   [ ] 7.2. Backend CRUD Colaboradores:
