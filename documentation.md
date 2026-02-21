@@ -211,42 +211,55 @@
 -   [ ] **Fase 6: Segurança/Auditoria**
     -   [x] 6.1. Middleware ConfigLojaSession para evitar repetir query da loja pelo slug toda vez que o lojista recarregar página
 -   [ ] **Fase 7: Features Lojista**
-    -   [ ] 7.1. Backend CRUD Produtos:
-        -   [ ] 7.1.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
-        -   [x] 7.1.2. show (com atalho de cadastrar ou alterar categoria do produto e gestão de estoque abaixo do produto).
-            -   [x] 7.1.2.1. Gestão de Estoque (Controller EstoqueController).
-                -   [x] 7.1.2.1.1. Cadastrar novo estoque.
-                -   [x] 7.1.2.1.1. Editar estoque.
-        -   [x] 7.1.3. create (com cadastro de categoria opcional).
-        -   [x] 7.1.4. store (com request).
-        -   [x] 7.1.5. edit.
-        -   [x] 7.1.6. update (com request).
-        -   [ ] 7.1.7. delete.
-    -   [ ] 7.1.4. Frontend CRUD Produtos:
-        -   [ ] 7.1.4.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
-        -   [x] 7.1.4.2. show (com atalho de cadastrar ou alterar categoria do produto e gestão de estoque abaixo do produto).
-            -   [x] 7.1.4.2.1. Gestão de Estoque.
-                -   [x] 7.1.4.2.1.1. Listar estoques do produto (com destaque para caso o estoque minimo estiver baixo).
-                -   [x] 7.1.4.2.1.2. Cadastrar novo estoque.
-                -   [x] 7.1.4.2.1.3. Editar o estoque.
-        -   [x] 7.1.4.3. create (com cadastro de categoria opcional).
-        -   [x] 7.1.4.4. edit.
-    -   [ ] 7.2. Backend CRUD Colaboradores:
-        -   [ ] 7.2.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
-        -   [x] 7.2.2. A implementar lista de colaboradores da loja no INDEX (`Dependente do item 7.2.1.`).
-            -   [x] 7.2.2.1. Cadastrar colaborador na loja.
-            -   [x] 7.2.2.2. Vincular colaborador na loja.
-            -   [x] 7.2.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
-            -   [x] 7.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
-            -   [x] 7.2.2.5. Atribuir/remover cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
-            -   [x] 7.2.2.6. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
-        -   [x] 7.2.3. store (com request, cadastrar novo user vinculando a loja ou vincular user existente).
-    -   [ ] 7.3. Frontend CRUD Colaboradores:
-        -   [ ] 7.3.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
-        -   [x] 7.3.2. A implementar lista de colaboradores da loja no INDEX para ambos modos os layouts (`Dependente do item 7.3.1.`).
-            -   [x] 7.3.2.1. Cadastrar colaborador na loja.
-            -   [x] 7.3.2.2. Vincular colaborador na loja.
-            -   [x] 7.3.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
-            -   [x] 7.3.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
-            -   [x] 7.3.2.5. Atribuir/remover cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
-            -   [x] 7.3.2.6. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
+    -   [ ] 7.1. Produtos:
+        -   [ ] 7.1.1. Backend CRUD Produtos:
+            -   [ ] 7.1.1.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado, mostrar quantidade de estoque).
+            -   [x] 7.1.1.2. show (com atalho de cadastrar ou alterar categoria do produto e gestão de estoque abaixo do produto).
+                -   [x] 7.1.1.2.1. Gestão de Estoque (Controller EstoqueController).
+                    -   [x] 7.1.1.2.1.1. Cadastrar novo estoque.
+                    -   [x] 7.1.1.2.1.1. Editar estoque.
+            -   [x] 7.1.1.3. create (com cadastro de categoria opcional).
+            -   [x] 7.1.1.4. store (com request).
+            -   [x] 7.1.1.5. edit.
+            -   [x] 7.1.1.6. update (com request).
+            -   [ ] 7.1.1.7. delete.
+        -   [ ] 7.1.2. Frontend CRUD Produtos:
+            -   [ ] 7.1.2.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado, mostrar quantidade de estoque).
+            -   [x] 7.1.2.2. show (com atalho de cadastrar ou alterar categoria do produto e gestão de estoque abaixo do produto).
+                -   [x] 7.1.2.2.1. Gestão de Estoque.
+                    -   [x] 7.1.2.2.1.1. Listar estoques do produto (com destaque para caso o estoque minimo estiver baixo).
+                    -   [x] 7.1.2.2.1.2. Cadastrar novo estoque.
+                    -   [x] 7.1.2.2.1.3. Editar o estoque.
+            -   [x] 7.1.2.3. create (com cadastro de categoria opcional).
+            -   [x] 7.1.2.4. edit.
+    -   [ ] 7.2. Colaboradores:
+        -   [ ] 7.2.1. Backend CRUD Colaboradores:
+            -   [ ] 7.2.1.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
+            -   [x] 7.2.1.2. A implementar lista de colaboradores da loja no INDEX (`Dependente do item 7.2.1.1.`).
+                -   [x] 7.2.1.2.1. Cadastrar colaborador na loja.
+                -   [x] 7.2.1.2.2. Vincular colaborador na loja.
+                -   [x] 7.2.1.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
+                -   [x] 7.2.1.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                -   [x] 7.2.1.2.5. Atribuir/remover cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                -   [x] 7.2.1.2.6. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
+            -   [x] 7.2.1.3. store (com request, cadastrar novo user vinculando a loja ou vincular user existente).
+        -   [ ] 7.2.2. Frontend CRUD Colaboradores:
+            -   [ ] 7.2.2.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
+            -   [x] 7.2.2.2. A implementar lista de colaboradores da loja no INDEX para ambos modos os layouts (`Dependente do item 7.2.2.1.`).
+                -   [x] 7.2.2.2.1. Cadastrar colaborador na loja.
+                -   [x] 7.2.2.2.2. Vincular colaborador na loja.
+                -   [x] 7.2.2.2.3. Desativar/reativar colaborador na loja clicando no status(icone verde ou vermelho) da lista de colaboradores.
+                -   [x] 7.2.2.2.4. Criar/editar cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                -   [x] 7.2.2.2.5. Atribuir/remover cargos de colaboradores da loja (ícone de adicionar na coluna de Cargo/Função da lista).
+                -   [x] 7.2.2.2.6. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
+    -   [ ] 7.3. Financeiro:
+        -   [ ] 7.3.1. Backend CRUD Financeiro:
+            -   [ ] 7.3.1.1. index (entradas e saidas, com filtro de data)
+                -   [ ] 7.3.1.1.1. Cadastrar nova categoria de financeiro.
+                -   [ ] 7.3.1.1.2. Editar categoria de financeiro.
+                -   [ ] 7.3.1.1.3. cadastrar nova entrada ou saida.
+        -   [ ] 7.3.2. Frontend CRUD Financeiro:
+            -   [ ] 7.3.2.1. index (entradas e saidas, com filtro de data)
+                -   [ ] 7.3.2.1.1. Cadastrar nova categoria de financeiro.
+                -   [ ] 7.3.2.1.2. Editar categoria de financeiro.
+                -   [ ] 7.3.2.1.3. cadastrar nova entrada ou saida.

@@ -4,6 +4,7 @@ use App\Http\Controllers\Lojista\LojaDashboardController;
 use App\Http\Controllers\Lojista\Lojas\CargoController;
 use App\Http\Controllers\Lojista\Lojas\ColaboradorController;
 use App\Http\Controllers\Lojista\Lojas\EstoqueController;
+use App\Http\Controllers\Lojista\Lojas\FinanceiroController;
 use App\Http\Controllers\Lojista\Lojas\ProdutoController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,7 @@ Route::group(['middleware' => ['auth', 'config.loja']], function () {
             Route::get('/show', [ProdutoController::class, 'show'])->name('show');
             Route::get('/edit', [ProdutoController::class, 'edit'])->name('edit');
             Route::put('/update', [ProdutoController::class, 'update'])->name('update');
-            
+
             //Estoque do produto
             Route::prefix('/show')->name('show.estoque.')->group(function () {
                 Route::post('/estoque/store', [EstoqueController::class, 'store'])->name('store');
@@ -51,5 +52,9 @@ Route::group(['middleware' => ['auth', 'config.loja']], function () {
             });
         });
 
+        //Financeiro
+        Route::prefix('/financeiro')->name('financeiro.')->group(function () {
+            Route::get('/', [FinanceiroController::class, 'index'])->name('index');
+        });
     });
 });

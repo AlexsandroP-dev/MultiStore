@@ -19,6 +19,12 @@ return [
             "params" => function() { return ['loja' => session('loja_slug')]; }
         ],
         [
+            "name" => "Financeiro",
+            "icon" => "bi bi-currency-dollar",
+            "route" => "loja.dashboard.financeiro.index",
+            "params" => function() { return ['loja' => session('loja_slug')]; }
+        ],
+        [
             "name" => "Cadastros",
             "icon" => "bi bi-grid",
             "submenu" => [
