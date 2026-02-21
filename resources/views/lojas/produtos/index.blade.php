@@ -5,7 +5,7 @@
         'enableHeaderButtons' => true,
         'session' => 'loja_produto_visualizacao',
         'route' => $bag['route'],
-        'params' => ['loja' => session('loja_slug')]
+        'params' => ['loja' => session('loja_slug')],
     ])
     @if (session('loja_produto_visualizacao', 'grid') == 'grid')
         <div class="row g-3">
@@ -25,6 +25,21 @@
                             <h5 class="card-title">{{ $item->nome }}</h5>
                             <p class="card-text text-muted mb-2" style="font-size: 0.875rem;">Categoria:
                                 #{{ $item->categoria->nome }}</p>
+                            <p class="card-text text-muted mb-0" style="font-size: 0.875rem;">Estoques:
+                                @if ($item->estoque)
+                                    @if ($item->estoque->quantidade > $item->estoque->estoque_minimo)
+                                        <span class="badge bg-success-subtle text-success p-2 px-2 rounded-pill">
+                                            {{ $item->estoque->quantidade }}
+                                            {{ $item->estoque->medida }}</span>
+                                    @else
+                                        <span class="badge bg-danger-subtle text-danger p-2 px-2 rounded-pill">
+                                            {{ $item->estoque->quantidade }}
+                                            {{ $item->estoque->medida }}</span>
+                                    @endif
+                                @else
+                                    <span class="text-muted">Sem estoques cadastrados</span>
+                                @endif
+                            </p>
                             <div class="mt-auto">
                                 @include('utils.buttons.show', [
                                     'route' => $bag['route'],

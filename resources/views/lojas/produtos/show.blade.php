@@ -138,62 +138,22 @@
                         <h5 class="mb-0 fw-bold text-primary">
                             <i class="bi bi-box-seam me-2"></i>Gestão de Estoque
                         </h5>
-                        @if ($produto->estoques->count() < 1)
+                        @if (!$produto->estoque)
                             <button type="button" class="btn btn-sm btn-primary" style="transition: transform 0.2s;"
                                 onmouseover="this.style.transform='scale(1.07)'"
                                 onmouseout="this.style.transform='scale(1)'" data-bs-toggle="modal"
                                 data-bs-target="#modalNovoEstoque">
-                                <i class="bi bi-plus-lg"></i> Novo Estoque
+                                <i class="bi bi-plus-lg"></i> Novo
+                            </button>
+                        @else
+                            <button type="button" class="btn btn-sm btn-outline-warning" style="transition: transform 0.2s;"
+                                onmouseover="this.style.transform='scale(1.07)'"
+                                onmouseout="this.style.transform='scale(1)'" data-bs-toggle="modal"
+                                data-bs-target="#modalEditarEstoque">
+                                <i class="bi bi-pencil"></i> Editar
                             </button>
                         @endif
                     </div>
-                    {{-- <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Quantidade</th>
-                                        <th>Preço de Venda</th>
-                                        <th>Preço de Custo</th>
-                                        <th>Unidade de Medida</th>
-                                        <th>Última Atualização</th>
-                                        <th class="text-center pe-4">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($produto->estoques as $estoque)
-                                        <tr>
-                                            <td>
-                                                <span
-                                                    class="fs-5">{{ number_format($estoque->quantidade, 0, ',', '.') }}</span>
-                                                <small class="text-muted">{{ $estoque->medida }}</small>
-                                            </td>
-                                            <td>R${{ $estoque->preco_venda() }} por {{ $estoque->medida }}</td>
-                                            <td>R${{ $estoque->preco_custo() }} no total</td>
-                                            <td>{{ config("themes.lojas.configs.unidades_medida.{$estoque->medida}") ?? $estoque->medida }}
-                                            </td>
-                                            <td>{{ $estoque->updated_at->format('d/m/Y H:i') }}</td>
-                                            <td class="text-center pe-4">
-                                                @if ($estoque->quantidade <= ($estoque->estoque_minimo ?? 5))
-                                                    <span class="badge bg-danger-subtle text-danger">Estoque Baixo</span>
-                                                @else
-                                                    <span class="badge bg-success-subtle text-success">Estoque
-                                                        Adequado</span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4" class="text-center py-4 text-muted">
-                                                <i class="bi bi-info-circle me-1"></i> Nenhum registro de estoque
-                                                encontrado para este produto.
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> --}}
                     <div class="card-body p-0">
                         {{-- Cabeçalho apenas para Desktop (d-none d-md-block) --}}
                         <div class="d-none d-md-block border-bottom bg-light py-2 px-4">
@@ -205,27 +165,23 @@
                         </div>
 
                         <div class="list-group list-group-flush">
-                            @forelse ($produto->estoques as $estoque)
+                            @if ($produto->estoque)
                                 <div class="list-group-item p-4">
                                     <div class="row align-items-center g-3">
                                         <div class="col-12 col-md-4">
                                             <div class="d-flex align-items-center justify-content-between w-100">
-                                                {{-- <div class="bg-primary-subtle text-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center"
-                                                    style="width: 45px; height: 45px;">
-                                                    <i class="bi bi-rulers"></i>
-                                                </div> --}}
                                                 <div>
                                                     <span class="d-block text-muted small">Medida</span>
                                                     <strong
-                                                        class="text-dark">{{ config("themes.lojas.configs.unidades_medida.{$estoque->medida}") ?? $estoque->medida }}</strong>
+                                                        class="text-dark">{{ config("themes.lojas.configs.unidades_medida.{$produto->estoque->medida}") ?? $produto->estoque->medida }}</strong>
                                                 </div>
-                                                <button type="button" class="d-md-none btn btn-sm btn-outline-warning"
+                                                {{-- <button type="button" class="d-md-none btn btn-sm btn-outline-warning"
                                                     style="transition: transform 0.2s;"
                                                     onmouseover="this.style.transform='scale(1.07)'"
                                                     onmouseout="this.style.transform='scale(1)'" data-bs-toggle="modal"
                                                     data-bs-target="#modalEditarEstoque">
                                                     <i class="bi bi-pencil"></i> Editar
-                                                </button>
+                                                </button> --}}
                                             </div>
                                         </div>
 
@@ -235,25 +191,22 @@
                                                 <div class="col-6 col-md-12">
                                                     <span class="d-block text-muted small">Estoque Disponível</span>
                                                     <span
-                                                        class="fs-5 fw-bold">{{ number_format($estoque->quantidade, 2, ',', '.') }}
-                                                        {{ $estoque->medida }}</span>
+                                                        class="fs-5 fw-bold">{{ number_format($produto->estoque->quantidade, 2, ',', '.') }}
+                                                        {{ $produto->estoque->medida }}</span>
                                                 </div>
                                                 <div class="col-6 d-md-none border-start ps-3"> {{-- Aparece apenas no Mobile ao lado da Qtd --}}
-                                                    {{-- <span class="d-block text-muted small">Venda</span>
-                                                    <span class="fw-bold text-success">R$
-                                                        {{ $estoque->preco_venda() }}</span> --}}
                                                     <span class="mt-md-2 small text-muted">
                                                         <i class="bi bi-box-seam me-1"></i> Estoque Mínimo:
-                                                        {{ number_format($estoque->estoque_minimo, 2, ',', '.') }}
+                                                        {{ number_format($produto->estoque->estoque_minimo, 2, ',', '.') }}
                                                     </span>
                                                 </div>
                                             </div>
 
                                             <div class="d-none d-md-block mt-1 small">
-                                                <span class="text-muted">Custo: R$ {{ $estoque->preco_custo() }}</span>
+                                                <span class="text-muted">Custo: R$ {{ $produto->estoque->preco_custo() }}</span>
                                                 <span class="mx-1">|</span>
                                                 <span class="text-success fw-bold">Venda: R$
-                                                    {{ $estoque->preco_venda() }}</span>
+                                                    {{ $produto->estoque->preco_venda() }}</span>
                                             </div>
                                         </div>
 
@@ -261,7 +214,7 @@
                                             <div class="d-flex d-md-block justify-content-between align-items-center">
                                                 <div>
                                                     <span class="d-none d-md-block text-muted small mb-1">Situação</span>
-                                                    @if ($estoque->quantidade <= $estoque->estoque_minimo)
+                                                    @if ($produto->estoque->quantidade <= $produto->estoque->estoque_minimo)
                                                         <span
                                                             class="badge bg-danger-subtle text-danger p-2 px-2 rounded-pill">
                                                             <i class="bi bi-exclamation-triangle-fill me-1"></i> Estoque
@@ -277,29 +230,29 @@
                                                 </div>
                                                 <div class="mt-md-2 d-none d-md-block small text-muted">
                                                     <i class="bi bi-box-seam me-1"></i> Estoque Mínimo:
-                                                    {{ number_format($estoque->estoque_minimo, 2, ',', '.') }}
+                                                    {{ number_format($produto->estoque->estoque_minimo, 2, ',', '.') }}
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 text-md-center">
                                             <hr class="d-md-none">
                                             <div class="d-md-none mt-1 small">
-                                                <span class="text-muted">Custo: R$ {{ $estoque->preco_custo() }}</span>
+                                                <span class="text-muted">Custo: R$ {{ $produto->estoque->preco_custo() }}</span>
                                                 <span class="mx-1">|</span>
                                                 <span class="text-success fw-bold">Venda: R$
-                                                    {{ $estoque->preco_venda() }}</span>
+                                                    {{ $produto->estoque->preco_venda() }}</span>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <button type="button"
+                                    {{-- <button type="button"
                                         class="d-none d-md-block btn btn-sm btn-outline-warning mt-3 mt-md-0 float-end"
                                         style="transition: transform 0.2s;"
                                         onmouseover="this.style.transform='scale(1.07)'"
                                         onmouseout="this.style.transform='scale(1)'" data-bs-toggle="modal"
                                         data-bs-target="#modalEditarEstoque">
                                         <i class="bi bi-pencil"></i> Editar Estoque
-                                    </button>
+                                    </button> --}}
                                 </div>
                                 <div class="modal fade" id="modalEditarEstoque" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -315,7 +268,7 @@
                                                     'loja' => session('loja_slug'),
                                                     'categoria' => $produto->categoria->slug,
                                                     'produto' => $produto->id,
-                                                    'estoque' => $estoque->id,
+                                                    'estoque' => $produto->estoque->id,
                                                 ]) }}"
                                                 method="POST">
                                                 @csrf
@@ -327,7 +280,7 @@
                                                             <select name="medida" class="form-select" required>
                                                                 @foreach (config('themes.lojas.configs.unidades_medida') as $valor => $label)
                                                                     <option value="{{ $valor }}"
-                                                                        {{ old('medida', $estoque->medida) == $valor ? 'selected' : '' }}>
+                                                                        {{ old('medida', $produto->estoque->medida) == $valor ? 'selected' : '' }}>
                                                                         {{ $label }}
                                                                     </option>
                                                                 @endforeach
@@ -337,7 +290,7 @@
                                                             <label class="form-label fw-bold">Quantidade Atual</label>
                                                             <input type="number" name="quantidade" step="0.01"
                                                                 class="form-control"
-                                                                value="{{ old('quantidade', $estoque->quantidade) }}"
+                                                                value="{{ old('quantidade', $produto->estoque->quantidade) }}"
                                                                 required>
                                                         </div>
                                                         <div class="col-md-6">
@@ -346,7 +299,7 @@
                                                                 <span class="input-group-text">R$</span>
                                                                 <input type="number" name="preco_custo" step="0.01"
                                                                     class="form-control"
-                                                                    value="{{ old('preco_custo', $estoque->preco_custo) }}"
+                                                                    value="{{ old('preco_custo', $produto->estoque->preco_custo) }}"
                                                                     required>
                                                             </div>
                                                         </div>
@@ -356,7 +309,7 @@
                                                                 <span class="input-group-text">R$</span>
                                                                 <input type="number" name="preco_venda" step="0.01"
                                                                     class="form-control"
-                                                                    value="{{ old('preco_venda', $estoque->preco_venda) }}"
+                                                                    value="{{ old('preco_venda', $produto->estoque->preco_venda) }}"
                                                                     required>
                                                             </div>
                                                         </div>
@@ -364,7 +317,7 @@
                                                             <label class="form-label fw-bold">Estoque Mínimo</label>
                                                             <input type="number" name="estoque_minimo" step="0.01"
                                                                 class="form-control"
-                                                                value="{{ old('estoque_minimo', $estoque->estoque_minimo) }}">
+                                                                value="{{ old('estoque_minimo', $produto->estoque->estoque_minimo) }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -384,12 +337,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            @empty
+                            @else
                                 <div class="p-5 text-center text-muted">
                                     <i class="bi bi-box-seam fs-1 d-block mb-3 opacity-50"></i>
                                     <p>Nenhum registro de estoque encontrado.</p>
                                 </div>
-                            @endforelse
+                            @endif
                         </div>
                     </div>
                 </div>

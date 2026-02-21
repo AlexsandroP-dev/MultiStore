@@ -42,7 +42,7 @@ class ProdutoController extends Controller
 
     public function index(Request $request)
     {
-        $produtos = $this->produtos->with('categoria')->where('loja_id', session('loja_id'))->paginate(30);
+        $produtos = $this->produtos->with('categoria', 'estoque')->where('loja_id', session('loja_id'))->paginate(30);
         $links = $produtos->appends($request->except('page'));
         return view($this->bag['view'] . '.index', compact('produtos', 'links'));
     }
@@ -56,7 +56,7 @@ class ProdutoController extends Controller
     public function show(Loja $loja, Categoria $categoria, Produto $produto)
     {
         $categorias = $this->categorias->where('loja_id', session('loja_id'))->get();
-        $produto = $this->produtos->with(['categoria', 'estoques'])->where('id', $produto->id)->firstOrFail();
+        $produto = $this->produtos->with(['categoria', 'estoque'])->where('id', $produto->id)->firstOrFail();
         return view($this->bag['view'] . '.show', compact('produto', 'categorias'));
     }
 
