@@ -39,11 +39,12 @@ class ColaboradorController extends Controller
         $this->cargos = $cargos;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $colaboradores = $this->colaboradores->with('user', 'cargos')->where('loja_id', session('loja_id'))->get();
+        $colaboradores = $this->colaboradores->with('user', 'cargos')->where('loja_id', session('loja_id'))->paginate(30);
         $cargos = $this->cargos->where('loja_id', session('loja_id'))->get();
-        return view($this->bag['view'] . '.index', compact('colaboradores', 'cargos'));
+        $links = $colaboradores->appends($request->except('page'));
+        return view($this->bag['view'] . '.index', compact('colaboradores', 'cargos', 'links'));
     }
 
     public function store(ColaboradorRequest $request, Loja $loja)
