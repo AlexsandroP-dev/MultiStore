@@ -14,8 +14,9 @@ class EstoqueRequest extends FormRequest
 
     public function rules(): array
     {
+        $unidadesValidas = array_keys(config('themes.lojas.configs.unidades_medida'));
         return [
-            'medida' => ['required', 'string', Rule::in(['unidade', 'm2', 'kg', 'metro'])],
+            'medida' => ['required', 'string', Rule::in($unidadesValidas)],
             'preco_venda' => ['required', 'numeric', 'min:0', 'decimal:0,2'],
             'preco_custo' => ['required', 'numeric', 'min:0', 'decimal:0,2'],
             'quantidade' => ['required', 'numeric', 'min:0', 'decimal:0,2'],

@@ -22,6 +22,7 @@ class ProdutoController extends Controller
         'route' => 'loja.dashboard.produtos',
         'routeColaborador' => 'loja.dashboard.show.colaborador',
         'routeCargo' => 'loja.dashboard.show.cargo',
+        'routeEstoque' => 'loja.dashboard.produtos.show.estoque',
         'title' => 'Produtos',
         'subtitle' => 'todos os produtos',
         'section' => [
