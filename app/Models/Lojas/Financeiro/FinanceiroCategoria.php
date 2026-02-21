@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Financeiro;
+namespace App\Models\Lojas\Financeiro;
 
 use App\Models\Lojas\Financeiro\FinanceiroMovimentacao;
 use App\Models\Lojas\Loja;
