@@ -34,7 +34,7 @@ class Categoria extends Model
         $isUuid = preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value);
 
         return $this->where('loja_id', session('loja_id'))
-            ->where(function ($query) use ($value, $isUuid) {
+            ->orWhere(function ($query) use ($value, $isUuid) {
                 if ($isUuid) {
                     $query->where('id', $value);
                 }

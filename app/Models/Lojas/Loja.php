@@ -39,10 +39,12 @@ class Loja extends Model
         $isUuid = preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value);
 
         return $this->where(function ($query) use ($value, $isUuid) {
-            if ($isUuid) {
-                $query->where('id', $value);
-            }
-            $query->orWhere('slug', $value);
+            $query->where(function ($q) use ($value, $isUuid) {
+                if ($isUuid) {
+                    $q->where('id', $value);
+                }
+                $q->orWhere('slug', $value);
+            });
         })->firstOrFail();
     }
 
