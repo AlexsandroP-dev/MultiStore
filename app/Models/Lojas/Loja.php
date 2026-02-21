@@ -7,6 +7,7 @@ use App\Models\Financeiro\FinanceiroCategoria;
 use App\Models\Lojas\Financeiro\FinanceiroMovimentacao;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Loja extends Model
 {
@@ -35,15 +36,14 @@ class Loja extends Model
 
     public function resolveRouteBinding($value, $field = null)
     {
-        // Regex para validar formato UUID: 8-4-4-4-12 caracteres hexadecimais
-        $isUuid = preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value);
-
+        $isUuid = Str::isUuid($value);
         return $this->where(function ($query) use ($value, $isUuid) {
             $query->where(function ($q) use ($value, $isUuid) {
                 if ($isUuid) {
                     $q->where('id', $value);
+                } else {
+                    $q->where('slug', $value);
                 }
-                $q->orWhere('slug', $value);
             });
         })->firstOrFail();
     }

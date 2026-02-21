@@ -4,6 +4,7 @@ namespace App\Models\Lojas;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Categoria extends Model
 {
@@ -30,17 +31,30 @@ class Categoria extends Model
 
     public function resolveRouteBinding($value, $field = null)
     {
-        // Regex para validar se a string é um UUID
-        $isUuid = preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value);
+        $query = $this->newQuery();
+        $lojaId = session('loja_id');
 
-        return $this->where('loja_id', session('loja_id'))
-            ->orWhere(function ($query) use ($value, $isUuid) {
-                if ($isUuid) {
-                    $query->where('id', $value);
-                }
-                $query->orWhere('slug', $value);
-            })
-            ->firstOrFail();
+        if ($lojaId) {
+            $query->where('loja_id', $lojaId);
+        } else {
+            $lojaParam = request()->route('loja');
+            if ($lojaParam instanceof \App\Models\Lojas\Loja) {
+                $query->where('loja_id', $lojaParam->id);
+            } else {
+                $query->whereHas('loja', function ($q) use ($lojaParam) {
+                    $q->where('slug', $lojaParam);
+                });
+            }
+        }
+
+        $isUuid = Str::isUuid($value);
+        return $query->where(function ($q) use ($value, $isUuid) {
+            if ($isUuid) {
+                $q->where('id', $value);
+            } else {
+                $q->where('slug', $value);
+            }
+        })->firstOrFail();
     }
 
     public function loja()
