@@ -35,8 +35,8 @@ class FinanceiroController extends Controller
 
     public function index(Request $request)
     {
-        $financeiros = $this->financeiros->with('categoria')->where('loja_id', session('loja_id'))->paginate(30);
-        $links = $financeiros->appends($request->except('page'));
-        return view($this->bag['view'] . '.index', compact('financeiros', 'links'));
+        $movimentacoes = $this->financeiros->with('categoria')->where('loja_id', session('loja_id'))->paginate(30);
+        $links = $movimentacoes->appends($request->except('page'));
+        return view($this->bag['view'] . '.index', compact('movimentacoes', 'links'));
     }
 }
