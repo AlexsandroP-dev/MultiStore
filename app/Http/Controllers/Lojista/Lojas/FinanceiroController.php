@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Lojista\Lojas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Lojas\Financeiro\CategoriaRequest;
+use App\Http\Requests\Lojas\Financeiro\FinanceiroRequest;
+use App\Models\Clientes\Pedido;
 use App\Models\Lojas\Financeiro\FinanceiroCategoria;
 use App\Models\Lojas\Financeiro\FinanceiroMovimentacao;
 use Illuminate\Support\Facades\View;
@@ -13,6 +16,7 @@ class FinanceiroController extends Controller
 {
     protected $financeiros;
     protected $categorias;
+    protected $pedidos;
     protected $bag = [
         'view' => 'lojas.financeiro',
         'route' => 'loja.dashboard.financeiro',
@@ -26,17 +30,82 @@ class FinanceiroController extends Controller
         ]
     ];
 
-    public function __construct(FinanceiroMovimentacao $financeiros, FinanceiroCategoria $categorias)
+    public function __construct(FinanceiroMovimentacao $financeiros, FinanceiroCategoria $categorias, Pedido $pedidos)
     {
         View::share('bag', $this->bag);
         $this->financeiros = $financeiros;
         $this->categorias = $categorias;
+        $this->pedidos = $pedidos;
     }
 
     public function index(Request $request)
     {
         $movimentacoes = $this->financeiros->with('categoria')->where('loja_id', session('loja_id'))->paginate(30);
         $links = $movimentacoes->appends($request->except('page'));
-        return view($this->bag['view'] . '.index', compact('movimentacoes', 'links'));
+        $categorias = $this->categorias->where('loja_id', session('loja_id'))->get();
+        $pedidosRecentes = $this->pedidos->where('loja_id', session('loja_id'))
+            ->whereIn('status', [Pedido::STATUS_PENDENTE, Pedido::STATUS_PAGO])
+            ->orderBy('created_at', 'desc')->limit(10)->get();
+        return view($this->bag['view'] . '.index', compact('movimentacoes', 'links', 'categorias', 'pedidosRecentes'));
+    }
+
+    public function store(FinanceiroRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            // Opcional: Se houver pedido_id, podemos preencher a descrição automaticamente caso esteja vazia
+            if ($request->pedido_id && empty($request->descricao)) {
+                $validated['descricao'] = "Pagamento referente ao Pedido #" . $request->pedido_id;
+            }
+            $this->financeiros->create($request->validated() + [
+                'loja_id' => session('loja_id'),
+            ]);
+            DB::commit();
+            return redirect()->back()->with('success', 'Movimentação financeira registrada com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Ocorreu um erro ao cadastrar a movimentação financeira:');
+        }
+    }
+
+    public function update(FinanceiroRequest $request, FinanceiroMovimentacao $financeiro)
+    {
+        DB::beginTransaction();
+        try {
+            $financeiro->update($request->validated());
+            DB::commit();
+            return redirect()->back()->with('success', 'Movimentação financeira atualizada com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Ocorreu um erro ao atualizar a movimentação financeira:');
+        }
+    }
+
+    public function storeCategoria(CategoriaRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $this->categorias->create($request->validated() + [
+                'loja_id' => session('loja_id'),
+            ]);
+            DB::commit();
+            return redirect()->back()->with('success', 'Categoria financeira cadastrada com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Ocorreu um erro ao cadastrar a categoria financeira:');
+        }
+    }
+
+    public function updateCategoria(CategoriaRequest $request, FinanceiroCategoria $categoria)
+    {
+        DB::beginTransaction();
+        try {
+            $categoria->update($request->validated());
+            DB::commit();
+            return redirect()->back()->with('success', 'Categoria financeira atualizada com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Ocorreu um erro ao atualizar a categoria financeira:');
+        }
     }
 }

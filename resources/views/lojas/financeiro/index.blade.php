@@ -44,7 +44,9 @@
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-bold">Movimentações</h5>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalNovaMovimentacao">
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalNovaMovimentacao"
+                style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.06)'"
+                onmouseout="this.style.transform='scale(1)'">
                 <i class="bi bi-plus-lg"></i> <span class="d-none d-md-inline">Nova Movimentação</span>
             </button>
         </div>
@@ -113,6 +115,102 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalNovaMovimentacao" tabindex="-1" aria-labelledby="modalNovaMovimentacaoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="modalNovaMovimentacaoLabel">
+                        Nova Movimentação
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"
+                        style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'"
+                        onmouseout="this.style.transform='scale(1)'"></button>
+                </div>
+
+                <form action="{{ route($bag['route'] . '.store', ['loja' => session('loja_slug')]) }}" method="POST"
+                    id="formFinanceiro">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+
+                            {{-- Seleção de Categoria --}}
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Categoria <span class="text-danger">*</span></label>
+                                <select name="categoria_id" class="form-select shadow-sm" required>
+                                    <option value="" selected disabled>Selecione uma categoria...</option>
+                                    <optgroup label="Entradas">
+                                        @foreach ($categorias->where('tipo', 'entrada') as $cat)
+                                            <option value="{{ $cat->id }}">{{ $cat->nome }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Saídas">
+                                        @foreach ($categorias->where('tipo', 'saida') as $cat)
+                                            <option value="{{ $cat->id }}">{{ $cat->nome }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            {{-- Pedido Relacionado (Opcional) --}}
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-muted">Vincular a um Pedido (Opcional)</label>
+                                <select name="pedido_id" class="form-select shadow-sm border-dashed">
+                                    <option value="">Registro Manual (Sem pedido)</option>
+                                    @foreach ($pedidosRecentes as $pedido)
+                                        <option value="{{ $pedido->id }}">Pedido #{{ $pedido->id }} -
+                                            {{ $pedido->cliente->nome }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- Descrição --}}
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Descrição da Movimentação <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" name="descricao" class="form-control shadow-sm"
+                                    placeholder="Ex: Pagamento Fornecedor X, Venda de Produto Y..." required>
+                            </div>
+
+                            {{-- Valor --}}
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Valor (R$) <span class="text-danger">*</span></label>
+                                <div class="input-group shadow-sm">
+                                    <span class="input-group-text bg-light text-muted fw-bold">R$</span>
+                                    <input type="number" step="0.01" name="valor"
+                                        class="form-control fw-bold text-dark" placeholder="0,00" required>
+                                </div>
+                            </div>
+
+                            {{-- Data Vencimento --}}
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-warning">Data de Vencimento <span
+                                        class="text-danger">*</span></label>
+                                <input type="date" name="data_vencimento" class="form-control shadow-sm"
+                                    value="{{ date('Y-m-d') }}" required>
+                            </div>
+
+                            {{-- Data Pagamento (Opcional) --}}
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-success">Data de Pagamento (Se pago)</label>
+                                <input type="date" name="data_pagamento" class="form-control shadow-sm">
+                                <div class="form-text small">Deixe vazio se for uma conta a receber/pagar.</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer bg-light border-0 px-4 py-3">
+                        @include('utils.form.cancelsubmitbuttons', [
+                            'cancel_route' => route($bag['route'] . '.index', [
+                                'loja' => session('loja_slug'),
+                            ]),
+                        ])
+                    </div>
+                </form>
             </div>
         </div>
     </div>

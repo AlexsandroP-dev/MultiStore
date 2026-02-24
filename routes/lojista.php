@@ -55,6 +55,12 @@ Route::group(['middleware' => ['auth', 'config.loja']], function () {
         //Financeiro
         Route::prefix('/financeiro')->name('financeiro.')->group(function () {
             Route::get('/', [FinanceiroController::class, 'index'])->name('index');
+            Route::post('/store', [FinanceiroController::class, 'store'])->name('store');
+            Route::put('/update/{financeiro}', [FinanceiroController::class, 'update'])->name('update');
+            Route::prefix('/categoria')->name('categoria.')->group(function () {
+                Route::post('/categoria/store', [FinanceiroController::class, 'storeCategoria'])->name('store');
+                Route::put('/categoria/update/{categoria}', [FinanceiroController::class, 'updateCategoria'])->name('update');
+            });
         });
     });
 });

@@ -257,9 +257,9 @@
             -   [ ] 7.3.1.1. index (entradas e saidas, com filtro de data)
                 -   [ ] 7.3.1.1.1. Cadastrar nova categoria de financeiro.
                 -   [ ] 7.3.1.1.2. Editar categoria de financeiro.
-                -   [ ] 7.3.1.1.3. cadastrar nova entrada ou saida.
+                -   [x] 7.3.1.1.3. cadastrar nova entrada ou saida.
         -   [ ] 7.3.2. Frontend CRUD Financeiro:
             -   [ ] 7.3.2.1. index (entradas e saidas, com filtro de data)
                 -   [ ] 7.3.2.1.1. Cadastrar nova categoria de financeiro.
                 -   [ ] 7.3.2.1.2. Editar categoria de financeiro.
-                -   [ ] 7.3.2.1.3. cadastrar nova entrada ou saida.
+                -   [x] 7.3.2.1.3. cadastrar nova entrada ou saida.
