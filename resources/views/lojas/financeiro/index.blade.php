@@ -4,39 +4,52 @@
     @include('utils.layout.alertsCustom')
     <div class="row g-3 mb-4">
         <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm bg-primary text-white h-100">
+            <div class="card border-0 shadow-sm {{ $saldoAtual >= 0 ? 'bg-primary' : 'bg-danger' }} text-white h-100">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-start">
                         <div>
-                            <small class="text-white-50 d-block">Saldo (Mês)</small>
-                            <h4 class="mb-0">R$ 15.250,00</h4>
+                            <small class="text-white-50 d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Saldo
+                                Total</small>
+                            <h4 class="mb-0 fw-bold">R$ {{ number_format($saldoAtual, 2, ',', '.') }}</h4>
                         </div>
-                        <i class="bi bi-wallet2 fs-2 opacity-50"></i>
+                        <i class="bi bi-piggy-bank fs-3 opacity-50"></i>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 border-start border-success border-4">
                 <div class="card-body">
-                    <small class="text-muted d-block">Entradas (Mês)</small>
-                    <h4 class="mb-0 text-success">+ R$ 8.400,00</h4>
+                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Entradas</small>
+                    <h4 class="mb-0 text-success fw-bold">R$ {{ number_format($totalEntradas, 2, ',', '.') }}</h4>
+                    <div class="progress mt-2" style="height: 4px;">
+                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 border-start border-danger border-4">
                 <div class="card-body">
-                    <small class="text-muted d-block">Saídas (Mês)</small>
-                    <h4 class="mb-0 text-danger">- R$ 3.120,00</h4>
+                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Saídas</small>
+                    <h4 class="mb-0 text-danger fw-bold">R$ {{ number_format($totalSaidas, 2, ',', '.') }}</h4>
+                    <div class="progress mt-2" style="height: 4px;">
+                        <div class="progress-bar bg-danger" style="width: 100%"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-6 col-md-3">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm h-100 bg-light">
                 <div class="card-body">
-                    <small class="text-muted d-block">A Pagar (Hoje)</small>
-                    <h4 class="mb-0 text-warning">R$ 450,00</h4>
+                    <small class="text-muted d-block fw-bold text-uppercase" style="font-size: 0.65rem;">Pendente
+                        (Liquidez)</small>
+                    <h4 class="mb-0 {{ $totalPendente >= 0 ? 'text-primary' : 'text-orange' }} fw-bold">
+                        R$ {{ number_format($totalPendente, 2, ',', '.') }}
+                    </h4>
+                    <small class="text-muted mt-1 d-block" style="font-size: 0.7rem;">
+                        {{ $totalPendente >= 0 ? 'Saldo futuro positivo' : 'Contas a pagar superam as entradas' }}
+                    </small>
                 </div>
             </div>
         </div>
@@ -130,13 +143,15 @@
                                     <button class="btn btn-sm btn-outline-warning border-warning" title="Editar"
                                         data-bs-toggle="modal" data-bs-target="#modalEditar"
                                         onclick="fillEditMovimentacao('{{ $mov->id }}', '{{ $mov->categoria_id }}', '{{ $mov->pedido_id }}', '{{ $mov->descricao }}', '{{ $mov->valor }}', '{{ $mov->data_vencimento->format('Y-m-d') }}', '{{ $mov->data_pagamento ? $mov->data_pagamento->format('Y-m-d') : '' }}')"
-                                        style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.15)'"
+                                        style="transition: transform 0.2s;"
+                                        onmouseover="this.style.transform='scale(1.15)'"
                                         onmouseout="this.style.transform='scale(1)'">
                                         <i class="bi bi-pencil"></i>
                                     </button>
                                     <button class="btn btn-sm btn-outline-danger border-danger" title="Excluir"
                                         onclick="deleteFinanceiro('{{ $mov->id }}')"
-                                        style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.15)'"
+                                        style="transition: transform 0.2s;"
+                                        onmouseover="this.style.transform='scale(1.15)'"
                                         onmouseout="this.style.transform='scale(1)'">
                                         <i class="bi bi-trash"></i>
                                     </button>
@@ -313,7 +328,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="modal-footer bg-light border-0 px-4 py-3">
                         @include('utils.form.cancelsubmitbuttons', [
                             'cancel_route' => route($bag['route'] . '.index', [

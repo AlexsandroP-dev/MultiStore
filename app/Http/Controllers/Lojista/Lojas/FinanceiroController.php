@@ -41,13 +41,39 @@ class FinanceiroController extends Controller
 
     public function index(Request $request)
     {
-        $movimentacoes = $this->financeiros->with('categoria')->where('loja_id', session('loja_id'))->paginate(30);
-        $links = $movimentacoes->appends($request->except('page'));
+        $query = $this->financeiros->with('categoria')->where('loja_id', session('loja_id'));
+
+        // Coletar todas as movimentações do período para os cálculos
+        $movimentacoesParaCalculo = $query->get();
+
+        // 1. Entradas (Somente as que foram pagas/recebidas, ou seja, com data_pagamento preenchida)
+        $totalEntradas = $movimentacoesParaCalculo->where('categoria.tipo', 'entrada')->whereNotNull('data_pagamento')->sum('valor');
+
+        // 2. Saídas (Somente as que foram pagas/efetivadas, ou seja, com data_pagamento preenchida)
+        $totalSaidas = $movimentacoesParaCalculo->where('categoria.tipo', 'saida')->whereNotNull('data_pagamento')->sum('valor');
+
+        // 3. Saldo Real (Apenas o que já foi efetivamente pago/recebido)
+        $saldoAtual = $totalEntradas - $totalSaidas;
+
+        // 4. Pendente (Contas a Pagar/Receber)
+        // Entradas sem data_pagamento (crédito futuro) - Saídas sem data_pagamento (débito futuro)
+        $entradasPendentes = $movimentacoesParaCalculo->where('categoria.tipo', 'entrada')->whereNull('data_pagamento')->sum('valor');
+        $saidasPendentes = $movimentacoesParaCalculo->where('categoria.tipo', 'saida')->whereNull('data_pagamento')->sum('valor');
+        $totalPendente = $entradasPendentes - $saidasPendentes;
+
+        $movimentacoes = $query->paginate(10);
         $categorias = $this->categorias->where('loja_id', session('loja_id'))->get();
-        $pedidosRecentes = $this->pedidos->where('loja_id', session('loja_id'))
-            ->whereIn('status', [Pedido::STATUS_PENDENTE, Pedido::STATUS_PAGO])
-            ->orderBy('created_at', 'desc')->limit(10)->get();
-        return view($this->bag['view'] . '.index', compact('movimentacoes', 'links', 'categorias', 'pedidosRecentes'));
+        $pedidosRecentes = $this->pedidos->where('loja_id', session('loja_id'))->whereIn('status', [Pedido::STATUS_PENDENTE, Pedido::STATUS_PAGO])->latest()->take(10)->get();
+
+        return view($this->bag['view'] . '.index', compact(
+            'movimentacoes',
+            'categorias',
+            'pedidosRecentes',
+            'totalEntradas',
+            'totalSaidas',
+            'saldoAtual',
+            'totalPendente'
+        ));
     }
 
     public function store(FinanceiroRequest $request, $loja)
