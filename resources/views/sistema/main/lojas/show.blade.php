@@ -7,7 +7,7 @@
             <div class="col-12 col-lg-8">
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-bold text-warning">Informações da Loja</h5>
+                        <h5 class="mb-0 fw-bold text-primary">Informações da Loja</h5>
                         <a href="{{ route($bag['route'] . '.edit', $loja->id) }}" class="btn btn-sm btn-outline-warning border-warning" title="Editar"
                             style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
                             onmouseout="this.style.transform='scale(1)'">
