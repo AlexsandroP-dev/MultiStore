@@ -15,7 +15,7 @@ class CategoriaRequest extends FormRequest
     {
         return [
             'nome' => ['required', 'string', 'max:255'],
-            'tipo' => ['required', 'in:entrada,saída'],
+            'tipo' => ['required', 'in:entrada,saida'],
         ];
     }
 }

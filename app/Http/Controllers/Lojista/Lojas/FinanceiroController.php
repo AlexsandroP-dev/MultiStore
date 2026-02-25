@@ -20,6 +20,7 @@ class FinanceiroController extends Controller
     protected $bag = [
         'view' => 'lojas.financeiro',
         'route' => 'loja.dashboard.financeiro',
+        'routeCategoria' => 'loja.dashboard.financeiro.categoria',
         'title' => 'Financeiro',
         'subtitle' => 'todas as movimentações financeiras',
         'section' => [
@@ -49,7 +50,7 @@ class FinanceiroController extends Controller
         return view($this->bag['view'] . '.index', compact('movimentacoes', 'links', 'categorias', 'pedidosRecentes'));
     }
 
-    public function store(FinanceiroRequest $request)
+    public function store(FinanceiroRequest $request, $loja)
     {
         DB::beginTransaction();
         try {
@@ -68,7 +69,7 @@ class FinanceiroController extends Controller
         }
     }
 
-    public function update(FinanceiroRequest $request, FinanceiroMovimentacao $financeiro)
+    public function update(FinanceiroRequest $request, $loja, FinanceiroMovimentacao $financeiro)
     {
         DB::beginTransaction();
         try {
@@ -81,7 +82,20 @@ class FinanceiroController extends Controller
         }
     }
 
-    public function storeCategoria(CategoriaRequest $request)
+    public function destroy($loja, FinanceiroMovimentacao $financeiro)
+    {
+        DB::beginTransaction();
+        try {
+            $financeiro->delete();
+            DB::commit();
+            return redirect()->back()->with('success', 'Movimentação financeira excluída com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Erro ao excluir movimentação financeira.');
+        }
+    }
+
+    public function storeCategoria(CategoriaRequest $request, $loja)
     {
         DB::beginTransaction();
         try {
@@ -96,7 +110,7 @@ class FinanceiroController extends Controller
         }
     }
 
-    public function updateCategoria(CategoriaRequest $request, FinanceiroCategoria $categoria)
+    public function updateCategoria(CategoriaRequest $request, $loja, FinanceiroCategoria $categoria)
     {
         DB::beginTransaction();
         try {
@@ -106,6 +120,19 @@ class FinanceiroController extends Controller
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->back()->with('error', 'Ocorreu um erro ao atualizar a categoria financeira:');
+        }
+    }
+
+    public function destroyCategoria($loja, FinanceiroCategoria $categoria)
+    {
+        DB::beginTransaction();
+        try {
+            $categoria->delete();
+            DB::commit();
+            return redirect()->back()->with('success', 'Categoria excluída com sucesso!');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Erro ao excluir categoria.');
         }
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('financeiro_movimentacoes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('loja_id')->constrained('lojas');
-            $table->foreignUuid('categoria_id')->constrained('financeiro_categorias');
+            $table->foreignUuid('categoria_id')->nullable()->constrained('financeiro_categorias');
             // Relacionamento opcional pois se a entrada vier de um produto então será vinculada aqui
             // nem todas as entradas serão de produtos
             $table->foreignUuid('pedido_id')->nullable()->constrained('pedidos');

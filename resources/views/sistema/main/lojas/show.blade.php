@@ -7,8 +7,8 @@
             <div class="col-12 col-lg-8">
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 fw-bold text-primary">Informações da Loja</h5>
-                        <a href="{{ route($bag['route'] . '.edit', $loja->id) }}" class="btn btn-sm btn-outline-primary"
+                        <h5 class="mb-0 fw-bold text-warning">Informações da Loja</h5>
+                        <a href="{{ route($bag['route'] . '.edit', $loja->id) }}" class="btn btn-sm btn-outline-warning border-warning" title="Editar"
                             style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
                             onmouseout="this.style.transform='scale(1)'">
                             <i class="bi bi-pencil me-1"></i> Editar
@@ -270,7 +270,7 @@
                                             <div class="d-flex align-items-center">
                                                 Cargo/Função
                                                 <button type="button"
-                                                    class="btn btn-xs btn-outline-secondary border-0 p-0 ms-1"
+                                                    class="btn btn-outline-secondary border-0 p-0 ms-1"
                                                     data-bs-toggle="modal" data-bs-target="#modalListaCargos"
                                                     title="Gerenciar Cargos" style="transition: transform 0.2s;"
                                                     onmouseover="this.style.transform='scale(1.2)'"
@@ -474,11 +474,11 @@
                                             <span class="fw-semibold d-block text-dark">{{ $cargo->nome }}</span>
                                         </div>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-xs btn-link text-primary p-1"
+                                            <button type="button" class="btn btn-sm btn-outline-warning border-warning" title="Editar"
                                                 data-bs-toggle="collapse"
                                                 data-bs-target="#collapseEditCargo{{ $cargo->id }}"
                                                 style="transition: transform 0.2s;"
-                                                onmouseover="this.style.transform='scale(1.23)'"
+                                                onmouseover="this.style.transform='scale(1.15)'"
                                                 onmouseout="this.style.transform='scale(1)'">
                                                 <i class="bi bi-pencil"></i>
                                             </button>
@@ -488,9 +488,9 @@
                                                 method="POST"
                                                 onsubmit="return confirm('Deseja realmente excluir este cargo?')">
                                                 @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-xs btn-link text-danger p-1"
+                                                <button type="submit" class="btn btn-sm btn-outline-danger border-danger" title="Excluir"
                                                     style="transition: transform 0.2s;"
-                                                    onmouseover="this.style.transform='scale(1.23)'"
+                                                    onmouseover="this.style.transform='scale(1.15)'"
                                                     onmouseout="this.style.transform='scale(1)'">
                                                     <i class="bi bi-trash"></i>
                                                 </button>

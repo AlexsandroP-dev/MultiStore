@@ -57,9 +57,11 @@ Route::group(['middleware' => ['auth', 'config.loja']], function () {
             Route::get('/', [FinanceiroController::class, 'index'])->name('index');
             Route::post('/store', [FinanceiroController::class, 'store'])->name('store');
             Route::put('/update/{financeiro}', [FinanceiroController::class, 'update'])->name('update');
+            Route::delete('/{financeiro}', [FinanceiroController::class, 'destroy'])->name('destroy');
             Route::prefix('/categoria')->name('categoria.')->group(function () {
-                Route::post('/categoria/store', [FinanceiroController::class, 'storeCategoria'])->name('store');
-                Route::put('/categoria/update/{categoria}', [FinanceiroController::class, 'updateCategoria'])->name('update');
+                Route::post('/store', [FinanceiroController::class, 'storeCategoria'])->name('store');
+                Route::put('/update/{categoria}', [FinanceiroController::class, 'updateCategoria'])->name('update');
+                Route::delete('/{categoria}', [FinanceiroController::class, 'destroyCategoria'])->name('destroy');
             });
         });
     });

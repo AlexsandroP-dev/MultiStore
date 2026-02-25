@@ -9,7 +9,7 @@
                 <div class="d-flex justify-content-end mb-4">
                     <div class="d-flex gap-2">
                         <a href="{{ route($bag['route'] . '.edit', ['loja' => session('loja_slug'), 'categoria' => $produto->categoria->slug, 'produto' => $produto->slug]) }}"
-                            class="btn btn-sm btn-outline-primary" style="transition: transform 0.2s;"
+                            class="btn btn-sm btn-outline-warning border-warning" title="Editar" style="transition: transform 0.2s;"
                             onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
                             <i class="bi bi-pencil me-1"></i> Editar
                         </a>

@@ -3,7 +3,7 @@
 namespace App\Models\Lojas\Financeiro;
 
 use App\Models\Clientes\Pedido;
-use App\Models\Financeiro\FinanceiroCategoria;
+use App\Models\Lojas\Financeiro\FinanceiroCategoria;
 use App\Models\Lojas\Loja;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;

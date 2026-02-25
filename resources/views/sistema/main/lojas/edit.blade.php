@@ -7,7 +7,7 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="mb-0 fw-bold text-primary">Editar Loja: {{ $loja->nome }}</h5>
+                            <h5 class="mb-0 fw-bold text-warning">Editar Loja: {{ $loja->nome }}</h5>
                             <small class="text-muted">Atualize as configurações da unidade abaixo.</small>
                         </div>
                         <span class="badge {{ $loja->expira_em->isFuture() ? 'bg-success' : 'bg-danger' }}">
