@@ -42,9 +42,21 @@ class ProdutoController extends Controller
 
     public function index(Request $request)
     {
-        $produtos = $this->produtos->with('categoria', 'estoque')->where('loja_id', session('loja_id'))->paginate(30);
+        $catDoProduto = $request->input('categoria') ?? null;
+        $nomeDoProduto = $request->input('nome') ?? null;
+        $produtos = $this->produtos->with('categoria', 'estoque')->where('loja_id', session('loja_id'))
+            ->when($catDoProduto, function ($q) use ($catDoProduto) {
+                return $q->whereHas('categoria', function ($query) use ($catDoProduto) {
+                    $query->where('nome', '=', $catDoProduto);
+                });
+            })
+            ->when($nomeDoProduto, function ($q) use ($nomeDoProduto) {
+                return $q->where('nome', 'ilike', '%' . $nomeDoProduto . '%');
+            })
+            ->paginate($request->qtd ?? 15)->withQueryString();
         $links = $produtos->appends($request->except('page'));
-        return view($this->bag['view'] . '.index', compact('produtos', 'links'));
+        $categorias = $this->categorias->where('loja_id', session('loja_id'))->where('ativo', true)->get();
+        return view($this->bag['view'] . '.index', compact('produtos', 'links', 'categorias'));
     }
 
     public function create()

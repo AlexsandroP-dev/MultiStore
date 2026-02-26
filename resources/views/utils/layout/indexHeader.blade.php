@@ -13,6 +13,9 @@
         </div>
     @endif
     <div class="btn-group shadow-sm ms-auto gap-2" role="group" aria-label="Visualização">
+        @if (isset($search))
+            @include($bag['view'] . '.search')
+        @endif
         <a href="{{ route($route . '.set.visualizacao', array_merge($params, ['modo' => 'grid'])) }}"
             class="btn btn-sm btn-outline-primary {{ session($session, 'grid') == 'grid' ? 'active' : '' }}"
             title="Visualizar como Grade" style="transition: transform 0.2s;"

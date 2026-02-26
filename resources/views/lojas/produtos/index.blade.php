@@ -3,6 +3,7 @@
 @section('content')
     @include('utils.layout.indexHeader', [
         'enableHeaderButtons' => true,
+        'search' => true,
         'session' => 'loja_produto_visualizacao',
         'route' => $bag['route'],
         'params' => ['loja' => session('loja_slug')],
