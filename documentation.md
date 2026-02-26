@@ -254,14 +254,20 @@
                 -   [x] 7.2.2.2.6. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
     -   [ ] 7.3. Financeiro:
         -   [ ] 7.3.1. Backend CRUD Financeiro:
-            -   [ ] 7.3.1.1. index (entradas e saidas, com filtro de data)
+            -   [ ] 7.3.1.1. index (entradas e saidas)
                 -   [x] 7.3.1.1.1. Cadastrar nova categoria de financeiro.
                 -   [x] 7.3.1.1.2. Editar categoria de financeiro.
                 -   [x] 7.3.1.1.3. cadastrar nova entrada ou saida.
                 -   [x] 7.3.1.1.4. editar nova entrada ou saida.
+                -   [x] 7.3.1.1.5. Filtragem por data.
+                -   [ ] 7.3.1.1.6. Gráfico de evolução dia a dia.
+                -   [ ] 7.3.1.1.7. Gráfico de evolução mês a mês.
         -   [ ] 7.3.2. Frontend CRUD Financeiro:
-            -   [ ] 7.3.2.1. index (entradas e saidas, com filtro de data)
+            -   [ ] 7.3.2.1. index (entradas e saidas)
                 -   [x] 7.3.2.1.1. Cadastrar nova categoria de financeiro.
                 -   [x] 7.3.2.1.2. Editar categoria de financeiro.
                 -   [x] 7.3.2.1.3. cadastrar nova entrada ou saida.
                 -   [x] 7.3.2.1.4. editar nova entrada ou saida.
+                -   [x] 7.3.2.1.5. Filtragem por data.
+                -   [ ] 7.3.2.1.6. Gráfico de evolução dia a dia.
+                -   [ ] 7.3.2.1.7. Gráfico de evolução mês a mês

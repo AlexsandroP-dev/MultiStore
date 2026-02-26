@@ -59,7 +59,8 @@
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
             <h5 class="mb-0 fw-bold">Movimentações</h5>
             <div class="btn-list">
-                <button class="btn btn-secondary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modalCategorias"
+                @include($bag['view'] . '.search')
+                <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalCategorias"
                     style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
                     onmouseout="this.style.transform='scale(1)'">
                     <i class="bi bi-tags"></i> <span class="d-none d-md-inline">Categorias</span>

@@ -41,7 +41,23 @@ class FinanceiroController extends Controller
 
     public function index(Request $request)
     {
-        $query = $this->financeiros->with('categoria')->where('loja_id', session('loja_id'));
+        $data_inicio = $request->input('data_inicio') ?? null;
+        $data_fim = $request->input('data_fim') ?? null;
+
+        $query = $this->financeiros->with('categoria')
+            ->where('loja_id', session('loja_id'))
+            ->when($data_inicio, function ($q) use ($data_inicio) {
+                return $q->where('data_vencimento', '>=', $data_inicio);
+            })
+            ->when($data_fim, function ($q) use ($data_fim) {
+                return $q->where('data_vencimento', '<=', $data_fim);
+            });
+
+        if ($request->filled('tipo')) {
+            $query->whereHas('categoria', function ($q) use ($request) {
+                $q->where('tipo', $request->tipo);
+            });
+        }
 
         // Coletar todas as movimentações do período para os cálculos
         $movimentacoesParaCalculo = $query->get();
@@ -61,7 +77,7 @@ class FinanceiroController extends Controller
         $saidasPendentes = $movimentacoesParaCalculo->where('categoria.tipo', 'saida')->whereNull('data_pagamento')->sum('valor');
         $totalPendente = $entradasPendentes - $saidasPendentes;
 
-        $movimentacoes = $query->paginate(10);
+        $movimentacoes = $query->orderBy('data_vencimento', 'desc')->paginate($request->qtd ?? 15)->withQueryString();
         $categorias = $this->categorias->where('loja_id', session('loja_id'))->get();
         $pedidosRecentes = $this->pedidos->where('loja_id', session('loja_id'))->whereIn('status', [Pedido::STATUS_PENDENTE, Pedido::STATUS_PAGO])->latest()->take(10)->get();
 
@@ -72,7 +88,9 @@ class FinanceiroController extends Controller
             'totalEntradas',
             'totalSaidas',
             'saldoAtual',
-            'totalPendente'
+            'totalPendente',
+            'data_inicio',
+            'data_fim'
         ));
     }
 

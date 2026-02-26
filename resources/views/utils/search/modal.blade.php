@@ -1,6 +1,7 @@
-<button class="btn btn-sm btn-outline-secondary" id="modal-button-search" data-bs-toggle="modal"
-    data-bs-target="#modal-search">
-    Filtrar
+<button class="btn btn-dark btn-sm" id="modal-button-search" data-bs-toggle="modal" data-bs-target="#modal-search"
+    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
+    onmouseout="this.style.transform='scale(1)'">
+    <i class="bi bi-search"></i> <span class="d-none d-md-inline">Filtrar</span>
 </button>
 
 <div class="modal fade" id="modal-search" tabindex="-1" style="display: none;" aria-hidden="true">
@@ -10,7 +11,9 @@
                 <h5 class="modal-title">
                     Filtrar
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'"
+                    onmouseout="this.style.transform='scale(1)'"></button>
             </div>
             <form method="GET" action="{{ request()->url() }}">
                 <div class="modal-body">

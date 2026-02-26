@@ -30,12 +30,13 @@
             <div class="input-group-text">
                 <span>QTD</span>
             </div>
-            <input type="number" name="qtd" id="qtd" value="{{ $_GET['qtd'] ?? 100 }}"
-                class="form-control form-control-sm" step="50" minlength="50" maxlength="500">
+            <input type="number" name="qtd" id="qtd" value="{{ $_GET['qtd'] ?? 15 }}"
+                class="form-control form-control-sm" step="1" minlength="1" maxlength="100">
         </div>
     </div>
     <div class="btn-list">
-        <a href="{{ request()->url() }}" class="btn btn-sm btn-outline-dark">Redefinir</a>
+        <a href="{{ request()->url() }}" class="btn btn-sm btn-outline-dark" style="transition: transform 0.2s;"
+            onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">Redefinir</a>
         @include('utils.buttons.submit', ['text' => 'Pesquisar', 'csrf' => false])
     </div>
 @stop
