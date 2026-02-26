@@ -9,8 +9,9 @@
                 <div class="d-flex justify-content-end mb-4">
                     <div class="d-flex gap-2">
                         <a href="{{ route($bag['route'] . '.edit', ['loja' => session('loja_slug'), 'categoria' => $produto->categoria->slug, 'produto' => $produto->slug]) }}"
-                            class="btn btn-sm btn-outline-warning border-warning" title="Editar" style="transition: transform 0.2s;"
-                            onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                            class="btn btn-sm btn-outline-warning border-warning" title="Editar"
+                            style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'"
+                            onmouseout="this.style.transform='scale(1)'">
                             <i class="bi bi-pencil me-1"></i> Editar
                         </a>
                     </div>
@@ -146,8 +147,8 @@
                                 <i class="bi bi-plus-lg"></i> Novo
                             </button>
                         @else
-                            <button type="button" class="btn btn-sm btn-outline-warning" style="transition: transform 0.2s;"
-                                onmouseover="this.style.transform='scale(1.07)'"
+                            <button type="button" class="btn btn-sm btn-outline-warning"
+                                style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.07)'"
                                 onmouseout="this.style.transform='scale(1)'" data-bs-toggle="modal"
                                 data-bs-target="#modalEditarEstoque">
                                 <i class="bi bi-pencil"></i> Editar
@@ -203,7 +204,8 @@
                                             </div>
 
                                             <div class="d-none d-md-block mt-1 small">
-                                                <span class="text-muted">Custo: R$ {{ $produto->estoque->preco_custo() }}</span>
+                                                <span class="text-muted">Custo: R$
+                                                    {{ $produto->estoque->preco_custo() }}</span>
                                                 <span class="mx-1">|</span>
                                                 <span class="text-success fw-bold">Venda: R$
                                                     {{ $produto->estoque->preco_venda() }}</span>
@@ -237,7 +239,8 @@
                                         <div class="col-12 col-md-4 text-md-center">
                                             <hr class="d-md-none">
                                             <div class="d-md-none mt-1 small">
-                                                <span class="text-muted">Custo: R$ {{ $produto->estoque->preco_custo() }}</span>
+                                                <span class="text-muted">Custo: R$
+                                                    {{ $produto->estoque->preco_custo() }}</span>
                                                 <span class="mx-1">|</span>
                                                 <span class="text-success fw-bold">Venda: R$
                                                     {{ $produto->estoque->preco_venda() }}</span>
@@ -293,22 +296,30 @@
                                                                 value="{{ old('quantidade', $produto->estoque->quantidade) }}"
                                                                 required>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4">
                                                             <label class="form-label fw-bold">Preço de Custo</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text">R$</span>
                                                                 <input type="number" name="preco_custo" step="0.01"
-                                                                    class="form-control"
+                                                                    class="form-control js-calc-custo"
                                                                     value="{{ old('preco_custo', $produto->estoque->preco_custo) }}"
                                                                     required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-4">
+                                                            <label class="form-label fw-bold">% Lucro</label>
+                                                            <div class="input-group">
+                                                                <input type="number" step="0.01"
+                                                                    class="form-control js-calc-lucro" placeholder="0">
+                                                                <span class="input-group-text">%</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
                                                             <label class="form-label fw-bold">Preço de Venda</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text">R$</span>
                                                                 <input type="number" name="preco_venda" step="0.01"
-                                                                    class="form-control"
+                                                                    class="form-control js-calc-venda"
                                                                     value="{{ old('preco_venda', $produto->estoque->preco_venda) }}"
                                                                     required>
                                                             </div>
@@ -389,20 +400,28 @@
                                 <input type="number" name="quantidade" step="0.01" class="form-control"
                                     placeholder="0,00" required>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label fw-bold">Preço de Custo</label>
                                 <div class="input-group">
                                     <span class="input-group-text">R$</span>
-                                    <input type="number" name="preco_custo" step="0.01" class="form-control"
-                                        placeholder="0,00" required>
+                                    <input type="number" name="preco_custo" step="0.01"
+                                        class="form-control js-calc-custo" placeholder="0,00" required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">% Lucro</label>
+                                <div class="input-group">
+                                    <input type="number" step="0.01" class="form-control js-calc-lucro"
+                                        placeholder="0">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <label class="form-label fw-bold">Preço de Venda</label>
                                 <div class="input-group">
                                     <span class="input-group-text">R$</span>
-                                    <input type="number" name="preco_venda" step="0.01" class="form-control"
-                                        placeholder="0,00" required>
+                                    <input type="number" name="preco_venda" step="0.01"
+                                        class="form-control js-calc-venda" placeholder="0,00" required>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -436,6 +455,45 @@
                 var myModal = new bootstrap.Modal(document.getElementById('modalEditarEstoque'));
                 myModal.show();
             @endif
+        });
+
+        document.addEventListener('input', function(event) {
+            // Verifica se o elemento digitado pertence ao grupo de cálculo
+            if (event.target.classList.contains('js-calc-custo') || event.target.classList.contains(
+                    'js-calc-lucro')) {
+
+                // Encontra o container (o modal) para não misturar valores de um modal com outro
+                const container = event.target.closest('.modal-body');
+
+                const inputCusto = container.querySelector('.js-calc-custo');
+                const inputLucro = container.querySelector('.js-calc-lucro');
+                const inputVenda = container.querySelector('.js-calc-venda');
+
+                let custo = parseFloat(inputCusto.value) || 0;
+                let margem = parseFloat(inputLucro.value) || 0;
+
+                if (custo > 0) {
+                    // Cálculo: Venda = Custo + (Custo * (Margem / 100))
+                    let venda = custo + (custo * (margem / 100));
+                    inputVenda.value = venda.toFixed(2);
+                }
+            }
+
+            // Lógica Inversa: Se o usuário mudar o Preço de Venda manualmente, recalcula a % de Lucro
+            if (event.target.classList.contains('js-calc-venda')) {
+                const container = event.target.closest('.modal-body');
+                const inputCusto = container.querySelector('.js-calc-custo');
+                const inputLucro = container.querySelector('.js-calc-lucro');
+                const inputVenda = event.target;
+
+                let custo = parseFloat(inputCusto.value) || 0;
+                let venda = parseFloat(inputVenda.value) || 0;
+
+                if (custo > 0 && venda > 0) {
+                    let lucroPercentual = ((venda - custo) / custo) * 100;
+                    inputLucro.value = lucroPercentual.toFixed(1);
+                }
+            }
         });
     </script>
 @endpush
