@@ -41,7 +41,16 @@ class ColaboradorController extends Controller
 
     public function index(Request $request)
     {
-        $colaboradores = $this->colaboradores->with('user', 'cargos')->where('loja_id', session('loja_id'))->paginate(30);
+        $cargoDoColaborador = $request->input('cargo') ?? null;
+        $nomeDoColaborador = $request->input('nome') ?? null;
+        $colaboradores = $this->colaboradores->where('loja_id', session('loja_id'))->with('user', 'cargos')
+            ->when($cargoDoColaborador, function ($q) use ($cargoDoColaborador) {
+                return $q->whereRelation('cargos.cargo', 'nome', '=', $cargoDoColaborador);
+            })
+            ->when($nomeDoColaborador, function ($q) use ($nomeDoColaborador) {
+                return $q->whereRelation('user', 'nome', 'ilike', '%' . $nomeDoColaborador . '%');
+            })
+            ->paginate($request->qtd ?? 15)->withQueryString();
         $cargos = $this->cargos->where('loja_id', session('loja_id'))->get();
         $links = $colaboradores->appends($request->except('page'));
         return view($this->bag['view'] . '.index', compact('colaboradores', 'cargos', 'links'));

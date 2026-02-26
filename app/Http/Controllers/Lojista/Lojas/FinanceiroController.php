@@ -54,9 +54,7 @@ class FinanceiroController extends Controller
             });
 
         if ($request->filled('tipo')) {
-            $query->whereHas('categoria', function ($q) use ($request) {
-                $q->where('tipo', $request->tipo);
-            });
+            $query->whereRelation('categoria', 'tipo', $request->tipo);
         }
 
         // Coletar todas as movimentações do período para os cálculos

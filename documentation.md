@@ -234,7 +234,7 @@
             -   [x] 7.1.2.4. edit.
     -   [ ] 7.2. Colaboradores:
         -   [ ] 7.2.1. Backend CRUD Colaboradores:
-            -   [ ] 7.2.1.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
+            -   [x] 7.2.1.1. index (com paginação e filtro de nome do colaborador e cargo do colaborador, escolher layout de tabela ou produto lado a lado).
             -   [x] 7.2.1.2. A implementar lista de colaboradores da loja no INDEX (`Dependente do item 7.2.1.1.`).
                 -   [x] 7.2.1.2.1. Cadastrar colaborador na loja.
                 -   [x] 7.2.1.2.2. Vincular colaborador na loja.
@@ -244,7 +244,7 @@
                 -   [x] 7.2.1.2.6. Mostrar tipo de usuário na lista de colaboradores (booleans da tabela users).
             -   [x] 7.2.1.3. store (com request, cadastrar novo user vinculando a loja ou vincular user existente).
         -   [ ] 7.2.2. Frontend CRUD Colaboradores:
-            -   [ ] 7.2.2.1. index (com paginação e pesquisa, escolher layout de tabela ou produto lado a lado).
+            -   [x] 7.2.2.1. index (com paginação e filtro de nome do colaborador e cargo do colaborador, escolher layout de tabela ou produto lado a lado).
             -   [x] 7.2.2.2. A implementar lista de colaboradores da loja no INDEX para ambos modos os layouts (`Dependente do item 7.2.2.1.`).
                 -   [x] 7.2.2.2.1. Cadastrar colaborador na loja.
                 -   [x] 7.2.2.2.2. Vincular colaborador na loja.

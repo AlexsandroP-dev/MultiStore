@@ -46,9 +46,7 @@ class ProdutoController extends Controller
         $nomeDoProduto = $request->input('nome') ?? null;
         $produtos = $this->produtos->with('categoria', 'estoque')->where('loja_id', session('loja_id'))
             ->when($catDoProduto, function ($q) use ($catDoProduto) {
-                return $q->whereHas('categoria', function ($query) use ($catDoProduto) {
-                    $query->where('nome', '=', $catDoProduto);
-                });
+                return $q->whereRelation('categoria', 'nome', '=', $catDoProduto);
             })
             ->when($nomeDoProduto, function ($q) use ($nomeDoProduto) {
                 return $q->where('nome', 'ilike', '%' . $nomeDoProduto . '%');
